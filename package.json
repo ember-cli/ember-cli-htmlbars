@@ -1,0 +1,33 @@
+{
+  "name": "ember-cli-htmlbars",
+  "version": "0.0.0",
+  "description": "A library for adding htmlbars to ember CLI",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha test/**/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:rondale-sc/ember-cli-htmlbars.git"
+  },
+  "keywords": [
+    "ember-cli"
+  ],
+  "author": "Jonathan Jackson & Chase McCarthy",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rondale-sc/ember-cli-htmlbars/issues"
+  },
+  "homepage": "https://github.com/rondale-sc/ember-cli-htmlbars",
+  "devDependencies": {
+    "broccoli": "^0.12.3",
+    "broccoli-concat": "0.0.11",
+    "broccoli-debug": "^0.1.1",
+    "broccoli-es6-module-transpiler": "^0.1.1",
+    "broccoli-filter": "^0.1.6",
+    "broccoli-merge-trees": "^0.1.4",
+    "broccoli-static-compiler": "^0.1.4",
+    "handlebars": "^2.0.0",
+    "htmlbars": "tildeio/htmlbars#master"
+  }
+}
