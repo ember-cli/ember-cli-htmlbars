@@ -22,12 +22,7 @@
   "devDependencies": {
     "broccoli": "^0.12.3",
     "broccoli-concat": "0.0.11",
-    "broccoli-debug": "^0.1.1",
-    "broccoli-es6-module-transpiler": "^0.1.1",
     "broccoli-filter": "^0.1.6",
-    "broccoli-merge-trees": "^0.1.4",
-    "broccoli-static-compiler": "^0.1.4",
-    "handlebars": "^2.0.0",
     "htmlbars": "tildeio/htmlbars#master"
   }
 }
