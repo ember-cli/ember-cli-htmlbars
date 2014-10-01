@@ -27,6 +27,6 @@
     "broccoli": "^0.12.3",
     "broccoli-concat": "0.0.11",
     "broccoli-filter": "^0.1.6",
-    "htmlbars": "tildeio/htmlbars#master"
+    "mocha": "^1.21.4"
   }
 }
