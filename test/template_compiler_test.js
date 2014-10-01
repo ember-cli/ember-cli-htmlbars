@@ -7,14 +7,14 @@ var htmlbarsCompile = require('../index');
 
 var builder;
 
-describe('poop', function(){
+describe('htmlbarsCompile', function(){
   afterEach(function() {
     if (builder) {
       builder.cleanup();
     }
   });
 
-  it('smells', function(){
+  it('precompiles templates into htmlbars', function(){
     var sourcePath = 'test/fixtures';
 
     var tree = htmlbarsCompile(sourcePath, {});
