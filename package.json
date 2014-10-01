@@ -4,15 +4,19 @@
   "description": "A library for adding htmlbars to ember CLI",
   "main": "index.js",
   "scripts": {
-    "test": "mocha test/**/*.js"
+    "test": "mocha test/*.js"
   },
   "repository": {
     "type": "git",
     "url": "git@github.com:rondale-sc/ember-cli-htmlbars.git"
   },
   "keywords": [
-    "ember-cli"
+    "ember-cli",
+    "ember-addon"
   ],
+  "ember-addon": {
+    "main": "ember-addon-main.js"
+  },
   "author": "Jonathan Jackson & Chase McCarthy",
   "license": "MIT",
   "bugs": {

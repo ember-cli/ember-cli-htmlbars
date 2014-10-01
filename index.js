@@ -13,7 +13,7 @@ function TemplateCompiler (inputTree, options) {
 
 TemplateCompiler.prototype = Object.create(Filter.prototype);
 TemplateCompiler.prototype.constructor = TemplateCompiler;
-TemplateCompiler.prototype.extensions = ['htmlbars'];
+TemplateCompiler.prototype.extensions = ['hbs'];
 TemplateCompiler.prototype.targetExtension = 'js';
 
 TemplateCompiler.prototype.processString = function (string) {
