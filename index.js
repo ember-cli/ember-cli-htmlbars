@@ -1,7 +1,7 @@
 var Filter = require('broccoli-filter');
 var path = require('path');
 var fs = require('fs');
-var compilerSpec = require('./ext/htmlbars-compiler/compiler').compileSpec;
+var compileSpec = require('./ext/htmlbars-compiler/compiler').compileSpec;
 
 function TemplateCompiler (inputTree, options) {
   if (!(this instanceof TemplateCompiler)) {
@@ -17,7 +17,7 @@ TemplateCompiler.prototype.extensions = ['hbs'];
 TemplateCompiler.prototype.targetExtension = 'js';
 
 TemplateCompiler.prototype.processString = function (string) {
-  return compilerSpec(string)
+  return compileSpec(string)
 }
 
 module.exports = TemplateCompiler;
