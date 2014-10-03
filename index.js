@@ -8,6 +8,8 @@ function TemplateCompiler (inputTree, options) {
     return new TemplateCompiler(inputTree, options);
   }
 
+  Filter.call(this, inputTree, options); // this._super()
+
   this.inputTree = inputTree;
 }
 
