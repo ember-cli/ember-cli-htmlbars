@@ -2,6 +2,7 @@ var Filter = require('broccoli-filter');
 var path = require('path');
 var fs = require('fs');
 var compileSpec = require('./ext/htmlbars-compiler/compiler').compileSpec;
+var handlbarsTemplateCompiler = require('ember-template-compiler');
 
 function TemplateCompiler (inputTree, options) {
   if (!(this instanceof TemplateCompiler)) {
@@ -10,6 +11,7 @@ function TemplateCompiler (inputTree, options) {
 
   Filter.call(this, inputTree, options); // this._super()
 
+  this.HTMLBars = options && options.HTMLBars || this.HTMLBars;
   this.inputTree = inputTree;
 }
 
@@ -17,9 +19,13 @@ TemplateCompiler.prototype = Object.create(Filter.prototype);
 TemplateCompiler.prototype.constructor = TemplateCompiler;
 TemplateCompiler.prototype.extensions = ['hbs'];
 TemplateCompiler.prototype.targetExtension = 'js';
-
-TemplateCompiler.prototype.processString = function (string) {
-  return compileSpec(string)
+TemplateCompiler.prototype.processString = function (string, relativePath) {
+  if (this.HTMLBars) {
+    return compileSpec(string)
+  } else {
+    var input = handlbarsTemplateCompiler.precompile(string);
+    return "export default Ember.Handlebars.template(" + input + ");\n";
+  }
 }
 
 module.exports = TemplateCompiler;
