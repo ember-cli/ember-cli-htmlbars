@@ -17,8 +17,7 @@ describe('templateCompilerFilter', function(){
 
   it('precompiles templates into htmlbars', function(){
     var sourcePath = 'test/fixtures';
-
-    var tree = templateCompilerFilter(sourcePath);
+    var tree = templateCompilerFilter(sourcePath, { HTMLBars: true });
 
     builder = new broccoli.Builder(tree);
     return builder.build().then(function(results) {
