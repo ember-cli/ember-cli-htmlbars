@@ -24,7 +24,7 @@ TemplateCompiler.prototype.processString = function (string, relativePath) {
     return "export default " + compileSpec(string);
   } else {
     var input = handlbarsTemplateCompiler.precompile(string);
-    return "export default Ember.Handlebars.template(" + input + ");\n";
+    return "export default Ember.Handlebars.template(" + input + ")";
   }
 }
 
