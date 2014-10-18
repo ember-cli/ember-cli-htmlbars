@@ -23,7 +23,7 @@ describe('templateCompilerFilter', function(){
     return builder.build().then(function(results) {
       var actual = fs.readFileSync(results.directory + '/template.js', { encoding: 'utf8'});
       var source = fs.readFileSync(sourcePath + '/template.hbs', { encoding: 'utf8' });
-      var expected = htmlbarsCompiler(source);
+      var expected = "export default " + htmlbarsCompiler(source);
 
       assert.equal(actual,expected,'They dont match!')
     });
