@@ -35,7 +35,7 @@ describe('templateCompilerFilter', function(){
     function assertOutput(results) {
       var actual = fs.readFileSync(results.directory + '/template.js', { encoding: 'utf8'});
       var source = fs.readFileSync(sourcePath + '/template.hbs', { encoding: 'utf8' });
-      var expected = 'export default Ember.Handlebars.template(' + handlbarsTemplateCompiler.precompile(source) + ')';
+      var expected = 'export default Ember.Handlebars.template(' + handlbarsTemplateCompiler.precompile(source, false) + ')';
 
       assert.equal(actual,expected,'They dont match!')
     }
