@@ -26,10 +26,10 @@
   "devDependencies": {
     "broccoli": "^0.12.3",
     "broccoli-concat": "0.0.11",
-    "broccoli-filter": "^0.1.6",
     "mocha": "^1.21.4"
   },
   "dependencies": {
-    "ember-template-compiler": "^1.9.0-alpha"
+    "ember-template-compiler": "^1.9.0-alpha",
+    "broccoli-filter": "^0.1.6"
   }
 }
