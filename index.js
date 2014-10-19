@@ -23,7 +23,7 @@ TemplateCompiler.prototype.processString = function (string, relativePath) {
   if (this.HTMLBars) {
     return "export default " + compileSpec(string);
   } else {
-    var input = handlbarsTemplateCompiler.precompile(string);
+    var input = handlbarsTemplateCompiler.precompile(string, false);
     return "export default Ember.Handlebars.template(" + input + ")";
   }
 }
