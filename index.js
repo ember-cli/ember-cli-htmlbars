@@ -21,7 +21,7 @@ TemplateCompiler.prototype.extensions = ['hbs'];
 TemplateCompiler.prototype.targetExtension = 'js';
 TemplateCompiler.prototype.processString = function (string, relativePath) {
   if (this.HTMLBars) {
-    return "var template = " + compileSpec(string) + "\nexport default template;";
+    return "var template = " + compileSpec(string) + "\nexport default Ember.HTMLBars.template(template);";
   } else {
     var input = handlbarsTemplateCompiler.precompile(string, false);
     return "export default Ember.Handlebars.template(" + input + ")";

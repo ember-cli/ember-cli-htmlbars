@@ -25,7 +25,7 @@ describe('templateCompilerFilter', function(){
     return builder.build().then(function(results) {
       var actual = fs.readFileSync(results.directory + '/template.js', { encoding: 'utf8'});
       var source = fs.readFileSync(sourcePath + '/template.hbs', { encoding: 'utf8' });
-      var expected = "var template = " + htmlbarsCompiler(source) + "\nexport default template;";
+      var expected = "var template = " + htmlbarsCompiler(source) + "\nexport default Ember.HTMLBars.template(template);";
 
       assert.equal(actual,expected,'They dont match!')
     });
