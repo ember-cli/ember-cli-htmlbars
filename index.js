@@ -1,7 +1,7 @@
 var Filter = require('broccoli-filter');
 var path = require('path');
 var fs = require('fs');
-var compileSpec = require('./ext/htmlbars-compiler/compiler').compileSpec;
+var compileSpec = require('htmlbars').compileSpec;
 var handlbarsTemplateCompiler = require('ember-template-compiler');
 
 function TemplateCompiler (inputTree, options) {

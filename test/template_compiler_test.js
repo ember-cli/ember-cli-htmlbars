@@ -4,7 +4,7 @@ var fs = require('fs');
 var broccoli = require('broccoli');
 var assert = require('assert');
 var templateCompilerFilter = require('../index');
-var htmlbarsCompiler = require('../ext/htmlbars-compiler/compiler').compileSpec;
+var htmlbarsCompiler = require('htmlbars').compileSpec;
 var handlbarsTemplateCompiler = require('ember-template-compiler');
 
 var builder;
