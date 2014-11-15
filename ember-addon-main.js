@@ -5,7 +5,7 @@ var htmlbarsCompile = require('./index');
 module.exports = {
   name: 'ember-cli-htmlbars',
   included: function (app) {
-    var HTMLBars = app.project.config(app.env).EmberENV.FEATURES.HTMLBars
+    var HTMLBars = app.project.config(app.env).EmberENV.FEATURES['ember-htmlbars'];
 
     this._super.included.apply(this, arguments);
 
