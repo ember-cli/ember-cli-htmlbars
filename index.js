@@ -11,7 +11,9 @@ function TemplateCompiler (inputTree, options) {
 
   Filter.call(this, inputTree, options); // this._super()
 
-  this.HTMLBars = options && options.HTMLBars || this.HTMLBars;
+  this.options = options || {};
+  this.htmlbarsOptions= this.options.htmlbarsOptions;
+
   this.inputTree = inputTree;
 }
 
@@ -20,8 +22,8 @@ TemplateCompiler.prototype.constructor = TemplateCompiler;
 TemplateCompiler.prototype.extensions = ['hbs'];
 TemplateCompiler.prototype.targetExtension = 'js';
 TemplateCompiler.prototype.processString = function (string, relativePath) {
-  if (this.HTMLBars) {
-    return "var template = " + compileSpec(string) + "\nexport default Ember.HTMLBars.template(template);";
+  if (this.htmlbarsOptions) {
+    return "export default Ember.HTMLBars.template(" + compileSpec(string, this.htmlbarsOptions) + ");";
   } else {
     var input = handlbarsTemplateCompiler.precompile(string, false);
     return "export default Ember.Handlebars.template(" + input + ")";

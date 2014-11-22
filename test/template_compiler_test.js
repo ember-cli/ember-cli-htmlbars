@@ -18,16 +18,39 @@ describe('templateCompilerFilter', function(){
     }
   });
 
-  it('precompiles templates into htmlbars', function(){
-    var tree = templateCompilerFilter(sourcePath, { HTMLBars: true });
+  describe('HTMLBars', function() {
+    var htmlbarsOptions;
 
-    builder = new broccoli.Builder(tree);
-    return builder.build().then(function(results) {
-      var actual = fs.readFileSync(results.directory + '/template.js', { encoding: 'utf8'});
-      var source = fs.readFileSync(sourcePath + '/template.hbs', { encoding: 'utf8' });
-      var expected = "var template = " + htmlbarsCompiler(source) + "\nexport default Ember.HTMLBars.template(template);";
+    beforeEach(function() {
+      htmlbarsOptions = {
+        disableComponentGeneration: true
+      };
+    });
 
-      assert.equal(actual,expected,'They dont match!')
+    it('precompiles templates into htmlbars', function(){
+      var tree = templateCompilerFilter(sourcePath, { htmlbarsOptions: htmlbarsOptions });
+
+      builder = new broccoli.Builder(tree);
+      return builder.build().then(function(results) {
+        var actual = fs.readFileSync(results.directory + '/template.js', { encoding: 'utf8'});
+        var source = fs.readFileSync(sourcePath + '/template.hbs', { encoding: 'utf8' });
+        var expected = "export default Ember.HTMLBars.template(" + htmlbarsCompiler(source) + ");";
+
+        assert.equal(actual,expected,'They dont match!')
+      });
+    });
+
+    it('passes provided options to htmlbars', function(){
+      var tree = templateCompilerFilter(sourcePath, { htmlbarsOptions: htmlbarsOptions });
+
+      builder = new broccoli.Builder(tree);
+      return builder.build().then(function(results) {
+        var actual = fs.readFileSync(results.directory + '/web-component-template.js', { encoding: 'utf8'});
+        var source = fs.readFileSync(sourcePath + '/web-component-template.hbs', { encoding: 'utf8' });
+        var expected = "export default Ember.HTMLBars.template(" + htmlbarsCompiler(source, htmlbarsOptions) + ");";
+
+        assert.equal(actual,expected,'They dont match!')
+      });
     });
   });
 
@@ -48,7 +71,7 @@ describe('templateCompilerFilter', function(){
     });
 
     it('precompiles templates into handlebars when HTMLBars option is false', function(){
-      var tree = templateCompilerFilter(sourcePath, { HTMLBars: false });
+      var tree = templateCompilerFilter(sourcePath, { htmlbarsOptions: false });
 
       builder = new broccoli.Builder(tree);
       return builder.build().then(assertOutput);
