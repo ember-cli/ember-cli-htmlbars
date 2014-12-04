@@ -55,6 +55,19 @@ describe('templateCompilerFilter', function(){
   });
 
   describe('handlebars', function() {
+    it('compiles .handlebars file', function() {
+      var tree = templateCompilerFilter(sourcePath);
+
+      builder = new broccoli.Builder(tree);
+      return builder.build().then(function(results) {
+        var actual = fs.readFileSync(results.directory + '/non-standard-extension.js', { encoding: 'utf8'});
+        var source = fs.readFileSync(sourcePath + '/non-standard-extension.handlebars', { encoding: 'utf8' });
+        var expected = 'export default Ember.Handlebars.template(' + handlbarsTemplateCompiler.precompile(source, false) + ')';
+
+        assert.equal(actual,expected,'They dont match!')
+      });
+    });
+
     function assertOutput(results) {
       var actual = fs.readFileSync(results.directory + '/template.js', { encoding: 'utf8'});
       var source = fs.readFileSync(sourcePath + '/template.hbs', { encoding: 'utf8' });

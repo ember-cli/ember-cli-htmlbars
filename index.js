@@ -19,7 +19,7 @@ function TemplateCompiler (inputTree, options) {
 
 TemplateCompiler.prototype = Object.create(Filter.prototype);
 TemplateCompiler.prototype.constructor = TemplateCompiler;
-TemplateCompiler.prototype.extensions = ['hbs'];
+TemplateCompiler.prototype.extensions = ['hbs', 'handlebars'];
 TemplateCompiler.prototype.targetExtension = 'js';
 TemplateCompiler.prototype.processString = function (string, relativePath) {
   if (this.htmlbarsOptions) {
