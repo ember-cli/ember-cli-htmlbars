@@ -46,7 +46,6 @@ module.exports = {
   registerTransforms: function(registry) {
     var eachTransform = require('./ext/plugins/transform-each-in-to-hash');
     var withTransform = require('./ext/plugins/transform-with-as-to-hash');
-    var classTransform = require('./ext/plugins/transform-quoted-class');
 
     registry.add('htmlbars-ast-plugin', {
       name: 'transform-each-in-to-hash',
@@ -56,11 +55,6 @@ module.exports = {
     registry.add('htmlbars-ast-plugin', {
       name: 'transform-with-as-to-hash',
       plugin: withTransform
-    });
-
-    registry.add('htmlbars-ast-plugin', {
-      name: 'transform-quoted-class',
-      plugin: classTransform
     });
   },
 
