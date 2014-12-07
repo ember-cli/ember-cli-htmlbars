@@ -44,24 +44,27 @@ module.exports = {
   },
 
   registerTransforms: function(registry) {
-    var eachTransform = require('./ext/plugins/transform-each-in-to-hash');
-    var withTransform = require('./ext/plugins/transform-with-as-to-hash');
+    var TransformEachInToHash = require('./ext/plugins/transform-each-in-to-hash');
+    var TransformWithAsToHash = require('./ext/plugins/transform-with-as-to-hash');
 
+    // we have to wrap these in an object so the ember-cli
+    // registry doesn't try to call `new` on them (new is actually
+    // called within htmlbars when compiling a given template).
     registry.add('htmlbars-ast-plugin', {
       name: 'transform-each-in-to-hash',
-      plugin: eachTransform
+      plugin: TransformEachInToHash
     });
 
     registry.add('htmlbars-ast-plugin', {
       name: 'transform-with-as-to-hash',
-      plugin: withTransform
+      plugin: TransformWithAsToHash
     });
   },
 
   astPlugins: function() {
-    var plugins = this.app.registry.load('htmlbars-ast-plugin');
-    var pluginFunctions = plugins.map(function(plugin) {
-      return plugin.plugin;
+    var pluginWrappers = this.app.registry.load('htmlbars-ast-plugin');
+    var plugins = pluginWrappers.map(function(wrapper) {
+      return wrapper.plugin;
     });
 
     return pluginFunctions;
