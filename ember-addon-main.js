@@ -67,6 +67,6 @@ module.exports = {
       return wrapper.plugin;
     });
 
-    return pluginFunctions;
+    return plugins;
   }
 }
