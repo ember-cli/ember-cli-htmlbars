@@ -25,8 +25,9 @@ module.exports = {
   },
 
   htmlbarsOptions: function() {
+    var emberVersion = require(this.project.root + '/' + this.app.bowerDirectory + '/ember/bower.json').version;
     var projectConfig = this.app.project.config(this.app.env);
-    var htmlbarsEnabled = projectConfig.EmberENV.FEATURES['ember-htmlbars'];
+    var htmlbarsEnabled = !/^1\.[0-9]\./.test(emberVersion);
     var htmlbarsComponentGeneration = projectConfig.EmberENV.FEATURES['ember-htmlbars-component-generation'];
 
     var htmlbarsOptions;
