@@ -11,7 +11,7 @@ var templateTree = new HtmlbarsCompiler('app/templates', {
   isHTMLBars: true,
 
   // provide the templateCompiler that is paired with your Ember version
-  templateCompiler: require('./bower_components/ember/ember-template-compiler)
+  templateCompiler: require('./bower_components/ember/ember-template-compiler')
 });
 ```
 
