@@ -26,11 +26,22 @@ module.exports = {
   },
 
   emberPath: function() {
-    return path.join(this.project.root, this.app.bowerDirectory, 'ember');
+    var asset = this.app.vendorFiles['ember.js'];
+    var assetPath;
+
+    if (typeof asset === 'object') {
+      assetPath = asset[this.env] || asset.development;
+    } else {
+      assetPath = asset;
+    }
+
+    assetPath = assetPath.replace(path.sep, '/');
+
+    return path.join(this.project.root, path.dirname(assetPath));
   },
 
   htmlbarsOptions: function() {
-    var emberVersion = require(this.emberPath() + '/bower.json').version;
+    var emberVersion = require(this.project.root + '/bower.json').ember;
     var projectConfig = this.app.project.config(this.app.env);
     var htmlbarsEnabled = !/^1\.[0-9]\./.test(emberVersion);
 
