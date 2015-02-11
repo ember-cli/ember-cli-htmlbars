@@ -5,15 +5,29 @@ var htmlbarsCompile = require('./index');
 
 module.exports = {
   name: 'ember-cli-htmlbars',
-  included: function (app) {
-    var self = this;
 
-    this._super.included.apply(this, arguments);
+  shouldSetupRegistryInIncluded: function() {
+    var version = this.project.emberCLIVersion();
 
+    var portions = version.split('.');
+    portions = portions.map(function(portion) {
+      return Number(portion.split('-')[0]);
+    });
+
+    if (portions[0] > 0) {
+      return false;
+    } else if (portions[1] > 1) {
+      return false;
+    } else {
+      return true;
+    }
+  },
+
+  setupPreprocessorRegistry: function(type, registry) {
     // ensure that broccoli-ember-hbs-template-compiler is not processing hbs files
-    app.registry.remove('template', 'broccoli-ember-hbs-template-compiler');
+    registry.remove('template', 'broccoli-ember-hbs-template-compiler');
 
-    app.registry.add('template', {
+    registry.add('template', {
       name: 'ember-cli-htmlbars',
       ext: 'hbs',
       toTree: function(tree) {
@@ -21,6 +35,16 @@ module.exports = {
         return htmlbarsCompile(tree, self.htmlbarsOptions());
       }
     })
+  },
+
+  included: function (app) {
+    var self = this;
+
+    this._super.included.apply(this, arguments);
+
+    if (this.shouldSetupRegistryInIncluded()) {
+      this.setupPreprocessorRegistry('parent', app.registry);
+    }
   },
 
   emberPath: function() {
