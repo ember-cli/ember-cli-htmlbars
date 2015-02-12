@@ -2,6 +2,11 @@
 
 [![Build Status](https://travis-ci.org/rondale-sc/ember-cli-htmlbars.svg?branch=master)](https://travis-ci.org/rondale-sc/ember-cli-htmlbars)
 
+### Handlebars 2.0 Support
+
+Handlebars 2.0 support has been removed. If you are using ember-cli-htmlbars with a 1.9.x project please continue
+to use ember-cli-htmlbars@0.6.x.
+
 ### Using as a Broccoli Plugin
 
 ```javascript
