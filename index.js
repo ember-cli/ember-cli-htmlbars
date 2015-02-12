@@ -1,5 +1,4 @@
 var Filter = require('broccoli-filter');
-var handlbarsTemplateCompiler = require('ember-template-compiler');
 
 function TemplateCompiler (inputTree, options) {
   if (!(this instanceof TemplateCompiler)) {
@@ -9,16 +8,10 @@ function TemplateCompiler (inputTree, options) {
   Filter.call(this, inputTree, options); // this._super()
 
   this.options = options || {};
-
   this.inputTree = inputTree;
 
-  if (this.options.isHTMLBars) {
-    this.precompile = this.options.templateCompiler.precompile;
-    this.templateWrapper = "export default Ember.HTMLBars.template(";
-  } else {
-    this.precompile = handlbarsTemplateCompiler.precompile;
-    this.templateWrapper = "export default Ember.Handlebars.template(";
-  }
+  this.precompile = this.options.templateCompiler.precompile;
+  this.registerPlugin = this.options.templateCompiler.registerPlugin;
 
   this.registerPlugins();
   this.initializeFeatures();
@@ -33,11 +26,10 @@ TemplateCompiler.prototype.registerPlugins = function registerPlugins() {
   var plugins = this.options.plugins;
   var templateCompiler = this.options.templateCompiler;
 
-  if (plugins && templateCompiler) {
+  if (plugins) {
     for (var type in plugins) {
       for (var i = 0, l = plugins[type].length; i < l; i++) {
-
-        templateCompiler.registerPlugin(type, plugins[type][i]);
+        this.registerPlugin(type, plugins[type][i]);
       }
     }
   }
@@ -55,7 +47,7 @@ TemplateCompiler.prototype.initializeFeatures = function initializeFeatures() {
 };
 
 TemplateCompiler.prototype.processString = function (string, relativePath) {
-  return this.templateWrapper + this.precompile(string, false) + ');';
+  return "export default Ember.HTMLBars.template(" + this.precompile(string, false) + ');';
 }
 
 module.exports = TemplateCompiler;

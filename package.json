@@ -31,7 +31,6 @@
     "mocha": "^1.21.4"
   },
   "dependencies": {
-    "broccoli-filter": "^0.1.6",
-    "ember-template-compiler": "^1.9.0-alpha"
+    "broccoli-filter": "^0.1.6"
   }
 }
