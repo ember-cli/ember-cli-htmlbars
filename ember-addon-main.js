@@ -1,29 +1,19 @@
 'use strict';
 
 var path = require('path');
+var versionChecker = require('ember-cli-version-checker');
 var htmlbarsCompile = require('./index');
 
 module.exports = {
   name: 'ember-cli-htmlbars',
 
   shouldSetupRegistryInIncluded: function() {
-    var version = this.project.emberCLIVersion();
-
-    var portions = version.split('.');
-    portions = portions.map(function(portion) {
-      return Number(portion.split('-')[0]);
-    });
-
-    if (portions[0] > 0) {
-      return false;
-    } else if (portions[1] > 1) {
-      return false;
-    } else {
-      return true;
-    }
+    return versionChecker.isAbove(this, '0.2.0');
   },
 
   setupPreprocessorRegistry: function(type, registry) {
+    var self = this;
+
     // ensure that broccoli-ember-hbs-template-compiler is not processing hbs files
     registry.remove('template', 'broccoli-ember-hbs-template-compiler');
 
