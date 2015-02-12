@@ -10,8 +10,6 @@ module.exports = {
 
     this._super.included.apply(this, arguments);
 
-    this.registerTransforms(app.registry);
-
     // ensure that broccoli-ember-hbs-template-compiler is not processing hbs files
     app.registry.remove('template', 'broccoli-ember-hbs-template-compiler');
 
@@ -41,36 +39,19 @@ module.exports = {
   },
 
   htmlbarsOptions: function() {
-    var emberVersion = require(this.project.root + '/bower.json').ember;
-    var projectConfig = this.app.project.config(this.app.env);
-    var htmlbarsEnabled = !/^1\.[0-9]\./.test(emberVersion);
+    var projectConfig = this.project.config(process.env.EMBER_ENV);
 
-    var htmlbarsOptions;
-    if (htmlbarsEnabled) {
-      htmlbarsOptions = {
-        isHTMLBars: true,
-        FEATURES: projectConfig.EmberENV.FEATURES,
-        templateCompiler: require(path.join(this.emberPath(), 'ember-template-compiler')),
+    var htmlbarsOptions = {
+      isHTMLBars: true,
+      FEATURES: projectConfig.EmberENV.FEATURES,
+      templateCompiler: require(path.join(this.emberPath(), 'ember-template-compiler')),
 
-        plugins: {
-          ast: this.astPlugins()
-        }
-      };
-    }
+      plugins: {
+        ast: this.astPlugins()
+      }
+    };
 
     return htmlbarsOptions;
-  },
-
-  registerTransforms: function(registry) {
-    //var TransformEachInToHash = require('./ext/plugins/transform-each-in-to-hash');
-
-    //// we have to wrap these in an object so the ember-cli
-    //// registry doesn't try to call `new` on them (new is actually
-    //// called within htmlbars when compiling a given template).
-    //registry.add('htmlbars-ast-plugin', {
-    //  name: 'transform-each-in-to-hash',
-    //  plugin: TransformEachInToHash
-    //});
   },
 
   astPlugins: function() {
