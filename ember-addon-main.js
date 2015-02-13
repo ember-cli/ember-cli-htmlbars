@@ -9,7 +9,7 @@ module.exports = {
 
   init: function() {
     checker.assertAbove(this, '0.1.2');
-  }
+  },
 
   parentRegistry: null,
 
@@ -30,7 +30,7 @@ module.exports = {
 
         return htmlbarsCompile(tree, self.htmlbarsOptions());
       }
-    })
+    });
 
     if (type === 'parent') {
       this.parentRegistry = registry;
@@ -38,8 +38,6 @@ module.exports = {
   },
 
   included: function (app) {
-    var self = this;
-
     this._super.included.apply(this, arguments);
 
     if (this.shouldSetupRegistryInIncluded()) {
@@ -86,4 +84,4 @@ module.exports = {
 
     return plugins;
   }
-}
+};
