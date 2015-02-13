@@ -1,6 +1,6 @@
 # Ember CLI HTMLBars
 
-[![Build Status](https://travis-ci.org/rondale-sc/ember-cli-htmlbars.svg?branch=master)](https://travis-ci.org/rondale-sc/ember-cli-htmlbars)
+[![Build Status](https://travis-ci.org/ember-cli/ember-cli-htmlbars.svg?branch=master)](https://travis-ci.org/ember-cli/ember-cli-htmlbars)
 
 ### Handlebars 2.0 Support
 
