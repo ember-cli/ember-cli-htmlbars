@@ -32,6 +32,6 @@
   },
   "dependencies": {
     "broccoli-filter": "^0.1.6",
-    "ember-cli-version-checker": "^1.0.1"
+    "ember-cli-version-checker": "^1.0.2"
   }
 }
