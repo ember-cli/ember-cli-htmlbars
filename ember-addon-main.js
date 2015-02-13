@@ -7,8 +7,10 @@ var htmlbarsCompile = require('./index');
 module.exports = {
   name: 'ember-cli-htmlbars',
 
+  parentRegistry: null,
+
   shouldSetupRegistryInIncluded: function() {
-    return versionChecker.isAbove(this, '0.2.0');
+    return !versionChecker.isAbove(this, '0.2.0');
   },
 
   setupPreprocessorRegistry: function(type, registry) {
@@ -25,6 +27,10 @@ module.exports = {
         return htmlbarsCompile(tree, self.htmlbarsOptions());
       }
     })
+
+    if (type === 'parent') {
+      this.parentRegistry = registry;
+    }
   },
 
   included: function (app) {
@@ -37,28 +43,28 @@ module.exports = {
     }
   },
 
-  emberPath: function() {
-    var asset = this.app.vendorFiles['ember.js'];
-    var assetPath;
+  projectConfig: function () {
+    return this.project.config(process.env.EMBER_ENV);
+  },
 
-    if (typeof asset === 'object') {
-      assetPath = asset[this.env] || asset.development;
-    } else {
-      assetPath = asset;
+  templateCompilerPath: function() {
+    var config = this.projectConfig();
+    var templateCompilerPath = config['ember-cli-htmlbars'] && config['ember-cli-htmlbars'].templateCompilerPath;
+
+    if (!templateCompilerPath) {
+      templateCompilerPath = this.project.bowerDirectory + '/ember/ember-template-compiler';
     }
 
-    assetPath = assetPath.replace(path.sep, '/');
-
-    return path.join(this.project.root, path.dirname(assetPath));
+    return path.join(this.project.root, templateCompilerPath);
   },
 
   htmlbarsOptions: function() {
-    var projectConfig = this.project.config(process.env.EMBER_ENV);
+    var projectConfig = this.projectConfig();
 
     var htmlbarsOptions = {
       isHTMLBars: true,
       FEATURES: projectConfig.EmberENV.FEATURES,
-      templateCompiler: require(path.join(this.emberPath(), 'ember-template-compiler')),
+      templateCompiler: require(this.templateCompilerPath()),
 
       plugins: {
         ast: this.astPlugins()
@@ -69,7 +75,7 @@ module.exports = {
   },
 
   astPlugins: function() {
-    var pluginWrappers = this.app.registry.load('htmlbars-ast-plugin');
+    var pluginWrappers = this.parentRegistry.load('htmlbars-ast-plugin');
     var plugins = pluginWrappers.map(function(wrapper) {
       return wrapper.plugin;
     });
