@@ -9,7 +9,7 @@ module.exports = {
 
   init: function() {
     checker.assertAbove(this, '0.1.2');
-  }
+  },
 
   parentRegistry: null,
 
