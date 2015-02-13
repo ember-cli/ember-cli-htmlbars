@@ -1,16 +1,20 @@
 'use strict';
 
 var path = require('path');
-var versionChecker = require('ember-cli-version-checker');
+var checker = require('ember-cli-version-checker');
 var htmlbarsCompile = require('./index');
 
 module.exports = {
   name: 'ember-cli-htmlbars',
 
+  init: function() {
+    checker.assertAbove(this, '0.1.2');
+  }
+
   parentRegistry: null,
 
   shouldSetupRegistryInIncluded: function() {
-    return !versionChecker.isAbove(this, '0.2.0');
+    return !checker.isAbove(this, '0.2.0');
   },
 
   setupPreprocessorRegistry: function(type, registry) {
