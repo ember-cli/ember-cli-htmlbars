@@ -1,19 +1,25 @@
 'use strict';
 
 var path = require('path');
+var versionChecker = require('ember-cli-version-checker');
 var htmlbarsCompile = require('./index');
 
 module.exports = {
   name: 'ember-cli-htmlbars',
-  included: function (app) {
+
+  parentRegistry: null,
+
+  shouldSetupRegistryInIncluded: function() {
+    return !versionChecker.isAbove(this, '0.2.0');
+  },
+
+  setupPreprocessorRegistry: function(type, registry) {
     var self = this;
 
-    this._super.included.apply(this, arguments);
-
     // ensure that broccoli-ember-hbs-template-compiler is not processing hbs files
-    app.registry.remove('template', 'broccoli-ember-hbs-template-compiler');
+    registry.remove('template', 'broccoli-ember-hbs-template-compiler');
 
-    app.registry.add('template', {
+    registry.add('template', {
       name: 'ember-cli-htmlbars',
       ext: 'hbs',
       toTree: function(tree) {
@@ -21,30 +27,44 @@ module.exports = {
         return htmlbarsCompile(tree, self.htmlbarsOptions());
       }
     })
+
+    if (type === 'parent') {
+      this.parentRegistry = registry;
+    }
   },
 
-  emberPath: function() {
-    var asset = this.app.vendorFiles['ember.js'];
-    var assetPath;
+  included: function (app) {
+    var self = this;
 
-    if (typeof asset === 'object') {
-      assetPath = asset[this.env] || asset.development;
-    } else {
-      assetPath = asset;
+    this._super.included.apply(this, arguments);
+
+    if (this.shouldSetupRegistryInIncluded()) {
+      this.setupPreprocessorRegistry('parent', app.registry);
+    }
+  },
+
+  projectConfig: function () {
+    return this.project.config(process.env.EMBER_ENV);
+  },
+
+  templateCompilerPath: function() {
+    var config = this.projectConfig();
+    var templateCompilerPath = config['ember-cli-htmlbars'] && config['ember-cli-htmlbars'].templateCompilerPath;
+
+    if (!templateCompilerPath) {
+      templateCompilerPath = this.project.bowerDirectory + '/ember/ember-template-compiler';
     }
 
-    assetPath = assetPath.replace(path.sep, '/');
-
-    return path.join(this.project.root, path.dirname(assetPath));
+    return path.join(this.project.root, templateCompilerPath);
   },
 
   htmlbarsOptions: function() {
-    var projectConfig = this.project.config(process.env.EMBER_ENV);
+    var projectConfig = this.projectConfig();
 
     var htmlbarsOptions = {
       isHTMLBars: true,
       FEATURES: projectConfig.EmberENV.FEATURES,
-      templateCompiler: require(path.join(this.emberPath(), 'ember-template-compiler')),
+      templateCompiler: require(this.templateCompilerPath()),
 
       plugins: {
         ast: this.astPlugins()
@@ -55,7 +75,7 @@ module.exports = {
   },
 
   astPlugins: function() {
-    var pluginWrappers = this.app.registry.load('htmlbars-ast-plugin');
+    var pluginWrappers = this.parentRegistry.load('htmlbars-ast-plugin');
     var plugins = pluginWrappers.map(function(wrapper) {
       return wrapper.plugin;
     });

@@ -31,6 +31,7 @@
     "mocha": "^1.21.4"
   },
   "dependencies": {
-    "broccoli-filter": "^0.1.6"
+    "broccoli-filter": "^0.1.6",
+    "ember-cli-version-checker": "^1.0.0"
   }
 }
