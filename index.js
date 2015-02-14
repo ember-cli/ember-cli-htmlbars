@@ -1,3 +1,5 @@
+'use strict';
+
 var Filter = require('broccoli-filter');
 
 function TemplateCompiler (inputTree, options) {
@@ -24,7 +26,6 @@ TemplateCompiler.prototype.targetExtension = 'js';
 
 TemplateCompiler.prototype.registerPlugins = function registerPlugins() {
   var plugins = this.options.plugins;
-  var templateCompiler = this.options.templateCompiler;
 
   if (plugins) {
     for (var type in plugins) {
@@ -46,8 +47,8 @@ TemplateCompiler.prototype.initializeFeatures = function initializeFeatures() {
   }
 };
 
-TemplateCompiler.prototype.processString = function (string, relativePath) {
-  return "export default Ember.HTMLBars.template(" + this.precompile(string, false) + ');';
-}
+TemplateCompiler.prototype.processString = function (string/*, relativePath */) {
+  return 'export default Ember.HTMLBars.template(' + this.precompile(string, false) + ');';
+};
 
 module.exports = TemplateCompiler;

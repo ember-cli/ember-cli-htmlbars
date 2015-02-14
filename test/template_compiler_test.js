@@ -37,9 +37,9 @@ describe('templateCompilerFilter', function(){
     return builder.build().then(function(results) {
       var actual = fs.readFileSync(results.directory + '/template.js', { encoding: 'utf8'});
       var source = fs.readFileSync(sourcePath + '/template.hbs', { encoding: 'utf8' });
-      var expected = "export default Ember.HTMLBars.template(" + htmlbarsPrecompile(source) + ");";
+      var expected = 'export default Ember.HTMLBars.template(' + htmlbarsPrecompile(source) + ');';
 
-      assert.equal(actual,expected,'They dont match!')
+      assert.equal(actual,expected,'They dont match!');
     });
   });
 
@@ -54,9 +54,9 @@ describe('templateCompilerFilter', function(){
     return builder.build().then(function(results) {
       var actual = fs.readFileSync(results.directory + '/web-component-template.js', { encoding: 'utf8'});
       var source = fs.readFileSync(sourcePath + '/web-component-template.hbs', { encoding: 'utf8' });
-      var expected = "export default Ember.HTMLBars.template(" + htmlbarsPrecompile(source) + ");";
+      var expected = 'export default Ember.HTMLBars.template(' + htmlbarsPrecompile(source) + ');';
 
-      assert.equal(actual,expected,'They dont match!')
+      assert.equal(actual,expected,'They dont match!');
     });
   });
 });
