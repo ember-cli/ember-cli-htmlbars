@@ -61,11 +61,12 @@ module.exports = {
   },
 
   htmlbarsOptions: function() {
-    var projectConfig = this.projectConfig();
+    var projectConfig = this.projectConfig() || {};
+    var EmberENV = projectConfig.EmberENV || {};
 
     var htmlbarsOptions = {
       isHTMLBars: true,
-      FEATURES: projectConfig.EmberENV.FEATURES,
+      FEATURES: EmberENV.FEATURES,
       templateCompiler: require(this.templateCompilerPath()),
 
       plugins: {
