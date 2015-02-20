@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:rondale-sc/ember-cli-htmlbars.git"
+    "url": "git@github.com:ember-cli/ember-cli-htmlbars.git"
   },
   "keywords": [
     "ember-cli",
@@ -21,9 +21,9 @@
   "author": "Jonathan Jackson & Chase McCarthy",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/rondale-sc/ember-cli-htmlbars/issues"
+    "url": "https://github.com/ember-cli/ember-cli-htmlbars/issues"
   },
-  "homepage": "https://github.com/rondale-sc/ember-cli-htmlbars",
+  "homepage": "https://github.com/ember-cli/ember-cli-htmlbars",
   "devDependencies": {
     "bower": "^1.3.12",
     "broccoli": "^0.12.3",
