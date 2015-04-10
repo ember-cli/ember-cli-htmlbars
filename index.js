@@ -47,8 +47,10 @@ TemplateCompiler.prototype.initializeFeatures = function initializeFeatures() {
   }
 };
 
-TemplateCompiler.prototype.processString = function (string/*, relativePath */) {
-  return 'export default Ember.HTMLBars.template(' + this.precompile(string, false) + ');';
+TemplateCompiler.prototype.processString = function (string, relativePath) {
+  return 'export default Ember.HTMLBars.template(' + this.precompile(string, {
+    moduleName: relativePath
+  }) + ');';
 };
 
 module.exports = TemplateCompiler;
