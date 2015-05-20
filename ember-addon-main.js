@@ -30,6 +30,12 @@ module.exports = {
       toTree: function(tree) {
         var htmlbarsOptions = self.htmlbarsOptions();
         return htmlbarsCompile(tree, htmlbarsOptions);
+      },
+
+      precompile: function(string) {
+        var htmlbarsOptions = self.htmlbarsOptions();
+        var templateCompiler = htmlbarsOptions.templateCompiler;
+        return utils.template(templateCompiler, string);
       }
     });
 
