@@ -1,5 +1,6 @@
 'use strict';
 
+var utils = require('./utils');
 var Filter = require('broccoli-filter');
 
 function TemplateCompiler (inputTree, options) {
@@ -40,17 +41,13 @@ TemplateCompiler.prototype.initializeFeatures = function initializeFeatures() {
   var FEATURES = this.options.FEATURES;
   var templateCompiler = this.options.templateCompiler;
 
-  if (FEATURES && templateCompiler) {
-    for (var feature in FEATURES) {
-      templateCompiler._Ember.FEATURES[feature] = FEATURES[feature];
-    }
-  }
+  utils.initializeFeatures(templateCompiler, FEATURES);
 };
 
 TemplateCompiler.prototype.processString = function (string, relativePath) {
-  return 'export default Ember.HTMLBars.template(' + this.precompile(string, {
+  return 'export default ' + utils.template(this.options.templateCompiler, string, {
     moduleName: relativePath
-  }) + ');';
+  }) + ';';
 };
 
 module.exports = TemplateCompiler;

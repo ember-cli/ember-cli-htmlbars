@@ -3,6 +3,7 @@
 var path = require('path');
 var checker = require('ember-cli-version-checker');
 var htmlbarsCompile = require('./index');
+var utils = require('./utils');
 
 module.exports = {
   name: 'ember-cli-htmlbars',
@@ -27,8 +28,8 @@ module.exports = {
       name: 'ember-cli-htmlbars',
       ext: 'hbs',
       toTree: function(tree) {
-
-        return htmlbarsCompile(tree, self.htmlbarsOptions());
+        var htmlbarsOptions = self.htmlbarsOptions();
+        return htmlbarsCompile(tree, htmlbarsOptions);
       }
     });
 
