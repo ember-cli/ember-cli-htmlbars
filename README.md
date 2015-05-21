@@ -39,3 +39,25 @@ module.exports = {
   }
 };
 ```
+
+### Precompile HTMLBars template strings within other addons
+
+```javascript
+module.exports = {
+  name: 'my-addon-name',
+
+  setupPreprocessorRegistry: function(type, registry) {
+    var htmlbarsPlugin = registry.load('template').find(function(plugin) {
+      return plugin.name === 'ember-cli-htmlbars';
+    });
+
+    // precompile any htmlbars template string via the precompile method on the
+    // ember-cli-htmlbars plugin wrapper; `precompiled` will be a string of the
+    // form:
+    //
+    //   Ember.HTMLBars.template(function() {...})
+    //
+    var precompiled = htmlbarsPlugin.precompile("{{my-component}}");
+  }
+};
+```
