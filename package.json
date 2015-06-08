@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "prepublish": "bower install",
-    "test": "mocha test/*.js"
+    "test": "mocha test/*.js",
+    "test:debug": "mocha debug test/*.js"
   },
   "repository": {
     "type": "git",

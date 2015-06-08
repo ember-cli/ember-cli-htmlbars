@@ -70,16 +70,26 @@ module.exports = {
   htmlbarsOptions: function() {
     var projectConfig = this.projectConfig() || {};
     var EmberENV = projectConfig.EmberENV || {};
+    var templateCompilerPath = this.templateCompilerPath() + '.js';
 
     var htmlbarsOptions = {
       isHTMLBars: true,
       FEATURES: EmberENV.FEATURES,
-      templateCompiler: require(this.templateCompilerPath()),
+      templateCompiler: require(templateCompilerPath),
 
       plugins: {
         ast: this.astPlugins()
       }
     };
+    // ensure we get a fresh templateCompilerModuleInstance per ember-addon
+    // instance NOTE: this is a quick hack, and will only work as long as
+    // templateCompilerPath is a single file bundle
+    //
+    // (╯°□°）╯︵ ɹǝqɯǝ
+    //
+    // we will also fix this in ember for future releases
+    delete require.cache[templateCompilerPath];
+    delete global.Ember;
 
     return htmlbarsOptions;
   },
