@@ -74,7 +74,7 @@ module.exports = {
 
     var htmlbarsOptions = {
       isHTMLBars: true,
-      FEATURES: EmberENV.FEATURES,
+      EmberENV: EmberENV,
       templateCompiler: require(templateCompilerPath),
 
       plugins: {

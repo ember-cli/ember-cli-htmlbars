@@ -26,10 +26,6 @@ describe('templateCompilerFilter', function(){
     htmlbarsPrecompile = htmlbarsOptions.templateCompiler.precompile;
   });
 
-  afterEach(function() {
-
-  });
-
   it('precompiles templates into htmlbars', function(){
     var tree = templateCompilerFilter(sourcePath, htmlbarsOptions);
 
@@ -43,7 +39,7 @@ describe('templateCompilerFilter', function(){
     });
   });
 
-  it('passes FEATURES to compiler', function(){
+  it('passes FEATURES to compiler when provided as `FEATURES` [DEPRECATED]', function(){
     htmlbarsOptions.FEATURES = {
       'ember-htmlbars-component-generation': true
     };
@@ -59,4 +55,24 @@ describe('templateCompilerFilter', function(){
       assert.equal(actual,expected,'They dont match!');
     });
   });
+
+  it('passes FEATURES to compiler when provided as `EmberENV.FEATURES`', function(){
+    htmlbarsOptions.EmberENV = {
+      FEATURES: {
+        'ember-htmlbars-component-generation': true
+      }
+    };
+
+    var tree = templateCompilerFilter(sourcePath, htmlbarsOptions);
+
+    builder = new broccoli.Builder(tree);
+    return builder.build().then(function(results) {
+      var actual = fs.readFileSync(results.directory + '/web-component-template.js', { encoding: 'utf8'});
+      var source = fs.readFileSync(sourcePath + '/web-component-template.hbs', { encoding: 'utf8' });
+      var expected = 'export default Ember.HTMLBars.template(' + htmlbarsPrecompile(source, { moduleName: 'web-component-template.hbs' }) + ');';
+
+      assert.equal(actual,expected,'They dont match!');
+    });
+  });
+
 });
