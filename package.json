@@ -33,7 +33,7 @@
     "mocha-jshint": "^0.0.9"
   },
   "dependencies": {
-    "broccoli-filter": "^0.1.6",
+    "broccoli-filter": "^1.2.0",
     "ember-cli-version-checker": "^1.0.2"
   }
 }
