@@ -1,11 +1,18 @@
 'use strict';
 
 var utils = require('./utils');
-var Filter = require('broccoli-filter');
+var Filter = require('broccoli-persistent-filter');
+var crypto = require('crypto');
+var stringify = require('json-stable-stringify');
 
-function TemplateCompiler (inputTree, options) {
+function TemplateCompiler (inputTree, _options) {
   if (!(this instanceof TemplateCompiler)) {
-    return new TemplateCompiler(inputTree, options);
+    return new TemplateCompiler(inputTree, _options);
+  }
+
+  var options = _options || {};
+  if (!options.hasOwnProperty('persist')) {
+    options.persist = true;
   }
 
   Filter.call(this, inputTree, options); // this._super()
@@ -24,6 +31,10 @@ TemplateCompiler.prototype = Object.create(Filter.prototype);
 TemplateCompiler.prototype.constructor = TemplateCompiler;
 TemplateCompiler.prototype.extensions = ['hbs', 'handlebars'];
 TemplateCompiler.prototype.targetExtension = 'js';
+
+TemplateCompiler.prototype.baseDir = function() {
+  return __dirname;
+};
 
 TemplateCompiler.prototype.registerPlugins = function registerPlugins() {
   var plugins = this.options.plugins;
@@ -55,6 +66,20 @@ TemplateCompiler.prototype.processString = function (string, relativePath) {
   return 'export default ' + utils.template(this.options.templateCompiler, string, {
     moduleName: relativePath
   }) + ';';
+};
+
+TemplateCompiler.prototype.optionsHash  = function() {
+  if (!this._optionsHash) {
+    this._optionsHash = crypto.createHash('md5')
+      .update(stringify(this.options), 'utf8')
+      .digest('hex');
+  }
+
+  return this._optionsHash;
+};
+
+TemplateCompiler.prototype.cacheKeyProcessString = function(string, relativePath) {
+  return this.optionsHash() + Filter.prototype.cacheKeyProcessString.call(this, string, relativePath);
 };
 
 module.exports = TemplateCompiler;
