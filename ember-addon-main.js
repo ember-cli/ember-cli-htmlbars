@@ -76,6 +76,7 @@ module.exports = {
       isHTMLBars: true,
       EmberENV: EmberENV,
       templateCompiler: require(templateCompilerPath),
+      templateCompilerPath: templateCompilerPath,
 
       plugins: {
         ast: this.astPlugins()

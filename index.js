@@ -1,5 +1,6 @@
 'use strict';
 
+var fs = require('fs');
 var utils = require('./utils');
 var Filter = require('broccoli-persistent-filter');
 var crypto = require('crypto');
@@ -80,10 +81,19 @@ TemplateCompiler.prototype._buildOptionsForHash = function() {
   return strippedOptions;
 };
 
+TemplateCompiler.prototype._templateCompilerContents = function() {
+  if (this.options.templateCompilerPath) {
+    return fs.readFileSync(this.options.templateCompilerPath, { encoding: 'utf8' });
+  } else {
+    return '';
+  }
+};
+
 TemplateCompiler.prototype.optionsHash  = function() {
   if (!this._optionsHash) {
     this._optionsHash = crypto.createHash('md5')
       .update(stringify(this._buildOptionsForHash()), 'utf8')
+      .update(stringify(this._templateCompilerContents()), 'utf8')
       .digest('hex');
   }
 
