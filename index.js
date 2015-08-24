@@ -68,10 +68,22 @@ TemplateCompiler.prototype.processString = function (string, relativePath) {
   }) + ';';
 };
 
+TemplateCompiler.prototype._buildOptionsForHash = function() {
+  var strippedOptions = {};
+
+  for (var key in this.options) {
+    if (key !== 'templateCompiler') {
+      strippedOptions[key] = this.options[key];
+    }
+  }
+
+  return strippedOptions;
+};
+
 TemplateCompiler.prototype.optionsHash  = function() {
   if (!this._optionsHash) {
     this._optionsHash = crypto.createHash('md5')
-      .update(stringify(this.options), 'utf8')
+      .update(stringify(this._buildOptionsForHash()), 'utf8')
       .digest('hex');
   }
 
