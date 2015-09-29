@@ -5,6 +5,7 @@ var utils = require('./utils');
 var Filter = require('broccoli-persistent-filter');
 var crypto = require('crypto');
 var stringify = require('json-stable-stringify');
+var stripBom = require('strip-bom');
 
 function TemplateCompiler (inputTree, _options) {
   if (!(this instanceof TemplateCompiler)) {
@@ -64,7 +65,7 @@ TemplateCompiler.prototype.initializeFeatures = function initializeFeatures() {
 };
 
 TemplateCompiler.prototype.processString = function (string, relativePath) {
-  return 'export default ' + utils.template(this.options.templateCompiler, string, {
+  return 'export default ' + utils.template(this.options.templateCompiler, stripBom(string), {
     moduleName: relativePath
   }) + ';';
 };

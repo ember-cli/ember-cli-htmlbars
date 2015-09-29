@@ -39,6 +39,19 @@ describe('templateCompilerFilter', function(){
     });
   });
 
+  it('ignores utf-8 byte order marks', function(){
+    var tree = templateCompilerFilter(sourcePath, htmlbarsOptions);
+
+    builder = new broccoli.Builder(tree);
+    return builder.build().then(function(results) {
+      var actual = fs.readFileSync(results.directory + '/template-with-bom.js', { encoding: 'utf8'});
+      var source = fs.readFileSync(sourcePath + '/template.hbs', { encoding: 'utf8' });
+      var expected = 'export default Ember.HTMLBars.template(' + htmlbarsPrecompile(source, { moduleName: 'template-with-bom.hbs' }) + ');';
+
+      assert.equal(actual,expected,'They dont match!');
+    });
+  });
+
   it('passes FEATURES to compiler when provided as `FEATURES` [DEPRECATED]', function(){
     htmlbarsOptions.FEATURES = {
       'ember-htmlbars-component-generation': true
