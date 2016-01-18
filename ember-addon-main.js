@@ -72,6 +72,7 @@ module.exports = {
     var EmberENV = projectConfig.EmberENV || {};
     var templateCompilerPath = this.templateCompilerPath() + '.js';
 
+    global.EmberENV = EmberENV; // Needed for eval time feature flag checks
     var htmlbarsOptions = {
       isHTMLBars: true,
       EmberENV: EmberENV,
@@ -91,6 +92,7 @@ module.exports = {
     // we will also fix this in ember for future releases
     delete require.cache[templateCompilerPath];
     delete global.Ember;
+    delete global.EmberENV;
 
     return htmlbarsOptions;
   },
