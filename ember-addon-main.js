@@ -19,21 +19,20 @@ module.exports = {
   },
 
   setupPreprocessorRegistry: function(type, registry) {
-    var self = this;
-
     // ensure that broccoli-ember-hbs-template-compiler is not processing hbs files
     registry.remove('template', 'broccoli-ember-hbs-template-compiler');
 
     registry.add('template', {
       name: 'ember-cli-htmlbars',
       ext: 'hbs',
+      _addon: this,
       toTree: function(tree) {
-        var htmlbarsOptions = self.htmlbarsOptions();
+        var htmlbarsOptions = this._addon.htmlbarsOptions();
         return htmlbarsCompile(tree, htmlbarsOptions);
       },
 
       precompile: function(string) {
-        var htmlbarsOptions = self.htmlbarsOptions();
+        var htmlbarsOptions = this._addon.htmlbarsOptions();
         var templateCompiler = htmlbarsOptions.templateCompiler;
         return utils.template(templateCompiler, string);
       }
