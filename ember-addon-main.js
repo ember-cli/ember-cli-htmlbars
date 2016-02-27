@@ -60,7 +60,10 @@ module.exports = {
     var config = this.projectConfig();
     var templateCompilerPath = config['ember-cli-htmlbars'] && config['ember-cli-htmlbars'].templateCompilerPath;
 
-    if (!templateCompilerPath) {
+    var ember = this.project.findAddonByName('ember-source');
+    if (ember) {
+      return ember.absolutePaths.templateCompiler;
+    } else if (!templateCompilerPath) {
       templateCompilerPath = this.project.bowerDirectory + '/ember/ember-template-compiler';
     }
 
@@ -70,7 +73,7 @@ module.exports = {
   htmlbarsOptions: function() {
     var projectConfig = this.projectConfig() || {};
     var EmberENV = projectConfig.EmberENV || {};
-    var templateCompilerPath = this.templateCompilerPath() + '.js';
+    var templateCompilerPath = this.templateCompilerPath();
 
     global.EmberENV = EmberENV; // Needed for eval time feature flag checks
     var htmlbarsOptions = {
