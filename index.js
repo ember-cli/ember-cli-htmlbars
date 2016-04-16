@@ -26,7 +26,6 @@ function TemplateCompiler (inputTree, _options) {
   this.registerPlugin = this.options.templateCompiler.registerPlugin;
 
   this.registerPlugins();
-  this.initializeFeatures();
 }
 
 TemplateCompiler.prototype = Object.create(Filter.prototype);
@@ -48,20 +47,6 @@ TemplateCompiler.prototype.registerPlugins = function registerPlugins() {
       }
     }
   }
-};
-
-TemplateCompiler.prototype.initializeFeatures = function initializeFeatures() {
-  var EmberENV = this.options.EmberENV;
-  var FEATURES = this.options.FEATURES;
-  var templateCompiler = this.options.templateCompiler;
-
-  if (FEATURES) {
-    console.warn('Using `options.FEATURES` with ember-cli-htmlbars is deprecated.  Please provide the full EmberENV as options.EmberENV instead.');
-    EmberENV = EmberENV || {};
-    EmberENV.FEATURES = FEATURES;
-  }
-
-  utils.initializeEmberENV(templateCompiler, EmberENV);
 };
 
 TemplateCompiler.prototype.processString = function (string, relativePath) {
