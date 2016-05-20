@@ -9,6 +9,7 @@ module.exports = {
   name: 'ember-cli-htmlbars',
 
   init: function() {
+    this._super.apply(this, arguments);
     checker.assertAbove(this, '0.1.2');
   },
 
