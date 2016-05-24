@@ -17,6 +17,10 @@ function TemplateCompiler (inputTree, _options) {
     options.persist = true;
   }
 
+  if (options.EmberENV && options.EmberENV.DISABLE_HTMLBARS_CACHE) {
+    options.persist = false;
+  }
+
   Filter.call(this, inputTree, options); // this._super()
 
   this.options = options || {};
