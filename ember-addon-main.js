@@ -2,7 +2,6 @@
 
 var path = require('path');
 var checker = require('ember-cli-version-checker');
-var htmlbarsCompile = require('./index');
 var utils = require('./utils');
 
 module.exports = {
@@ -29,7 +28,7 @@ module.exports = {
       _addon: this,
       toTree: function(tree) {
         var htmlbarsOptions = this._addon.htmlbarsOptions();
-        return htmlbarsCompile(tree, htmlbarsOptions);
+        return require('./index')(tree, htmlbarsOptions);
       },
 
       precompile: function(string) {
