@@ -2,6 +2,7 @@
 
 var path = require('path');
 var checker = require('ember-cli-version-checker');
+var HTMLBarsInlinePrecompilePlugin = require('babel-plugin-htmlbars-inline-precompile');
 var utils = require('./utils');
 
 module.exports = {
@@ -13,6 +14,7 @@ module.exports = {
   },
 
   parentRegistry: null,
+  inlinePrecompilerRegistered: false,
 
   shouldSetupRegistryInIncluded: function() {
     return !checker.isAbove(this, '0.2.0');
@@ -45,6 +47,20 @@ module.exports = {
 
   included: function (app) {
     this._super.included.apply(this, arguments);
+
+    app.options = app.options || {};
+    app.options.babel = app.options.babel || {};
+    app.options.babel.plugins = app.options.babel.plugins || [];
+
+    // add the HTMLBarsInlinePrecompilePlugin to the list of plugins used by
+    // the `ember-cli-babel` addon
+    if (!this.inlinePrecompilerRegistered) {
+      var Compiler = this.htmlbarsOptions().templateCompiler;
+      var PrecompileInlineHTMLBarsPlugin = HTMLBarsInlinePrecompilePlugin(Compiler.precompile); // jshint ignore:line
+
+      app.options.babel.plugins.push(PrecompileInlineHTMLBarsPlugin);
+      this.inlinePrecompilerRegistered = true;
+    }
 
     if (this.shouldSetupRegistryInIncluded()) {
       this.setupPreprocessorRegistry('parent', app.registry);
