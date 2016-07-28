@@ -80,6 +80,15 @@ module.exports = {
     var EmberENV = projectConfig.EmberENV || {};
     var templateCompilerPath = this.templateCompilerPath();
 
+    // ensure we get a fresh templateCompilerModuleInstance per ember-addon
+    // instance NOTE: this is a quick hack, and will only work as long as
+    // templateCompilerPath is a single file bundle
+    //
+    // (╯°□°）╯︵ ɹǝqɯǝ
+    //
+    // we will also fix this in ember for future releases
+    delete require.cache[templateCompilerPath];
+
     global.EmberENV = EmberENV; // Needed for eval time feature flag checks
     var htmlbarsOptions = {
       isHTMLBars: true,
@@ -91,13 +100,7 @@ module.exports = {
         ast: this.astPlugins()
       }
     };
-    // ensure we get a fresh templateCompilerModuleInstance per ember-addon
-    // instance NOTE: this is a quick hack, and will only work as long as
-    // templateCompilerPath is a single file bundle
-    //
-    // (╯°□°）╯︵ ɹǝqɯǝ
-    //
-    // we will also fix this in ember for future releases
+
     delete require.cache[templateCompilerPath];
     delete global.Ember;
     delete global.EmberENV;
