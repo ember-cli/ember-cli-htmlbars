@@ -1,0 +1,13 @@
+*.swp
+.DS_Store
+.git
+.gitignore
+.jshintignore
+.jshintrc
+.npmignore
+CODE_OF_CONDUCT.md
+LICENSE.md
+.travis.yml
+node_modules/
+*.log
+test/
