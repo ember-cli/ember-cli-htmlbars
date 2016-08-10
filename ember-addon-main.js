@@ -3,6 +3,7 @@
 var path = require('path');
 var checker = require('ember-cli-version-checker');
 var utils = require('./utils');
+var hashForDep = require('hash-for-dep');
 
 module.exports = {
   name: 'ember-cli-htmlbars',
@@ -90,6 +91,8 @@ module.exports = {
     delete require.cache[templateCompilerPath];
 
     global.EmberENV = EmberENV; // Needed for eval time feature flag checks
+    var pluginInfo = this.astPlugins();
+
     var htmlbarsOptions = {
       isHTMLBars: true,
       EmberENV: EmberENV,
@@ -97,8 +100,10 @@ module.exports = {
       templateCompilerPath: templateCompilerPath,
 
       plugins: {
-        ast: this.astPlugins()
-      }
+        ast: pluginInfo.plugins
+      },
+
+      pluginCacheKey: pluginInfo.cacheKeys
     };
 
     delete require.cache[templateCompilerPath];
@@ -110,10 +115,29 @@ module.exports = {
 
   astPlugins: function() {
     var pluginWrappers = this.parentRegistry.load('htmlbars-ast-plugin');
-    var plugins = pluginWrappers.map(function(wrapper) {
-      return wrapper.plugin;
-    });
+    var plugins = [];
+    var cacheKeys = [];
 
-    return plugins;
+    for (var i = 0; i < pluginWrappers.length; i++) {
+      var wrapper = pluginWrappers[i];
+
+      plugins.push(wrapper.plugin);
+
+      if (typeof wrapper.baseDir === 'function') {
+        var pluginHashForDep = hashForDep(wrapper.baseDir());
+        cacheKeys.push(pluginHashForDep);
+      } else {
+        // support for ember-cli < 2.2.0
+        var log = this.ui.writeDeprecateLine || this.ui.writeLine;
+
+        log.call(this.ui, 'ember-cli-htmlbars is opting out of caching due to an AST plugin that does not provide a caching strategy: `' + wrapper.name + '`.');
+        cacheKeys.push((new Date()).getTime() + '|' + Math.random());
+      }
+    }
+
+    return {
+      plugins: plugins,
+      cacheKeys: cacheKeys
+    };
   }
 };
