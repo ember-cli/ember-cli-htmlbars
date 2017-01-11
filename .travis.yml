@@ -3,3 +3,12 @@ node_js:
   - "6"
   - "4"
   - "0.12"
+
+deploy:
+  provider: npm
+  email: stefan.penner+ember-cli@gmail.com
+  api_key:
+    secure: Y5uNST9XrrvGreK+UhNob9ZgjPcwfRoOFpkBpeEMBk5V5fGy9RsAA4RE6VHQtnqPnhpYORXZDe7UK8AgiVXB3pgzxJ1E5N68dbphWjWhZMefbsXbTikHERkYauHlTXuJ6tOMabD9tdxhe4Dsvox/wayP2svOqtpXtkjzvIHhO1c=
+  on:
+    tags: true
+    repo: ember-cli/ember-cli-htmlbars
