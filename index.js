@@ -66,6 +66,7 @@ TemplateCompiler.prototype.initializeFeatures = function initializeFeatures() {
 
 TemplateCompiler.prototype.processString = function (string, relativePath) {
   return 'export default ' + utils.template(this.options.templateCompiler, stripBom(string), {
+    contents: string,
     moduleName: relativePath
   }) + ';';
 };
