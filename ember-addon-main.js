@@ -123,9 +123,17 @@ module.exports = {
 
       plugins.push(wrapper.plugin);
 
-      if (typeof wrapper.baseDir === 'function') {
-        var pluginHashForDep = hashForDep(wrapper.baseDir());
-        cacheKeys.push(pluginHashForDep);
+      var providesBaseDir = typeof wrapper.baseDir === 'function';
+      var augmentsCacheKey = typeof wrapper.cacheKey === 'function';
+
+      if (providesBaseDir || augmentsCacheKey) {
+        if (providesBaseDir) {
+          var pluginHashForDep = hashForDep(wrapper.baseDir());
+          cacheKeys.push(pluginHashForDep);
+        }
+        if (augmentsCacheKey) {
+          cacheKeys.push(wrapper.cacheKey());
+        }
       } else {
         // support for ember-cli < 2.2.0
         var log = this.ui.writeDeprecateLine || this.ui.writeLine;
