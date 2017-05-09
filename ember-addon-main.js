@@ -13,13 +13,13 @@ module.exports = {
 
     let checker = new VersionChecker(this);
     let dep = this.emberCLIDep = checker.for('ember-cli', 'npm');
-    dep.assertAbove(this, '0.1.2');
+    dep.assertAbove('0.1.2');
   },
 
   parentRegistry: null,
 
   shouldSetupRegistryInIncluded: function() {
-    return !this.emberCLIDep.isAbove(this, '0.2.0');
+    return !this.emberCLIDep.isAbove('0.2.0');
   },
 
   setupPreprocessorRegistry: function(type, registry) {
