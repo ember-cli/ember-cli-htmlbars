@@ -19,7 +19,8 @@ module.exports = {
       _addon: this,
       toTree(tree) {
         let htmlbarsOptions = this._addon.htmlbarsOptions();
-        return require('./index')(tree, htmlbarsOptions);
+        let TemplateCompiler = require('./index');
+        return new TemplateCompiler(tree, htmlbarsOptions);
       },
 
       precompile(string) {
