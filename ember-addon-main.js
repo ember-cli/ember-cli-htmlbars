@@ -1,26 +1,13 @@
 'use strict';
 
 const path = require('path');
-const VersionChecker = require('ember-cli-version-checker');
 const utils = require('./utils');
 const hashForDep = require('hash-for-dep');
 
 module.exports = {
   name: 'ember-cli-htmlbars',
 
-  init() {
-    if (this._super.init) { this._super.init.apply(this, arguments); }
-
-    let checker = new VersionChecker(this);
-    let dep = this.emberCLIDep = checker.for('ember-cli', 'npm');
-    dep.assertAbove('0.1.2');
-  },
-
   parentRegistry: null,
-
-  shouldSetupRegistryInIncluded() {
-    return !this.emberCLIDep.isAbove('0.2.0');
-  },
 
   setupPreprocessorRegistry(type, registry) {
     // ensure that broccoli-ember-hbs-template-compiler is not processing hbs files
@@ -44,14 +31,6 @@ module.exports = {
 
     if (type === 'parent') {
       this.parentRegistry = registry;
-    }
-  },
-
-  included (app) {
-    this._super.included.apply(this, arguments);
-
-    if (this.shouldSetupRegistryInIncluded()) {
-      this.setupPreprocessorRegistry('parent', app.registry);
     }
   },
 
@@ -139,9 +118,7 @@ module.exports = {
         }
       } else {
         // support for ember-cli < 2.2.0
-        let log = this.ui.writeDeprecateLine || this.ui.writeLine;
-
-        log.call(this.ui, 'ember-cli-htmlbars is opting out of caching due to an AST plugin that does not provide a caching strategy: `' + wrapper.name + '`.');
+        this.ui.writeDeprecateLine('ember-cli-htmlbars is opting out of caching due to an AST plugin that does not provide a caching strategy: `' + wrapper.name + '`.');
         cacheKeys.push((new Date()).getTime() + '|' + Math.random());
       }
     }
