@@ -1,17 +1,18 @@
 'use strict';
-var utils = require('../utils');
-var assert = require('assert');
 
-describe('utils', function(){
-  var templateCompiler;
+const utils = require('../utils');
+const assert = require('assert');
+
+describe('utils', function() {
+  let templateCompiler;
 
   beforeEach(function() {
     templateCompiler = require('../bower_components/ember/ember-template-compiler');
   });
 
 
-  it('passes other ENV variables to compiler when provided', function(){
-    var EmberENV = {
+  it('passes other ENV variables to compiler when provided', function() {
+    let EmberENV = {
       FOO_BAR: true
     };
 
@@ -20,8 +21,8 @@ describe('utils', function(){
     assert.equal(templateCompiler._Ember.ENV.FOO_BAR, true);
   });
 
-  it('passes features through when provided', function(){
-    var EmberENV = {
+  it('passes features through when provided', function() {
+    let EmberENV = {
       FEATURES: {
         BLAH: true
       }

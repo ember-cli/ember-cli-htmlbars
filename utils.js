@@ -1,15 +1,15 @@
 'use strict';
 
 module.exports = {
-  initializeEmberENV: function(templateCompiler, EmberENV) {
+  initializeEmberENV(templateCompiler, EmberENV) {
     if (!templateCompiler || !EmberENV) { return; }
 
-    var props;
+    let props;
 
     if (EmberENV.FEATURES) {
       props = Object.keys(EmberENV.FEATURES);
 
-      props.forEach(function(prop) {
+      props.forEach(prop => {
         templateCompiler._Ember.FEATURES[prop] = EmberENV.FEATURES[prop];
       });
     }
@@ -17,7 +17,7 @@ module.exports = {
     if (EmberENV) {
       props = Object.keys(EmberENV);
 
-      props.forEach(function(prop) {
+      props.forEach(prop => {
         if (prop === 'FEATURES') { return; }
 
         templateCompiler._Ember.ENV[prop] = EmberENV[prop];
@@ -25,8 +25,8 @@ module.exports = {
     }
   },
 
-  template: function(templateCompiler, string, options) {
-    var precompiled = templateCompiler.precompile(string, options);
+  template(templateCompiler, string, options) {
+    let precompiled = templateCompiler.precompile(string, options);
     return 'Ember.HTMLBars.template(' + precompiled + ')';
   }
 };
