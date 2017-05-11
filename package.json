@@ -8,6 +8,9 @@
     "ember-addon-main.js",
     "utils.js"
   ],
+  "engines": {
+    "node": ">= 4.0.0"
+  },
   "scripts": {
     "prepublish": "bower install",
     "test": "mocha test/*.js",
