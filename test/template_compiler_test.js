@@ -1,13 +1,14 @@
 'use strict';
 
-var fs = require('fs');
-var broccoli = require('broccoli');
-var assert = require('assert');
-var templateCompilerFilter = require('../index');
-var builder;
+const fs = require('fs');
+const broccoli = require('broccoli');
+const assert = require('assert');
+const TemplateCompiler = require('../index');
+const co = require('co');
 
-describe('templateCompilerFilter', function(){
-  var sourcePath = 'test/fixtures';
+describe('TemplateCompiler', function(){
+  const sourcePath = 'test/fixtures';
+  let builder;
 
   afterEach(function() {
     if (builder) {
@@ -15,7 +16,7 @@ describe('templateCompilerFilter', function(){
     }
   });
 
-  var htmlbarsOptions, htmlbarsPrecompile;
+  let htmlbarsOptions, htmlbarsPrecompile;
 
   beforeEach(function() {
     htmlbarsOptions = {
@@ -26,66 +27,65 @@ describe('templateCompilerFilter', function(){
     htmlbarsPrecompile = htmlbarsOptions.templateCompiler.precompile;
   });
 
-  it('precompiles templates into htmlbars', function(){
-    var tree = templateCompilerFilter(sourcePath, htmlbarsOptions);
+  it('precompiles templates into htmlbars', co.wrap(function* () {
+    let tree = new TemplateCompiler(sourcePath, htmlbarsOptions);
 
     builder = new broccoli.Builder(tree);
-    return builder.build().then(function(results) {
-      var actual = fs.readFileSync(results.directory + '/template.js', { encoding: 'utf8'});
-      var source = fs.readFileSync(sourcePath + '/template.hbs', { encoding: 'utf8' });
-      var expected = 'export default Ember.HTMLBars.template(' + htmlbarsPrecompile(source, { moduleName: 'template.hbs' }) + ');';
+    let results = yield builder.build();
 
-      assert.equal(actual,expected,'They dont match!');
-    });
-  });
+    let actual = fs.readFileSync(results.directory + '/template.js', { encoding: 'utf8'});
+    let source = fs.readFileSync(sourcePath + '/template.hbs', { encoding: 'utf8' });
+    let expected = 'export default Ember.HTMLBars.template(' + htmlbarsPrecompile(source, { moduleName: 'template.hbs' }) + ');';
 
-  it('ignores utf-8 byte order marks', function(){
-    var tree = templateCompilerFilter(sourcePath, htmlbarsOptions);
+    assert.equal(actual,expected,'They dont match!');
+  }));
+
+  it('ignores utf-8 byte order marks', co.wrap(function*() {
+    let tree = new TemplateCompiler(sourcePath, htmlbarsOptions);
 
     builder = new broccoli.Builder(tree);
-    return builder.build().then(function(results) {
-      var actual = fs.readFileSync(results.directory + '/template-with-bom.js', { encoding: 'utf8'});
-      var source = fs.readFileSync(sourcePath + '/template.hbs', { encoding: 'utf8' });
-      var expected = 'export default Ember.HTMLBars.template(' + htmlbarsPrecompile(source, { moduleName: 'template-with-bom.hbs' }) + ');';
+    let results = yield builder.build();
 
-      assert.equal(actual,expected,'They dont match!');
-    });
-  });
+    let actual = fs.readFileSync(results.directory + '/template-with-bom.js', { encoding: 'utf8'});
+    let source = fs.readFileSync(sourcePath + '/template.hbs', { encoding: 'utf8' });
+    let expected = 'export default Ember.HTMLBars.template(' + htmlbarsPrecompile(source, { moduleName: 'template-with-bom.hbs' }) + ');';
 
-  it('passes FEATURES to compiler when provided as `FEATURES` [DEPRECATED]', function(){
+    assert.equal(actual,expected,'They dont match!');
+  }));
+
+  it('passes FEATURES to compiler when provided as `FEATURES` [DEPRECATED]', co.wrap(function* () {
     htmlbarsOptions.FEATURES = {
       'ember-htmlbars-component-generation': true
     };
 
-    var tree = templateCompilerFilter(sourcePath, htmlbarsOptions);
+    let tree = new TemplateCompiler(sourcePath, htmlbarsOptions);
 
     builder = new broccoli.Builder(tree);
-    return builder.build().then(function(results) {
-      var actual = fs.readFileSync(results.directory + '/web-component-template.js', { encoding: 'utf8'});
-      var source = fs.readFileSync(sourcePath + '/web-component-template.hbs', { encoding: 'utf8' });
-      var expected = 'export default Ember.HTMLBars.template(' + htmlbarsPrecompile(source, { moduleName: 'web-component-template.hbs' }) + ');';
+    let results = yield builder.build();
 
-      assert.equal(actual,expected,'They dont match!');
-    });
-  });
+    let actual = fs.readFileSync(results.directory + '/web-component-template.js', { encoding: 'utf8'});
+    let source = fs.readFileSync(sourcePath + '/web-component-template.hbs', { encoding: 'utf8' });
+    let expected = 'export default Ember.HTMLBars.template(' + htmlbarsPrecompile(source, { moduleName: 'web-component-template.hbs' }) + ');';
 
-  it('passes FEATURES to compiler when provided as `EmberENV.FEATURES`', function(){
+    assert.equal(actual,expected,'They dont match!');
+  }));
+
+  it('passes FEATURES to compiler when provided as `EmberENV.FEATURES`', co.wrap(function* () {
     htmlbarsOptions.EmberENV = {
       FEATURES: {
         'ember-htmlbars-component-generation': true
       }
     };
 
-    var tree = templateCompilerFilter(sourcePath, htmlbarsOptions);
+    let tree = new TemplateCompiler(sourcePath, htmlbarsOptions);
 
     builder = new broccoli.Builder(tree);
-    return builder.build().then(function(results) {
-      var actual = fs.readFileSync(results.directory + '/web-component-template.js', { encoding: 'utf8'});
-      var source = fs.readFileSync(sourcePath + '/web-component-template.hbs', { encoding: 'utf8' });
-      var expected = 'export default Ember.HTMLBars.template(' + htmlbarsPrecompile(source, { moduleName: 'web-component-template.hbs' }) + ');';
+    let results = yield builder.build();
 
-      assert.equal(actual,expected,'They dont match!');
-    });
-  });
+    let actual = fs.readFileSync(results.directory + '/web-component-template.js', { encoding: 'utf8'});
+    let source = fs.readFileSync(sourcePath + '/web-component-template.hbs', { encoding: 'utf8' });
+    let expected = 'export default Ember.HTMLBars.template(' + htmlbarsPrecompile(source, { moduleName: 'web-component-template.hbs' }) + ');';
 
+    assert.equal(actual,expected,'They dont match!');
+  }));
 });
