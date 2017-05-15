@@ -1,7 +1,7 @@
 'use strict';
 
 var path = require('path');
-var VersionChecker = require('ember-cli-version-checker');
+var checker = require('ember-cli-version-checker');
 var utils = require('./utils');
 var hashForDep = require('hash-for-dep');
 
@@ -10,16 +10,13 @@ module.exports = {
 
   init: function() {
     if (this._super.init) { this._super.init.apply(this, arguments); }
-
-    let checker = new VersionChecker(this);
-    let dep = this.emberCLIDep = checker.for('ember-cli', 'npm');
-    dep.assertAbove(this, '0.1.2');
+    checker.assertAbove(this, '0.1.2');
   },
 
   parentRegistry: null,
 
   shouldSetupRegistryInIncluded: function() {
-    return !this.emberCLIDep.isAbove(this, '0.2.0');
+    return !checker.isAbove(this, '0.2.0');
   },
 
   setupPreprocessorRegistry: function(type, registry) {
