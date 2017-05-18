@@ -43,6 +43,7 @@
   },
   "dependencies": {
     "broccoli-persistent-filter": "^1.0.3",
+    "ember-build-utilities": "^0.1.2",
     "hash-for-dep": "^1.0.2",
     "json-stable-stringify": "^1.0.0",
     "strip-bom": "^3.0.0"

@@ -25,8 +25,12 @@ module.exports = {
     }
   },
 
+  precompile(templateCompiler, string, options) {
+    return templateCompiler.precompile(string, options);
+  },
+
   template(templateCompiler, string, options) {
-    let precompiled = templateCompiler.precompile(string, options);
-    return 'Ember.HTMLBars.template(' + precompiled + ')';
+    let precompiled = this.precompile(string, options);
+    return `Ember.HTMLBars.template(${precompiled})`;
   }
 };
