@@ -6,6 +6,7 @@ const Filter = require('broccoli-persistent-filter');
 const crypto = require('crypto');
 const stringify = require('json-stable-stringify');
 const stripBom = require('strip-bom');
+const ExtractPragmaAstTransform = require('ember-build-utilities/dist/lib/compilers/glimmer/extract-pragma-ast-transform');
 
 class TemplateCompiler extends Filter {
   constructor(inputTree, _options) {
@@ -18,13 +19,14 @@ class TemplateCompiler extends Filter {
     super(inputTree, options);
 
     this.options = options;
+    this.options.plugins = this.options.plugins || {};
     this.inputTree = inputTree;
 
-    this.precompile = this.options.templateCompiler.precompile;
     this.registerPlugin = this.options.templateCompiler.registerPlugin;
 
-    this.registerPlugins();
     this.initializeFeatures();
+    this.registerFeaturedPlugin('glimmer-custom-component-manager', ExtractPragmaAstTransform);
+    this.registerPlugins();
   }
 
   baseDir() {
@@ -43,6 +45,16 @@ class TemplateCompiler extends Filter {
     }
   }
 
+  registerFeaturedPlugin(featureName, plugin) {
+    const featureEnabled = !!this.options.templateCompiler._Ember.FEATURES[featureName];
+
+    this.options.plugins.ast = this.options.plugins.ast || [];
+
+    if (featureEnabled) {
+      this.options.plugins.ast.push(plugin);
+    }
+  }
+
   initializeFeatures() {
     let EmberENV = this.options.EmberENV;
     let FEATURES = this.options.FEATURES;
@@ -57,11 +69,17 @@ class TemplateCompiler extends Filter {
     utils.initializeEmberENV(templateCompiler, EmberENV);
   }
 
+  precompile(string, options) {
+    return utils.precompile(this.options.templateCompiler, string, options);
+  }
+
   processString(string, relativePath) {
-    return 'export default ' + utils.template(this.options.templateCompiler, stripBom(string), {
-      contents: string,
-      moduleName: relativePath
-    }) + ';';
+    const precompiledTemplate = this.precompile(stripBom(string), {
+      moduleName: relativePath,
+      plugins: this.options.plugins
+    });
+
+    return `export default Ember.HTMLBars.template(${precompiledTemplate});`;
   }
 
   _buildOptionsForHash() {

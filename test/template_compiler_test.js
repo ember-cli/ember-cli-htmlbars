@@ -7,6 +7,7 @@ const TemplateCompiler = require('../index');
 const co = require('co');
 
 describe('TemplateCompiler', function(){
+  this.timeout(50000);
   const sourcePath = 'test/fixtures';
   let builder;
 
@@ -88,4 +89,52 @@ describe('TemplateCompiler', function(){
 
     assert.equal(actual,expected,'They dont match!');
   }));
+
+  it('does not register custom component manager ast transform if flag is disabled', function() {
+    var options = {
+      templateCompiler: require('../bower_components/ember/ember-template-compiler'),
+      EmberENV:{
+        FEATURES: { }
+      }
+    };
+
+    var templateCompiler = new TemplateCompiler(sourcePath, options);
+
+    assert.equal(templateCompiler.options.plugins.ast.length, 0, 'custom ast trasform was not registered');
+  });
+
+  it('registers custom component manager ast transform if flag is enabled', function() {
+    var options = {
+      templateCompiler: require('../bower_components/ember/ember-template-compiler'),
+      EmberENV:{
+        FEATURES: {
+          'glimmer-custom-component-manager': true
+        }
+      }
+    };
+
+    var templateCompiler = new TemplateCompiler(sourcePath, options);
+
+    assert.equal(templateCompiler.options.plugins.ast.length, 1, 'custom ast trasform was registered');
+  });
+
+  it('sets custom component manager id on a template\'s metadata if feature flag is enabled', function() {
+    var options = {
+      templateCompiler: require('../bower_components/ember/ember-template-compiler'),
+      EmberENV:{
+        FEATURES: {
+          'glimmer-custom-component-manager': true
+        }
+      }
+    };
+    var templateContent = '{{use-component-manager "glimmer"}}hello';
+
+    var templateCompiler = new TemplateCompiler(sourcePath, options);
+    var compiled = JSON.parse(templateCompiler.precompile(templateContent, {
+      moduleName: '',
+      plugins: templateCompiler.options.plugins
+    }));
+
+    assert.equal(compiled.meta.managerId, 'glimmer');
+  });
 });
