@@ -7,6 +7,20 @@ const crypto = require('crypto');
 const stringify = require('json-stable-stringify');
 const stripBom = require('strip-bom');
 
+function rethrowBuildError(error) {
+  if (!error) { throw new Error('Unknown Error'); }
+
+  if (typeof error === 'string') {
+    throw new Error('[string exception]: ' + error);
+  } else {
+    // augment with location and type information and re-throw.
+    error.type = 'Template Compiler Error';
+    error.location = error.location && error.location.start;
+
+    throw error;
+  }
+}
+
 class TemplateCompiler extends Filter {
   constructor(inputTree, _options) {
     let options = _options || {};
@@ -58,10 +72,14 @@ class TemplateCompiler extends Filter {
   }
 
   processString(string, relativePath) {
-    return 'export default ' + utils.template(this.options.templateCompiler, stripBom(string), {
-      contents: string,
-      moduleName: relativePath
-    }) + ';';
+    try {
+      return 'export default ' + utils.template(this.options.templateCompiler, stripBom(string), {
+        contents: string,
+        moduleName: relativePath
+      }) + ';';
+    } catch(error) {
+      rethrowBuildError(error);
+    }
   }
 
   _buildOptionsForHash() {
