@@ -71,7 +71,12 @@ module.exports = {
     // (╯°□°）╯︵ ɹǝqɯǝ
     //
     // we will also fix this in ember for future releases
-    delete require.cache[templateCompilerPath];
+    let templateCompiler = require(templateCompilerPath);
+
+    if (typeof templateCompiler.unregisterAllPlugins !== 'function') {
+      templateCompiler = require(templateCompilerPath);
+      delete require.cache[templateCompilerPath];
+    }
 
     global.EmberENV = EmberENV; // Needed for eval time feature flag checks
     let pluginInfo = this.astPlugins();
@@ -79,7 +84,7 @@ module.exports = {
     let htmlbarsOptions = {
       isHTMLBars: true,
       EmberENV: EmberENV,
-      templateCompiler: require(templateCompilerPath),
+      templateCompiler: templateCompiler,
       templateCompilerPath: templateCompilerPath,
 
       plugins: {
