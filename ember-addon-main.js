@@ -90,7 +90,8 @@ module.exports = {
     // we will also fix this in ember for future releases
     delete require.cache[templateCompilerPath];
 
-    global.EmberENV = EmberENV; // Needed for eval time feature flag checks
+    var clonedEmberENV = JSON.parse(JSON.stringify(EmberENV));
+    global.EmberENV = clonedEmberENV; // Needed for eval time feature flag checks
     var pluginInfo = this.astPlugins();
 
     var htmlbarsOptions = {
