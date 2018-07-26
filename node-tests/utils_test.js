@@ -18,7 +18,7 @@ describe('utils', function() {
 
     utils.initializeEmberENV(templateCompiler, EmberENV);
 
-    assert.equal(templateCompiler._Ember.ENV.FOO_BAR, true);
+    assert.strictEqual(templateCompiler._Ember.ENV.FOO_BAR, true);
   });
 
   it('passes features through when provided', function() {
@@ -30,6 +30,6 @@ describe('utils', function() {
 
     utils.initializeEmberENV(templateCompiler, EmberENV);
 
-    assert.equal(templateCompiler._Ember.FEATURES.BLAH, true);
+    assert.strictEqual(templateCompiler._Ember.FEATURES.BLAH, true);
   });
 });

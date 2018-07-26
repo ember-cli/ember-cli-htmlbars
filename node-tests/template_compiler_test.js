@@ -7,7 +7,9 @@ const TemplateCompiler = require('../index');
 const co = require('co');
 
 describe('TemplateCompiler', function(){
-  const sourcePath = 'test/fixtures';
+  this.timeout(10000);
+
+  const sourcePath = __dirname + '/fixtures';
   let builder;
 
   afterEach(function() {
@@ -37,7 +39,7 @@ describe('TemplateCompiler', function(){
     let source = fs.readFileSync(sourcePath + '/template.hbs', { encoding: 'utf8' });
     let expected = 'export default Ember.HTMLBars.template(' + htmlbarsPrecompile(source, { moduleName: 'template.hbs' }) + ');';
 
-    assert.equal(actual,expected,'They dont match!');
+    assert.strictEqual(actual,expected,'They dont match!');
   }));
 
   it('ignores utf-8 byte order marks', co.wrap(function*() {
@@ -50,7 +52,7 @@ describe('TemplateCompiler', function(){
     let source = fs.readFileSync(sourcePath + '/template.hbs', { encoding: 'utf8' });
     let expected = 'export default Ember.HTMLBars.template(' + htmlbarsPrecompile(source, { moduleName: 'template-with-bom.hbs' }) + ');';
 
-    assert.equal(actual,expected,'They dont match!');
+    assert.strictEqual(actual,expected,'They dont match!');
   }));
 
   it('passes FEATURES to compiler when provided as `FEATURES` [DEPRECATED]', co.wrap(function* () {
@@ -67,7 +69,7 @@ describe('TemplateCompiler', function(){
     let source = fs.readFileSync(sourcePath + '/web-component-template.hbs', { encoding: 'utf8' });
     let expected = 'export default Ember.HTMLBars.template(' + htmlbarsPrecompile(source, { moduleName: 'web-component-template.hbs' }) + ');';
 
-    assert.equal(actual,expected,'They dont match!');
+    assert.strictEqual(actual,expected,'They dont match!');
   }));
 
   it('passes FEATURES to compiler when provided as `EmberENV.FEATURES`', co.wrap(function* () {
@@ -86,6 +88,6 @@ describe('TemplateCompiler', function(){
     let source = fs.readFileSync(sourcePath + '/web-component-template.hbs', { encoding: 'utf8' });
     let expected = 'export default Ember.HTMLBars.template(' + htmlbarsPrecompile(source, { moduleName: 'web-component-template.hbs' }) + ');';
 
-    assert.equal(actual,expected,'They dont match!');
+    assert.strictEqual(actual,expected,'They dont match!');
   }));
 });

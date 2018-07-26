@@ -63,6 +63,7 @@ class TemplateCompiler extends Filter {
     let templateCompiler = this.options.templateCompiler;
 
     if (FEATURES) {
+      // eslint-disable-next-line no-console
       console.warn('Using `options.FEATURES` with ember-cli-htmlbars is deprecated.  Please provide the full EmberENV as options.EmberENV instead.');
       EmberENV = EmberENV || {};
       EmberENV.FEATURES = FEATURES;
