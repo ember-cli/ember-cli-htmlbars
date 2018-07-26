@@ -71,7 +71,12 @@ module.exports = {
     // (╯°□°）╯︵ ɹǝqɯǝ
     //
     // we will also fix this in ember for future releases
-    delete require.cache[templateCompilerPath];
+    let templateCompiler = require(templateCompilerPath);
+
+    if (typeof templateCompiler.unregisterAllPlugins !== 'function') {
+      templateCompiler = require(templateCompilerPath);
+      delete require.cache[templateCompilerPath];
+    }
 
     // do a full clone of the EmberENV (it is guaranteed to be structured
     // cloneable) to prevent ember-template-compiler.js from mutating
@@ -83,7 +88,7 @@ module.exports = {
     let htmlbarsOptions = {
       isHTMLBars: true,
       EmberENV: EmberENV,
-      templateCompiler: require(templateCompilerPath),
+      templateCompiler: templateCompiler,
       templateCompilerPath: templateCompilerPath,
 
       plugins: {
