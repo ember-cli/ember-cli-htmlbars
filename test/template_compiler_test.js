@@ -21,7 +21,7 @@ describe('TemplateCompiler', function(){
   beforeEach(function() {
     htmlbarsOptions = {
       isHTMLBars: true,
-      templateCompiler: require('../bower_components/ember/ember-template-compiler')
+      templateCompiler: require('ember-source/dist/ember-template-compiler.js')
     };
 
     htmlbarsPrecompile = htmlbarsOptions.templateCompiler.precompile;
