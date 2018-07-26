@@ -7,7 +7,7 @@ describe('utils', function() {
   let templateCompiler;
 
   beforeEach(function() {
-    templateCompiler = require('ember-source/dist/ember-template-compiler');
+    templateCompiler = require('../bower_components/ember/ember-template-compiler');
   });
 
 
