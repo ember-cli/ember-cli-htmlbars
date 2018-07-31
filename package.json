@@ -39,13 +39,13 @@
   },
   "homepage": "https://github.com/ember-cli/ember-cli-htmlbars",
   "devDependencies": {
-    "broccoli": "^0.16.7",
+    "broccoli": "^2.0.0-beta.4",
     "broccoli-concat": "^3.5.1",
     "co": "^4.6.0",
     "ember-cli": "~3.3.0",
     "ember-cli-app-version": "^3.0.0",
     "ember-cli-babel": "^6.6.0",
-    "ember-cli-dependency-checker": "^2.0.0",
+    "ember-cli-dependency-checker": "^3.0.0",
     "ember-cli-eslint": "^4.2.1",
     "ember-cli-inject-live-reload": "^1.4.1",
     "ember-cli-qunit": "^4.3.2",
@@ -53,7 +53,7 @@
     "ember-export-application-global": "^2.0.0",
     "ember-load-initializers": "^1.1.0",
     "ember-maybe-import-regenerator": "^0.1.6",
-    "ember-resolver": "^4.0.0",
+    "ember-resolver": "^5.0.0",
     "ember-source": "~3.3.1",
     "ember-source-channel-url": "^1.1.0",
     "ember-try": "^0.2.23",
@@ -62,7 +62,7 @@
     "eslint-plugin-node": "^7.0.1",
     "loader.js": "^4.2.3",
     "mocha": "^5.2.0",
-    "qunit-dom": "^0.6.2"
+    "qunit-dom": "^0.7.1"
   },
   "dependencies": {
     "broccoli-persistent-filter": "^1.4.3",
