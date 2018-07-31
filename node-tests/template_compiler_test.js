@@ -33,9 +33,9 @@ describe('TemplateCompiler', function(){
     let tree = new TemplateCompiler(sourcePath, htmlbarsOptions);
 
     builder = new broccoli.Builder(tree);
-    let results = yield builder.build();
+    yield builder.build();
 
-    let actual = fs.readFileSync(results.directory + '/template.js', { encoding: 'utf8'});
+    let actual = fs.readFileSync(builder.outputPath + '/template.js', { encoding: 'utf8'});
     let source = fs.readFileSync(sourcePath + '/template.hbs', { encoding: 'utf8' });
     let expected = 'export default Ember.HTMLBars.template(' + htmlbarsPrecompile(source, { moduleName: 'template.hbs' }) + ');';
 
@@ -46,9 +46,9 @@ describe('TemplateCompiler', function(){
     let tree = new TemplateCompiler(sourcePath, htmlbarsOptions);
 
     builder = new broccoli.Builder(tree);
-    let results = yield builder.build();
+    yield builder.build();
 
-    let actual = fs.readFileSync(results.directory + '/template-with-bom.js', { encoding: 'utf8'});
+    let actual = fs.readFileSync(builder.outputPath + '/template-with-bom.js', { encoding: 'utf8'});
     let source = fs.readFileSync(sourcePath + '/template.hbs', { encoding: 'utf8' });
     let expected = 'export default Ember.HTMLBars.template(' + htmlbarsPrecompile(source, { moduleName: 'template-with-bom.hbs' }) + ');';
 
@@ -63,9 +63,9 @@ describe('TemplateCompiler', function(){
     let tree = new TemplateCompiler(sourcePath, htmlbarsOptions);
 
     builder = new broccoli.Builder(tree);
-    let results = yield builder.build();
+    yield builder.build();
 
-    let actual = fs.readFileSync(results.directory + '/web-component-template.js', { encoding: 'utf8'});
+    let actual = fs.readFileSync(builder.outputPath + '/web-component-template.js', { encoding: 'utf8'});
     let source = fs.readFileSync(sourcePath + '/web-component-template.hbs', { encoding: 'utf8' });
     let expected = 'export default Ember.HTMLBars.template(' + htmlbarsPrecompile(source, { moduleName: 'web-component-template.hbs' }) + ');';
 
@@ -82,9 +82,9 @@ describe('TemplateCompiler', function(){
     let tree = new TemplateCompiler(sourcePath, htmlbarsOptions);
 
     builder = new broccoli.Builder(tree);
-    let results = yield builder.build();
+    yield builder.build();
 
-    let actual = fs.readFileSync(results.directory + '/web-component-template.js', { encoding: 'utf8'});
+    let actual = fs.readFileSync(builder.outputPath + '/web-component-template.js', { encoding: 'utf8'});
     let source = fs.readFileSync(sourcePath + '/web-component-template.hbs', { encoding: 'utf8' });
     let expected = 'export default Ember.HTMLBars.template(' + htmlbarsPrecompile(source, { moduleName: 'web-component-template.hbs' }) + ');';
 
