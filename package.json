@@ -41,6 +41,7 @@
   "devDependencies": {
     "broccoli": "^2.0.0-beta.4",
     "broccoli-concat": "^3.5.1",
+    "chai": "^4.2.0",
     "co": "^4.6.0",
     "ember-cli": "~3.3.0",
     "ember-cli-app-version": "^3.0.0",

@@ -9,6 +9,29 @@ module.exports = {
 
   parentRegistry: null,
 
+  purgeModule(templateCompilerPath) {
+    // ensure we get a fresh templateCompilerModuleInstance per ember-addon
+    // instance NOTE: this is a quick hack, and will only work as long as
+    // templateCompilerPath is a single file bundle
+    //
+    // (╯°□°）╯︵ ɹǝqɯǝ
+    //
+    // we will also fix this in ember for future releases
+
+    // Module will be cached in .parent.children as well. So deleting from require.cache alone is not sufficient.
+    let mod = require.cache[templateCompilerPath];
+    if (mod && mod.parent) {
+      let index = mod.parent.children.indexOf(mod);
+      if (index >= 0) {
+        mod.parent.children.splice(index, 1);
+      } else {
+        throw new TypeError(`ember-cli-htmlbars attempted to purge '${templateCompilerPath}' but something went wrong.`);
+      }
+    }
+
+    delete require.cache[templateCompilerPath];
+  },
+
   setupPreprocessorRegistry(type, registry) {
     // ensure that broccoli-ember-hbs-template-compiler is not processing hbs files
     registry.remove('template', 'broccoli-ember-hbs-template-compiler');
@@ -64,14 +87,7 @@ module.exports = {
     let EmberENV = projectConfig.EmberENV || {};
     let templateCompilerPath = this.templateCompilerPath();
 
-    // ensure we get a fresh templateCompilerModuleInstance per ember-addon
-    // instance NOTE: this is a quick hack, and will only work as long as
-    // templateCompilerPath is a single file bundle
-    //
-    // (╯°□°）╯︵ ɹǝqɯǝ
-    //
-    // we will also fix this in ember for future releases
-    delete require.cache[templateCompilerPath];
+    this.purgeModule(templateCompilerPath);
 
     // do a full clone of the EmberENV (it is guaranteed to be structured
     // cloneable) to prevent ember-template-compiler.js from mutating
@@ -93,7 +109,8 @@ module.exports = {
       pluginCacheKey: pluginInfo.cacheKeys
     };
 
-    delete require.cache[templateCompilerPath];
+    this.purgeModule(templateCompilerPath);
+
     delete global.Ember;
     delete global.EmberENV;
 
