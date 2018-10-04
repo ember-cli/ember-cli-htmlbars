@@ -19,6 +19,29 @@ module.exports = {
     return !checker.isAbove(this, '0.2.0');
   },
 
+  purgeModule: function(templateCompilerPath) {
+    // ensure we get a fresh templateCompilerModuleInstance per ember-addon
+    // instance NOTE: this is a quick hack, and will only work as long as
+    // templateCompilerPath is a single file bundle
+    //
+    // (╯°□°）╯︵ ɹǝqɯǝ
+    //
+    // we will also fix this in ember for future releases
+
+    // Module will be cached in .parent.children as well. So deleting from require.cache alone is not sufficient.
+    var mod = require.cache[templateCompilerPath];
+    if (mod && mod.parent) {
+      var index = mod.parent.children.indexOf(mod);
+      if (index >= 0) {
+        mod.parent.children.splice(index, 1);
+      } else {
+        throw new TypeError("ember-cli-htmlbars attempted to purge '" + templateCompilerPath + "' but something went wrong.");
+      }
+    }
+
+    delete require.cache[templateCompilerPath];
+  },
+
   setupPreprocessorRegistry: function(type, registry) {
     // ensure that broccoli-ember-hbs-template-compiler is not processing hbs files
     registry.remove('template', 'broccoli-ember-hbs-template-compiler');
@@ -81,14 +104,7 @@ module.exports = {
     var EmberENV = projectConfig.EmberENV || {};
     var templateCompilerPath = this.templateCompilerPath();
 
-    // ensure we get a fresh templateCompilerModuleInstance per ember-addon
-    // instance NOTE: this is a quick hack, and will only work as long as
-    // templateCompilerPath is a single file bundle
-    //
-    // (╯°□°）╯︵ ɹǝqɯǝ
-    //
-    // we will also fix this in ember for future releases
-    delete require.cache[templateCompilerPath];
+    this.purgeModule(templateCompilerPath);
 
     var clonedEmberENV = JSON.parse(JSON.stringify(EmberENV));
     global.EmberENV = clonedEmberENV; // Needed for eval time feature flag checks
@@ -107,7 +123,8 @@ module.exports = {
       pluginCacheKey: pluginInfo.cacheKeys
     };
 
-    delete require.cache[templateCompilerPath];
+    this.purgeModule(templateCompilerPath);
+
     delete global.Ember;
     delete global.EmberENV;
 
