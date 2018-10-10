@@ -39,8 +39,7 @@
   },
   "homepage": "https://github.com/ember-cli/ember-cli-htmlbars",
   "devDependencies": {
-    "broccoli": "^2.0.0-beta.4",
-    "broccoli-concat": "^3.5.1",
+    "broccoli-test-helper": "^1.5.0",
     "chai": "^4.2.0",
     "co": "^4.6.0",
     "ember-cli": "~3.3.0",
@@ -61,6 +60,7 @@
     "eslint-plugin-ember": "^5.0.0",
     "eslint-plugin-mocha": "^5.1.0",
     "eslint-plugin-node": "^7.0.1",
+    "fixturify": "^0.3.4",
     "loader.js": "^4.2.3",
     "mocha": "^5.2.0",
     "qunit-dom": "^0.7.1"
