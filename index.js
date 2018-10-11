@@ -35,26 +35,12 @@ class TemplateCompiler extends Filter {
     this.inputTree = inputTree;
 
     this.precompile = this.options.templateCompiler.precompile;
-    this.registerPlugin = this.options.templateCompiler.registerPlugin;
 
-    this.registerPlugins();
     this.initializeFeatures();
   }
 
   baseDir() {
     return __dirname;
-  }
-
-  registerPlugins() {
-    let plugins = this.options.plugins;
-
-    if (plugins) {
-      for (let type in plugins) {
-        for (let i = 0, l = plugins[type].length; i < l; i++) {
-          this.registerPlugin(type, plugins[type][i]);
-        }
-      }
-    }
   }
 
   initializeFeatures() {
@@ -76,7 +62,8 @@ class TemplateCompiler extends Filter {
     try {
       return 'export default ' + utils.template(this.options.templateCompiler, stripBom(string), {
         contents: string,
-        moduleName: relativePath
+        moduleName: relativePath,
+        plugins: this.options.plugins,
       }) + ';';
     } catch(error) {
       rethrowBuildError(error);
