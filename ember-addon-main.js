@@ -108,13 +108,20 @@ module.exports = {
       toTree(tree) {
         let htmlbarsOptions = this._addon.htmlbarsOptions();
         let TemplateCompiler = require('./index');
+
         return new TemplateCompiler(tree, htmlbarsOptions);
       },
 
-      precompile(string) {
+      precompile(string, _options) {
         let htmlbarsOptions = this._addon.htmlbarsOptions();
         let templateCompiler = htmlbarsOptions.templateCompiler;
-        return utils.template(templateCompiler, string);
+
+        let options = Object.assign({}, _options, {
+          contents: string,
+          plugins: htmlbarsOptions.plugins,
+        });
+
+        return utils.template(templateCompiler, string, options);
       }
     });
 
