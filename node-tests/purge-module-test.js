@@ -1,10 +1,14 @@
 'use strict';
 
-const purgeModule = require('../ember-addon-main').purgeModule;
+const _purgeModule = require('../ember-addon-main').purgeModule;
 const expect = require('chai').expect;
 
 describe('purgeModule', function() {
   const FIXTURE_COMPILER_PATH = require.resolve('./fixtures/compiler');
+
+  function purgeModule(modulePath) {
+    return _purgeModule.call({}, modulePath);
+  }
 
   it('it works correctly', function() {
     expect(purgeModule('asdfasdfasdfaf-unknown-file')).to.eql(undefined);

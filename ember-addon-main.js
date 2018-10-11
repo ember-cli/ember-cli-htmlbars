@@ -3,13 +3,78 @@
 const path = require('path');
 const utils = require('./utils');
 const hashForDep = require('hash-for-dep');
+const VersionChecker = require('ember-cli-version-checker');
+
+// used as a way to memoize canAvoidCacheBusting so that we can avoid many many
+// top down searches of the addon heirarchy
+const NEEDS_CACHE_BUSTING = new WeakMap();
+
+function canAvoidCacheBusting(project) {
+  if (NEEDS_CACHE_BUSTING.has(project)) {
+    return NEEDS_CACHE_BUSTING.get(project);
+  }
+
+  let checker = new VersionChecker(project);
+  let emberVersion = checker.forEmber();
+
+  let hasLegacyHTMLBarsAddons = checkAddonsForLegacyVersion(project);
+
+  let needsCacheBusting = hasLegacyHTMLBarsAddons || emberVersion.lt('1.13.0');
+  NEEDS_CACHE_BUSTING.set(project, !!needsCacheBusting);
+
+  return needsCacheBusting;
+}
+
+function checkAddonsForLegacyVersion(addon) {
+  let registry = addon.registry;
+
+  let plugins = registry && registry.load('htmlbars-ast-plugin');
+  let hasPlugins = plugins && plugins.length > 0;
+
+  if (hasPlugins) {
+    let htmlbarsInstance = addon.addons.find(addon => addon.name === 'ember-cli-htmlbars');
+    if (!htmlbarsInstance || htmlbarsInstance.legacyPluginRegistrationCacheBustingRequired !== false) {
+      return true;
+    }
+
+    let inlineHTMLBarsCompileInstance = addon.addons.find(addon => addon.name === 'ember-cli-htmlbars-inline-precompile');
+    if (!inlineHTMLBarsCompileInstance || inlineHTMLBarsCompileInstance.legacyPluginRegistrationCacheBustingRequired !== false) {
+      return true;
+    }
+  }
+
+  return addon.addons.some(checkAddonsForLegacyVersion);
+}
 
 module.exports = {
   name: require('./package').name,
 
+  init() {
+    this._super.init && this._super.init.apply(this, arguments);
+
+    // default to `true`
+    this.legacyPluginRegistrationCacheBustingRequired = true;
+  },
+
+  included() {
+    this._super.included.apply(this, arguments);
+
+    // populated lazily to ensure that the registries throughout the entire
+    // project are populated
+    //
+    // population happens in setupPreprocessorRegistry hook, which is called in
+    // `lib/broccoli/ember-app.js` constructor and `lib/models/addon.js`
+    // constructor in ember-cli itself
+    this.legacyPluginRegistrationCacheBustingRequired = canAvoidCacheBusting(this.project);
+  },
+
   parentRegistry: null,
 
   purgeModule(templateCompilerPath) {
+    // do nothing if we are operating in the "new world" and avoiding
+    // global state mutations...
+    if (this.legacyPluginRegistrationCacheBustingRequired === false) { return; }
+
     // ensure we get a fresh templateCompilerModuleInstance per ember-addon
     // instance NOTE: this is a quick hack, and will only work as long as
     // templateCompilerPath is a single file bundle
@@ -83,18 +148,24 @@ module.exports = {
   },
 
   htmlbarsOptions() {
+    if (this._htmlbarsOptions && this.legacyPluginRegistrationCacheBustingRequired === false) {
+      return this._htmlbarsOptions;
+    }
+
     let projectConfig = this.projectConfig() || {};
     let EmberENV = projectConfig.EmberENV || {};
     let templateCompilerPath = this.templateCompilerPath();
+    let pluginInfo = this.astPlugins();
 
     this.purgeModule(templateCompilerPath);
 
     // do a full clone of the EmberENV (it is guaranteed to be structured
-    // cloneable) to prevent ember-template-compiler.js from mutating
-    // the shared global config
+    // cloneable) to prevent ember-template-compiler.js from mutating the
+    // shared global config (the cloning can be removed after we drop support
+    // for Ember < 3.2).
     let clonedEmberENV = JSON.parse(JSON.stringify(EmberENV));
     global.EmberENV = clonedEmberENV; // Needed for eval time feature flag checks
-    let pluginInfo = this.astPlugins();
+
 
     let htmlbarsOptions = {
       isHTMLBars: true,
@@ -109,12 +180,24 @@ module.exports = {
       pluginCacheKey: pluginInfo.cacheKeys
     };
 
+    if (this.legacyPluginRegistrationCacheBustingRequired !== false) {
+      let plugins = pluginInfo.plugins;
+
+      if (plugins) {
+        for (let type in plugins) {
+          for (let i = 0, l = plugins[type].length; i < l; i++) {
+            htmlbarsOptions.templateCompiler.registerPlugin(type, plugins[type][i]);
+          }
+        }
+      }
+    }
+
     this.purgeModule(templateCompilerPath);
 
     delete global.Ember;
     delete global.EmberENV;
 
-    return htmlbarsOptions;
+    return this._htmlbarsOptions = htmlbarsOptions;
   },
 
   astPlugins() {
