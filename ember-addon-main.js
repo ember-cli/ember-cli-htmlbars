@@ -5,7 +5,7 @@ const utils = require('./utils');
 const hashForDep = require('hash-for-dep');
 
 module.exports = {
-  name: 'ember-cli-htmlbars',
+  name: require('./package').name,
 
   parentRegistry: null,
 

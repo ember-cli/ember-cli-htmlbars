@@ -2,17 +2,29 @@
   "name": "ember-cli-htmlbars",
   "version": "3.0.0",
   "description": "A library for adding htmlbars to ember CLI",
-  "main": "index.js",
+  "keywords": [
+    "ember-addon",
+    "ember-cli"
+  ],
+  "homepage": "https://github.com/ember-cli/ember-cli-htmlbars",
+  "bugs": {
+    "url": "https://github.com/ember-cli/ember-cli-htmlbars/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:ember-cli/ember-cli-htmlbars.git"
+  },
+  "license": "MIT",
+  "author": "Jonathan Jackson & Chase McCarthy",
   "files": [
     "index.js",
     "ember-addon-main.js",
     "utils.js"
   ],
-  "engines": {
-    "node": "6.* || 8.* || >= 10.*"
-  },
+  "main": "index.js",
   "scripts": {
     "build": "ember build",
+    "lint:hbs": "ember-template-lint .",
     "lint:js": "eslint .",
     "start": "ember serve",
     "test": "yarn run test:ember && yarn run test:node",
@@ -20,55 +32,45 @@
     "test:node": "mocha node-tests/*.js",
     "test:node:debug": "mocha debug node-tests/*.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:ember-cli/ember-cli-htmlbars.git"
+  "dependencies": {
+    "broccoli-persistent-filter": "^2.1.0",
+    "hash-for-dep": "^1.2.3",
+    "json-stable-stringify": "^1.0.1",
+    "strip-bom": "^3.0.0"
   },
-  "keywords": [
-    "ember-cli",
-    "ember-addon"
-  ],
-  "ember-addon": {
-    "main": "ember-addon-main.js",
-    "configPath": "tests/dummy/config"
-  },
-  "author": "Jonathan Jackson & Chase McCarthy",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/ember-cli/ember-cli-htmlbars/issues"
-  },
-  "homepage": "https://github.com/ember-cli/ember-cli-htmlbars",
   "devDependencies": {
+    "@ember/optional-features": "^0.7.0",
     "broccoli-test-helper": "^1.5.0",
     "chai": "^4.2.0",
     "co": "^4.6.0",
-    "ember-cli": "~3.3.0",
-    "ember-cli-app-version": "^3.0.0",
-    "ember-cli-babel": "^6.6.0",
+    "ember-cli": "~3.5.0-beta.2",
+    "ember-cli-app-version": "^3.2.0",
+    "ember-cli-babel": "^6.16.0",
     "ember-cli-dependency-checker": "^3.0.0",
-    "ember-cli-eslint": "^4.2.1",
-    "ember-cli-inject-live-reload": "^1.4.1",
-    "ember-cli-qunit": "^4.3.2",
-    "ember-cli-shims": "^1.2.0",
+    "ember-cli-eslint": "^4.2.3",
+    "ember-cli-inject-live-reload": "^1.8.2",
+    "ember-cli-template-lint": "^1.0.0-beta.1",
     "ember-export-application-global": "^2.0.0",
     "ember-load-initializers": "^1.1.0",
     "ember-maybe-import-regenerator": "^0.1.6",
-    "ember-resolver": "^5.0.0",
-    "ember-source": "~3.3.1",
+    "ember-qunit": "^3.5.0",
+    "ember-resolver": "^5.0.1",
+    "ember-source": "~3.5.0-beta.1",
     "ember-source-channel-url": "^1.1.0",
-    "ember-try": "^0.2.23",
-    "eslint-plugin-ember": "^5.0.0",
-    "eslint-plugin-mocha": "^5.1.0",
+    "ember-try": "^1.1.0",
+    "eslint-plugin-ember": "^5.2.0",
+    "eslint-plugin-mocha": "^5.2.0",
     "eslint-plugin-node": "^7.0.1",
     "fixturify": "^0.3.4",
-    "loader.js": "^4.2.3",
+    "loader.js": "^4.7.0",
     "mocha": "^5.2.0",
-    "qunit-dom": "^0.7.1"
+    "qunit-dom": "^0.8.0"
   },
-  "dependencies": {
-    "broccoli-persistent-filter": "^1.4.3",
-    "hash-for-dep": "^1.2.3",
-    "json-stable-stringify": "^1.0.0",
-    "strip-bom": "^3.0.0"
+  "engines": {
+    "node": "6.* || 8.* || >= 10.*"
+  },
+  "ember-addon": {
+    "main": "ember-addon-main.js",
+    "configPath": "tests/dummy/config"
   }
 }
