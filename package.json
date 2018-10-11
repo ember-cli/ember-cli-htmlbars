@@ -40,6 +40,7 @@
   },
   "devDependencies": {
     "@ember/optional-features": "^0.7.0",
+    "broccoli-merge-trees": "^3.0.1",
     "broccoli-test-helper": "^1.5.0",
     "chai": "^4.2.0",
     "co": "^4.6.0",

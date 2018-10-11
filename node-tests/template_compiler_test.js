@@ -5,11 +5,20 @@ const TemplateCompiler = require('../index');
 const co = require('co');
 const { createTempDir, createBuilder } = require('broccoli-test-helper');
 const fixturify = require('fixturify');
+const MergeTrees = require('broccoli-merge-trees');
 
 describe('TemplateCompiler', function(){
   this.timeout(10000);
 
   let input, output, builder;
+
+  function buildHTMLBarsOptions(plugins) {
+    return {
+      plugins,
+      isHTMLBars: true,
+      templateCompiler: require('ember-source/dist/ember-template-compiler.js'),
+    };
+  }
 
   beforeEach(co.wrap(function*() {
     input = yield createTempDir();
@@ -31,11 +40,7 @@ describe('TemplateCompiler', function(){
   let htmlbarsOptions, htmlbarsPrecompile;
 
   beforeEach(function() {
-    htmlbarsOptions = {
-      isHTMLBars: true,
-      templateCompiler: require('ember-source/dist/ember-template-compiler.js')
-    };
-
+    htmlbarsOptions = buildHTMLBarsOptions();
     htmlbarsPrecompile = htmlbarsOptions.templateCompiler.precompile;
   });
 
@@ -95,4 +100,54 @@ describe('TemplateCompiler', function(){
 
     assert.strictEqual(output.readText('web-component-template.js'), expected);
   }));
+
+  describe('multiple instances', function() {
+    let first, second;
+
+    beforeEach(co.wrap(function*() {
+      first = yield createTempDir();
+      second = yield createTempDir();
+    }));
+
+    it('allows each instance to have separate AST plugins', co.wrap(function*() {
+      first.write({
+        'first': {
+          'foo.hbs': `LOLOL`,
+        }
+      });
+
+      second.write({
+        'second': {
+          'bar.hbs': `LOLOL`,
+        }
+      });
+
+      class SillyPlugin {
+        constructor(syntax) {
+          this.syntax = syntax;
+        }
+
+        transform(ast) {
+          this.syntax.traverse(ast, {
+            TextNode(node) {
+              node.chars = 'NOT FUNNY!';
+            }
+          });
+
+          return ast;
+        }
+      }
+
+      let firstTree = new TemplateCompiler(first.path(), buildHTMLBarsOptions({
+        ast: [SillyPlugin],
+      }));
+      let secondTree = new TemplateCompiler(second.path(), buildHTMLBarsOptions());
+
+      output = createBuilder(new MergeTrees([firstTree, secondTree]));
+      yield output.build();
+
+      assert.ok(output.readText('first/foo.js').includes('NOT FUNNY'), 'first was transformed');
+      assert.ok(output.readText('second/bar.js').includes('LOLOL'), 'second was not transformed');
+    }));
+  });
 });
