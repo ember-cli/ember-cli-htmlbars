@@ -31,15 +31,20 @@ jobs:
     # runs linting and tests with current locked deps
 
     - stage: "Tests"
-      name: "Tests: Node 10"
+      name: "Node 10"
       script:
         - yarn lint:hbs
         - yarn lint:js
         - yarn test:node
-    - name: "Tests: Node 8"
+    - name: "Node 8"
       script:
         - yarn test:node
-    - name: "Tests: Node 6"
+    - name: "Node 6"
+      script:
+        - yarn test:node
+    - name: "Floating Dependencies"
+      install:
+        - yarn install --no-lockfile --non-interactive
       script:
         - yarn test:node
 
@@ -59,7 +64,7 @@ before_install:
   - export PATH=$HOME/.yarn/bin:$PATH
 
 install:
-  - yarn install --no-lockfile --non-interactive
+  - yarn install --frozen-lockfile --non-interactive
 
 script:
   - yarn ember try:one $EMBER_TRY_SCENARIO --skip-cleanup
