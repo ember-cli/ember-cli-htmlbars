@@ -16,10 +16,10 @@
     silent-error "^1.1.0"
     util.promisify "^1.0.0"
 
-"@ember/test-helpers@^0.7.26":
-  version "0.7.26"
-  resolved "https://registry.yarnpkg.com/@ember/test-helpers/-/test-helpers-0.7.26.tgz#ae11cbde9cce2c872abbea6edcd849a31dd7bd1e"
-  integrity sha512-5HxPYmdeinI4f0lF2tKHyiNGTcNY3O5rw89AC6Z6hb9yEL3ktF8eaU7rZfvSTFEF3d3TlhR5Qidl27QzLGkUeA==
+"@ember/test-helpers@^0.7.27":
+  version "0.7.27"
+  resolved "https://registry.yarnpkg.com/@ember/test-helpers/-/test-helpers-0.7.27.tgz#c622cabd0cbb95b34efc1e1b6274ab5a14edc138"
+  integrity sha512-AQESk0FTFxRY6GyZ8PharR4SC7Fju0rXqNkfNYIntAjzefZ8xEqEM4iXDj5h7gAvfx/8dA69AQ9+p7ubc+KvJg==
   dependencies:
     broccoli-funnel "^2.0.1"
     ember-assign-polyfill "~2.4.0"
@@ -2718,17 +2718,17 @@ ember-maybe-import-regenerator@^0.1.6:
     regenerator-runtime "^0.9.5"
 
 ember-qunit@^3.5.0:
-  version "3.5.0"
-  resolved "https://registry.yarnpkg.com/ember-qunit/-/ember-qunit-3.5.0.tgz#826dd91930835f86b32ff2a97a523b865db0cf69"
-  integrity sha512-g0CRAPXm4B4nR6DE5Zp40JM/dxVTyvXK+80Y074GhVY0RsVNWD3uQMasRsunU2qdTZlJyXgkRZs3tvRhQO94vg==
+  version "3.5.2"
+  resolved "https://registry.yarnpkg.com/ember-qunit/-/ember-qunit-3.5.2.tgz#f859fe3cd3cc25bc8b17911a7de808ca2f509e4c"
+  integrity sha512-gAR6m0RdOVbuDAclbaRxgY8eCxzqmBR/P0FBQajbYRNvz9qk1Uqwx821GNXCMs2bTFyWnDVZJIDyrgt4LIeqEA==
   dependencies:
-    "@ember/test-helpers" "^0.7.26"
+    "@ember/test-helpers" "^0.7.27"
     broccoli-funnel "^2.0.1"
-    broccoli-merge-trees "^2.0.0"
+    broccoli-merge-trees "^3.0.1"
     common-tags "^1.4.0"
     ember-cli-babel "^6.8.2"
     ember-cli-test-loader "^2.2.0"
-    qunit "^2.7.0"
+    qunit "~2.7.1"
 
 ember-resolver@^5.0.1:
   version "5.0.1"
@@ -6320,10 +6320,10 @@ qunit-dom@^0.8.0:
     broccoli-funnel "^2.0.0"
     broccoli-merge-trees "^3.0.1"
 
-qunit@^2.7.0:
-  version "2.7.0"
-  resolved "https://registry.yarnpkg.com/qunit/-/qunit-2.7.0.tgz#32a605c90e9291713b53609d4cf1bb25d513eee8"
-  integrity sha512-YQa/1ckkBHFIs5e7+iqh93H31F2zzZhRbC4dUeI+CuOvW7otfpu4H66DRkFLyVWLozNl4KKRQ9idjL7CNGafXg==
+qunit@~2.7.1:
+  version "2.7.1"
+  resolved "https://registry.yarnpkg.com/qunit/-/qunit-2.7.1.tgz#ab93d322e46d8457d52fe4fa49d76da8cc476fec"
+  integrity sha512-ePeNs/CVL8coOWxnjxQAp9mCvRJybEQw3rwJe1TUClL+WrIcaZkLeW7VxHWtshn0L0ZtY0y80JqC7+po7330Ng==
   dependencies:
     commander "2.12.2"
     exists-stat "1.0.0"
