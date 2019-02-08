@@ -4463,20 +4463,10 @@ has@^1.0.1:
   dependencies:
     function-bind "^1.1.1"
 
-hash-for-dep@^1.0.2:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/hash-for-dep/-/hash-for-dep-1.1.2.tgz#e3347ed92960eb0bb53a2c6c2b70e36d75b7cd0c"
-  integrity sha1-4zR+2Slg6wu1OixsK3DjbXW3zQw=
-  dependencies:
-    broccoli-kitchen-sink-helpers "^0.3.1"
-    heimdalljs "^0.2.3"
-    heimdalljs-logger "^0.1.7"
-    resolve "^1.1.6"
-
-hash-for-dep@^1.2.3:
-  version "1.2.3"
-  resolved "https://registry.yarnpkg.com/hash-for-dep/-/hash-for-dep-1.2.3.tgz#5ec69fca32c23523972d52acb5bb65ffc3664cab"
-  integrity sha512-NE//rDaCFpWHViw30YM78OAGBShU+g4dnUGY3UWGyEzPOGYg/ptOjk32nEc+bC1xz+RfK5UIs6lOL6eQdrV4Ow==
+hash-for-dep@^1.0.2, hash-for-dep@^1.2.3, hash-for-dep@^1.3.1:
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/hash-for-dep/-/hash-for-dep-1.3.1.tgz#b33d33aea8a428de5045d3e7ee0ad86298960c53"
+  integrity sha512-+EtZxGPLzo4MxEOT3VALnWcfGx/LGuYJE2HqKAPJfDXju0KHZgSNluUyExtKvXeMlF41Vwyv4qbboUI3RqRoBA==
   dependencies:
     broccoli-kitchen-sink-helpers "^0.3.1"
     heimdalljs "^0.2.3"
