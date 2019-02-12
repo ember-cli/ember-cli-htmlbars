@@ -4463,14 +4463,15 @@ has@^1.0.1:
   dependencies:
     function-bind "^1.1.1"
 
-hash-for-dep@^1.0.2, hash-for-dep@^1.2.3, hash-for-dep@^1.3.1:
-  version "1.3.1"
-  resolved "https://registry.yarnpkg.com/hash-for-dep/-/hash-for-dep-1.3.1.tgz#b33d33aea8a428de5045d3e7ee0ad86298960c53"
-  integrity sha512-+EtZxGPLzo4MxEOT3VALnWcfGx/LGuYJE2HqKAPJfDXju0KHZgSNluUyExtKvXeMlF41Vwyv4qbboUI3RqRoBA==
+hash-for-dep@^1.0.2, hash-for-dep@^1.2.3, hash-for-dep@^1.4.3:
+  version "1.4.3"
+  resolved "https://registry.yarnpkg.com/hash-for-dep/-/hash-for-dep-1.4.3.tgz#7c4718179c130fa29ed1fcde82d2ffa06646abad"
+  integrity sha512-9wxIRC89BOZCu17Df966u9TzBQhXVGvbVWOqjMa7e/4ZU/8E+jTd0G8ZC4KD0VMvYLOwqEurfDlFB6BLKVAMlw==
   dependencies:
     broccoli-kitchen-sink-helpers "^0.3.1"
     heimdalljs "^0.2.3"
     heimdalljs-logger "^0.1.7"
+    path-root "^0.1.1"
     resolve "^1.4.0"
 
 he@1.1.1:
@@ -6390,6 +6391,18 @@ path-posix@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/path-posix/-/path-posix-1.0.0.tgz#06b26113f56beab042545a23bfa88003ccac260f"
   integrity sha1-BrJhE/Vr6rBCVFojv6iAA8ysJg8=
+
+path-root-regex@^0.1.0:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/path-root-regex/-/path-root-regex-0.1.2.tgz#bfccdc8df5b12dc52c8b43ec38d18d72c04ba96d"
+  integrity sha1-v8zcjfWxLcUsi0PsONGNcsBLqW0=
+
+path-root@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/path-root/-/path-root-0.1.1.tgz#9a4a6814cac1c0cd73360a95f32083c8ea4745b7"
+  integrity sha1-mkpoFMrBwM1zNgqV8yCDyOpHRbc=
+  dependencies:
+    path-root-regex "^0.1.0"
 
 path-to-regexp@0.1.7:
   version "0.1.7"
