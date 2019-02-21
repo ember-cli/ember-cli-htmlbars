@@ -34,7 +34,7 @@
   },
   "dependencies": {
     "broccoli-persistent-filter": "^2.2.1",
-    "hash-for-dep": "^1.4.6",
+    "hash-for-dep": "^1.4.7",
     "json-stable-stringify": "^1.0.1",
     "strip-bom": "^3.0.0"
   },

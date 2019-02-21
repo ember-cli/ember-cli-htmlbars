@@ -4455,10 +4455,10 @@ has@^1.0.1:
   dependencies:
     function-bind "^1.1.1"
 
-hash-for-dep@^1.0.2, hash-for-dep@^1.2.3, hash-for-dep@^1.4.6:
-  version "1.4.6"
-  resolved "https://registry.yarnpkg.com/hash-for-dep/-/hash-for-dep-1.4.6.tgz#315556a27ce9f5151cff003c12e8208005898412"
-  integrity sha512-QkZE+//K3Gum1fq1QevkSFRgeiItVNutpbCd7JYq30Rfg+GpITHhrF+59+VFcn3MJIPu9IIWU5h3/12CYDYMnA==
+hash-for-dep@^1.0.2, hash-for-dep@^1.2.3, hash-for-dep@^1.4.7:
+  version "1.4.7"
+  resolved "https://registry.yarnpkg.com/hash-for-dep/-/hash-for-dep-1.4.7.tgz#ea6f9d8e2f9e784fc48ca60c40ea886bdb41aa54"
+  integrity sha512-nz0Ttg6U7vx8Ec4ai4niocpJYD76fm9L1n/d2dIt4lH+s0T+TPgwaxgYkQ3S3R7ZxDyiNedYwRtdzqL29FQyTw==
   dependencies:
     broccoli-kitchen-sink-helpers "^0.3.1"
     heimdalljs "^0.2.3"
