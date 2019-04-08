@@ -63,7 +63,7 @@
     "eslint-plugin-node": "^8.0.0",
     "fixturify": "^1.2.0",
     "loader.js": "^4.7.0",
-    "mocha": "^6.0.2",
+    "mocha": "^6.1.1",
     "qunit-dom": "^0.8.0"
   },
   "engines": {
