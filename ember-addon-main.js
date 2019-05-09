@@ -1,9 +1,93 @@
 'use strict';
 
+const fs = require('fs');
 const path = require('path');
 const utils = require('./utils');
 const addDependencyTracker = require("./addDependencyTracker");
 const hashForDep = require('hash-for-dep');
+const walkSync = require('walk-sync');
+const Plugin = require('broccoli-plugin');
+
+class ColocatedTemplateProcessor extends Plugin {
+  constructor(tree, options) {
+    super([tree], options);
+
+    this.options = options;
+  }
+
+  build() {
+    // TODO: do we need to pass through all files, or only template files?
+    let files = walkSync(this.inputPaths[0], { directories: false });
+
+    let filesToCopy = [];
+    files.forEach(filePath => {
+      let filePathParts = path.parse(filePath);
+      let inputPath = path.join(this.inputPaths[0], filePath);
+      let isInsideComponentsFolder = filePath.includes('/components/');
+
+      // copy forward non-hbs files
+      // TODO: don't copy .js files that will ultimately be overridden
+      if (!isInsideComponentsFolder || filePathParts.ext !== '.hbs') {
+        filesToCopy.push(filePath);
+        return;
+      }
+
+      // TODO: deal with alternate extensions (e.g. ts)
+      let possibleJSPath = path.join(filePathParts.dir, filePathParts.name + '.js');
+      let hasJSFile = fs.existsSync(path.join(this.inputPaths[0], possibleJSPath));
+
+      if (filePathParts.name === 'template') {
+        // TODO: maybe warn?
+        return;
+      }
+
+      let templateContents = fs.readFileSync(inputPath, { encoding: 'utf8' });
+      let jsContents = null;
+
+      // TODO: deal with hygiene
+      if (hasJSFile) {
+        // add the template, call setComponentTemplate
+
+        jsContents = fs.readFileSync(path.join(this.inputPaths[0], possibleJSPath), { encoding: 'utf8' });
+        jsContents = `${jsContents.replace('export default', 'const CLASS =')}\n;
+const setComponentTemplate = Ember._setComponentTemplate;
+const TEMPLATE = ${this.options.precompile(templateContents)};
+export default setComponentTemplate(TEMPLATE, CLASS);`;
+      } else {
+        // create JS file, use null component pattern
+        jsContents = `import templateOnlyComponent from "@ember/component/template-only";
+const setComponentTemplate = Ember._setComponentTemplate;
+const TEMPLATE = ${this.options.precompile(templateContents)};
+const CLASS = templateOnlyComponent();
+export default setComponentTemplate(TEMPLATE, CLASS);`;
+      }
+
+
+      let outputPath = path.join(this.outputPath, possibleJSPath);
+
+      // TODO: check for compat with Node 8 (recursive may only be present in 10+)
+      // TODO: don't speculatively mkdirSync (likely do in a try/catch with ENOENT)
+      fs.mkdirSync(path.dirname(outputPath), { recursive: true });
+
+      fs.writeFileSync(outputPath, jsContents, { encoding: 'utf8' });
+    });
+
+    filesToCopy.forEach(filePath => {
+      let inputPath = path.join(this.inputPaths[0], filePath);
+      let outputPath = path.join(this.outputPath, filePath);
+
+      // avoid copying file over top of a previously written one
+      if (fs.existsSync(outputPath)) {
+        return;
+      }
+
+      // TODO: check for compat with Node 8 (recursive may only be present in 10+)
+      // TODO: don't speculatively mkdirSync (likely do in a try/catch with ENOENT)
+      fs.mkdirSync(path.dirname(outputPath), { recursive: true });
+      fs.copyFileSync(inputPath, outputPath);
+    })
+  }
+}
 
 module.exports = {
   name: require('./package').name,
@@ -37,6 +121,12 @@ module.exports = {
     // ensure that broccoli-ember-hbs-template-compiler is not processing hbs files
     registry.remove('template', 'broccoli-ember-hbs-template-compiler');
 
+    let precompile = string => {
+      let htmlbarsOptions = this.htmlbarsOptions();
+      let templateCompiler = htmlbarsOptions.templateCompiler;
+      return utils.template(templateCompiler, string);
+    }
+
     registry.add('template', {
       name: 'ember-cli-htmlbars',
       ext: 'hbs',
@@ -44,14 +134,12 @@ module.exports = {
       toTree(tree) {
         let htmlbarsOptions = this._addon.htmlbarsOptions();
         let TemplateCompiler = require('./index');
-        return new TemplateCompiler(tree, htmlbarsOptions);
+        let unifiedColocatedTemplates = new ColocatedTemplateProcessor(tree, { precompile });
+
+        return new TemplateCompiler(unifiedColocatedTemplates, htmlbarsOptions);
       },
 
-      precompile(string) {
-        let htmlbarsOptions = this._addon.htmlbarsOptions();
-        let templateCompiler = htmlbarsOptions.templateCompiler;
-        return utils.template(templateCompiler, string);
-      }
+      precompile,
     });
 
     if (type === 'parent') {
