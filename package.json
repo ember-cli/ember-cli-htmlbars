@@ -33,7 +33,7 @@
     "test:node:debug": "mocha debug node-tests/*.js"
   },
   "dependencies": {
-    "broccoli-persistent-filter": "^2.2.2",
+    "broccoli-persistent-filter": "^2.2.3",
     "hash-for-dep": "^1.5.1",
     "json-stable-stringify": "^1.0.1",
     "strip-bom": "^3.0.0"
