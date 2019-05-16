@@ -86,10 +86,14 @@ class TemplateCompiler extends Filter {
   }
 
   processString(string, relativePath) {
+    let srcDir = this.inputPaths[0];
     try {
       return 'export default ' + utils.template(this.options.templateCompiler, stripBom(string), {
         contents: string,
-        moduleName: relativePath
+        moduleName: relativePath,
+        parseOptions: {
+          srcName: path.join(srcDir, relativePath)
+        }
       }) + ';';
     } catch(error) {
       rethrowBuildError(error);
