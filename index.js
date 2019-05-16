@@ -1,6 +1,7 @@
 'use strict';
 
 const fs = require('fs');
+const path = require('path');
 const utils = require('./utils');
 const Filter = require('broccoli-persistent-filter');
 const crypto = require('crypto');
@@ -87,7 +88,7 @@ class TemplateCompiler extends Filter {
     let strippedOptions = {};
 
     for (let key in this.options) {
-      if (key !== 'templateCompiler') {
+      if (key !== 'templateCompiler' || key !== 'templateCacheKey') {
         strippedOptions[key] = this.options[key];
       }
     }
@@ -115,7 +116,17 @@ class TemplateCompiler extends Filter {
   }
 
   cacheKeyProcessString(string, relativePath) {
-    return this.optionsHash() + Filter.prototype.cacheKeyProcessString.call(this, string, relativePath);
+    let baseKey =
+      Filter.prototype.cacheKeyProcessString.call(this, string, relativePath);
+    let hash = crypto.createHash('md5');
+    hash.update(this.optionsHash(), 'utf8');
+    hash.update("\0");
+    hash.update(baseKey, 'utf8');
+    if (this.options.templateCacheKey) {
+      hash.update("\0");
+      hash.update(this.options.templateCacheKey(relativePath), 'utf8');
+    }
+    return hash.digest("hex");
   }
 }
 

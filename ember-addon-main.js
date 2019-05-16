@@ -3,6 +3,7 @@
 const path = require('path');
 const utils = require('./utils');
 const hashForDep = require('hash-for-dep');
+const crypto = require('crypto');
 
 module.exports = {
   name: require('./package').name,
@@ -106,7 +107,10 @@ module.exports = {
         ast: pluginInfo.plugins
       },
 
-      pluginCacheKey: pluginInfo.cacheKeys
+      pluginCacheKey: pluginInfo.cacheKeys,
+
+      templateCacheKey: pluginInfo.templateCacheKeys &&
+        templateCacheKey.bind(null, pluginInfo.templateCacheKeys)
     };
 
     this.purgeModule(templateCompilerPath);
@@ -121,6 +125,7 @@ module.exports = {
     let pluginWrappers = this.parentRegistry.load('htmlbars-ast-plugin');
     let plugins = [];
     let cacheKeys = [];
+    let templateCacheKeys;
 
     for (let i = 0; i < pluginWrappers.length; i++) {
       let wrapper = pluginWrappers[i];
@@ -129,14 +134,19 @@ module.exports = {
 
       let providesBaseDir = typeof wrapper.baseDir === 'function';
       let augmentsCacheKey = typeof wrapper.cacheKey === 'function';
+      let hasTemplateCacheKey = typeof wrapper.templateCacheKey === 'function';
 
-      if (providesBaseDir || augmentsCacheKey) {
+      if (providesBaseDir || augmentsCacheKey || hasTemplateCacheKey) {
         if (providesBaseDir) {
           let pluginHashForDep = hashForDep(wrapper.baseDir());
           cacheKeys.push(pluginHashForDep);
         }
         if (augmentsCacheKey) {
-          cacheKeys.push(wrapper.cacheKey());
+          cacheKeys.push(wrapper.cacheKey);
+        }
+        if (hasTemplateCacheKey) {
+          templateCacheKeys = templateCacheKeys || [];
+          templateCacheKeys.push(wrapper.templateCacheKey);
         }
       } else {
         // support for ember-cli < 2.2.0
@@ -147,7 +157,17 @@ module.exports = {
 
     return {
       plugins: plugins,
-      cacheKeys: cacheKeys
+      cacheKeys: cacheKeys,
+      templateCacheKeys: templateCacheKeys
     };
   }
 };
+
+function templateCacheKey(templateCacheKeys, relativePath) {
+  let hash = crypto.createHash('md5')
+  for (let i = 0; i < templateCacheKeys.length; i++) {
+    hash.update(templateCacheKeys[i](relativePath));
+    hash.update("\0");
+  }
+  return hash.digest("hex");
+}
