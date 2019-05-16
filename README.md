@@ -35,7 +35,19 @@ module.exports = {
     // called within htmlbars when compiling a given template).
     this.app.registry.add('htmlbars-ast-plugin', {
       name: 'some-transform',
-      plugin: SomeTransform
+      plugin: SomeTransform,
+      cacheKey: function() {
+        // Invoked once per process.
+        // Usually used to return a value representing configuration that
+        // affects the behavior of the transform.
+        // Can return any value that can be represented in JSON.
+      },
+      templateCacheKey: function(relativePathToTemplate) {
+        // Invoked every time the template might need to be (re-)compiled.
+        // Used to invalidate the compiled template if the output depends on
+        // application content that isn't part of the template itself.
+        // Must return a string.
+      }
     });
   }
 };
