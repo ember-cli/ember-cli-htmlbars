@@ -36,6 +36,7 @@ class TemplateCompiler extends Filter {
 
     this.precompile = this.options.templateCompiler.precompile;
     this.registerPlugin = this.options.templateCompiler.registerPlugin;
+    this.unregisterPlugin = this.options.templateCompiler.unregisterPlugin
 
     this.registerPlugins();
     this.initializeFeatures();
@@ -52,6 +53,17 @@ class TemplateCompiler extends Filter {
       for (let type in plugins) {
         for (let i = 0, l = plugins[type].length; i < l; i++) {
           this.registerPlugin(type, plugins[type][i]);
+        }
+      }
+    }
+  }
+  unregisterPlugins() {
+    let plugins = this.options.plugins;
+
+    if (plugins) {
+      for (let type in plugins) {
+        for (let i = 0, l = plugins[type].length; i < l; i++) {
+          this.unregisterPlugin(type, plugins[type][i]);
         }
       }
     }
