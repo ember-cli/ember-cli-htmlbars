@@ -1,6 +1,7 @@
 'use strict';
 
 const fs = require('fs');
+const path = require('path');
 const utils = require('./utils');
 const Filter = require('broccoli-persistent-filter');
 const crypto = require('crypto');
@@ -46,6 +47,13 @@ class TemplateCompiler extends Filter {
     return __dirname;
   }
 
+  registeredASTPlugins() {
+    // This is a super obtuse way to get access to the plugins we've registered
+    // it also returns other plugins that are registered by ember itself.
+    let options = this.options.templateCompiler.compileOptions();
+    return options.plugins.ast;
+  }
+
   registerPlugins() {
     let plugins = this.options.plugins;
 
@@ -86,14 +94,25 @@ class TemplateCompiler extends Filter {
 
   processString(string, relativePath) {
     let srcDir = this.inputPaths[0];
+    let srcName = path.join(srcDir, relativePath);
     try {
-      return 'export default ' + utils.template(this.options.templateCompiler, stripBom(string), {
+      let result = 'export default ' + utils.template(this.options.templateCompiler, stripBom(string), {
         contents: string,
         moduleName: relativePath,
         parseOptions: {
-          srcName: path.join(srcDir, relativePath)
+          srcName: srcName
         }
       }) + ';';
+      if (this.options.dependencyInvalidation) {
+        let plugins = pluginsWithDependencies(this.registeredASTPlugins());
+        let dependencies = [];
+        for (let i = 0; i < plugins.length; i++) {
+          let pluginDeps = plugins[i].getDependencies(srcName);
+          dependencies = dependencies.concat(pluginDeps);
+        }
+        this.dependencies.setDependencies(relativePath, dependencies);
+      }
+      return result;
     } catch(error) {
       rethrowBuildError(error);
     }
@@ -137,5 +156,15 @@ class TemplateCompiler extends Filter {
 
 TemplateCompiler.prototype.extensions = ['hbs', 'handlebars'];
 TemplateCompiler.prototype.targetExtension = 'js';
+
+function pluginsWithDependencies(registeredPlugins) {
+  let found = [];
+  for (let i = 0; i < registeredPlugins.length; i++) {
+    if (registeredPlugins[i].getDependencies) {
+      found.push(registeredPlugins[i]);
+    }
+  }
+  return found;
+}
 
 module.exports = TemplateCompiler;
