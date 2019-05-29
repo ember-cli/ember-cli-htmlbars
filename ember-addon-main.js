@@ -135,7 +135,7 @@ module.exports = {
       let providesBaseDir = typeof wrapper.baseDir === 'function';
       let augmentsCacheKey = typeof wrapper.cacheKey === 'function';
 
-      if (providesBaseDir || augmentsCacheKey) {
+      if (providesBaseDir || augmentsCacheKey || wrapper.dependencyInvalidation) {
         if (providesBaseDir) {
           let pluginHashForDep = hashForDep(wrapper.baseDir());
           cacheKeys.push(pluginHashForDep);
