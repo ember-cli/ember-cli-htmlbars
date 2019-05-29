@@ -47,6 +47,7 @@ module.exports = {
 * `plugin` - A function of type [`ASTPluginBuilder`](https://github.com/glimmerjs/glimmer-vm/blob/master/packages/%40glimmer/syntax/lib/parser/tokenizer-event-handlers.ts#L329-L341).
 * `dependencyInvalidation` - Boolean. A flag that indicates the AST Plugin may, on a per-template basis, depend on other files that affect its output.
 * `cacheKey` - function that returns any JSON-compatible value - The value returned is used to invalidate the persistent cache across restarts, usually in the case of a dependency or configuration change.
+* `baseDir` - `() => string`. A function that returns the directory on disk of the npm module for the plugin. If provided, a basic cache invalidation is performed if any of the dependencies change (e.g. due to a npm install/upgrade).
 
 #### Implementing Dependency Invalidation in an AST Plugin
 
