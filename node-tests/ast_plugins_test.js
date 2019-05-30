@@ -119,6 +119,7 @@ describe('AST plugins', function(){
     // The state didn't change. the output should be cached
     // and the rewriter shouldn't be invoked.
     yield output.build();
+    assert.deepEqual(output.changes(), []);
     templateOutput = output.readText('template.js');
     assert.ok(!templateOutput.match(/div/));
     assert.ok(templateOutput.match(/my-custom-element/));
@@ -159,6 +160,8 @@ describe('AST plugins', function(){
     tree = new TemplateCompiler(input.path(), htmlbarsOptions);
     output = createBuilder(tree);
     yield output.build();
+    assert.deepEqual(output.changes()['template.js'], 'create');
+    // the "new" file is read from cache.
     templateOutput = output.readText('template.js');
     assert.ok(!templateOutput.match(/div/));
     assert.ok(templateOutput.match(/my-custom-element/));
