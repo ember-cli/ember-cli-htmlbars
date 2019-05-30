@@ -131,8 +131,6 @@ describe('AST plugins', function(){
     });
     yield output.build();
     templateOutput = output.readText('template.js');
-    // XXX This fails because the hot cache is not invalidated when the cache
-    // XXX key changes.
     assert.strictEqual(rewriterCallCount, 2);
     assert.ok(templateOutput.match(/my-changed-element/));
   }));
