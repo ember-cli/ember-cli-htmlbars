@@ -73,6 +73,12 @@ export interface ASTPluginBuilderWithDeps extends ASTPluginBuilder {
 
 export interface ASTPluginWithDeps extends ASTPlugin {
   /**
+   * If this method exists, it is called with the relative path to the current
+   * file just before processing starts. Use this method to reset the
+   * dependency tracking state associated with the file.
+   */
+  resetDependencies?(relativePath: string): void;
+  /**
    * This method is called just as the template finishes being processed.
    *
    * @param relativePath {string} A relative path to the file that may have dependencies.
