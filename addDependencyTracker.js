@@ -17,8 +17,8 @@ module.exports = function addDependencyTracker(plugin, enableInvalidation) {
   let lastDependencies = {};
   let trackedPlugin = (env) => {
     let realPlugin = plugin(env);
-    let visitors = realPlugin.visitor;
-    let origProgram = visitors.Program;
+    let visitor = realPlugin.visitor;
+    let origProgram = visitor.Program;
     let origEnter, origExit, origKeys;
     if (origProgram) {
       if (typeof origProgram === "function") {
@@ -31,7 +31,7 @@ module.exports = function addDependencyTracker(plugin, enableInvalidation) {
         origKeys = origProgram.keys;
       }
     }
-    visitors.Program = {
+    visitor.Program = {
       keys: origKeys,
       enter: (node) => {
         if (realPlugin.resetDependencies) {
