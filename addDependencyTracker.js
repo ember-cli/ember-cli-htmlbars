@@ -31,25 +31,23 @@ module.exports = function addDependencyTracker(plugin, enableInvalidation) {
     }
     visitors.Program = {
       enter: (node) => {
-        let fileName = node.loc.source;
         if (realPlugin.resetDependencies) {
-          realPlugin.resetDependencies();
+          realPlugin.resetDependencies(env.meta.moduleName);
         }
-        delete lastDependencies[fileName];
+        delete lastDependencies[env.meta.moduleName];
         if (origEnter) origEnter(node);
       },
       exit: (node) => {
         if (realPlugin.dependencies) {
-          let fileName = node.loc.source;
-          lastDependencies[fileName] = realPlugin.dependencies(fileName);
+          lastDependencies[env.meta.moduleName] = realPlugin.dependencies(env.meta.moduleName);
         }
         if (origExit) origExit(node)
       }
     };
     return realPlugin;
   };
-  trackedPlugin.getDependencies = (filename) => {
-    return lastDependencies[filename] || [];
+  trackedPlugin.getDependencies = (relativePath) => {
+    return lastDependencies[relativePath] || [];
   }
   return trackedPlugin;
 };

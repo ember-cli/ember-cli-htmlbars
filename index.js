@@ -107,7 +107,7 @@ class TemplateCompiler extends Filter {
         let plugins = pluginsWithDependencies(this.registeredASTPlugins());
         let dependencies = [];
         for (let i = 0; i < plugins.length; i++) {
-          let pluginDeps = plugins[i].getDependencies(srcName);
+          let pluginDeps = plugins[i].getDependencies(relativePath);
           dependencies = dependencies.concat(pluginDeps);
         }
         this.dependencies.setDependencies(relativePath, dependencies);
