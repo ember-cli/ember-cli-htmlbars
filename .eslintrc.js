@@ -25,6 +25,7 @@ module.exports = {
         'ember-cli-build.js',
         'ember-addon-main.js',
         'index.js',
+        'addDependencyTracker.js',
         'utils.js',
         'testem.js',
         'blueprints/*/index.js',

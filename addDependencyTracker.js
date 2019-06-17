@@ -1,4 +1,4 @@
-module.exports = function addDependencyTracker(plugin, enableInvalidation) {
+function addDependencyTracker(plugin, enableInvalidation) {
   if (plugin.prototype && plugin.prototype.transform) {
     // we don't track dependencies for legacy plugins.
     return plugin;
@@ -53,4 +53,6 @@ module.exports = function addDependencyTracker(plugin, enableInvalidation) {
     return lastDependencies[relativePath] || [];
   }
   return trackedPlugin;
-};
+}
+
+module.exports = addDependencyTracker;

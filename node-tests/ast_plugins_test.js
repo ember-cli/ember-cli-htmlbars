@@ -59,8 +59,8 @@ describe('AST plugins', function(){
         return rewriter.tagNameFile ? [rewriter.tagNameFile] : [];
       },
       visitor: {
-        Program(node) {
-          let sourceFile = node.loc.source;
+        Program() {
+          let sourceFile = env.meta.moduleName;
           let pathInfo = sourceFile && path.parse(sourceFile);
           if (pathInfo) {
             if (pathInfo.base === "template.hbs") {
@@ -121,7 +121,7 @@ describe('AST plugins', function(){
     // The state didn't change. the output should be cached
     // and the rewriter shouldn't be invoked.
     yield output.build();
-    assert.deepEqual(output.changes(), {});
+    assert.deepStrictEqual(output.changes(), {});
     templateOutput = output.readText('template.js');
     assert.ok(!templateOutput.match(/div/));
     assert.ok(templateOutput.match(/my-custom-element/));
@@ -133,7 +133,7 @@ describe('AST plugins', function(){
       'template.tagname': 'MyChangedElement'
     });
     yield output.build();
-    assert.deepEqual(output.changes(), { 'template.js': 'change', 'template.tagname': 'change' });
+    assert.deepStrictEqual(output.changes(), { 'template.js': 'change', 'template.tagname': 'change' });
     templateOutput = output.readText('template.js');
     assert.strictEqual(rewriterCallCount, 2);
     assert.ok(templateOutput.match(/my-changed-element/));
@@ -163,7 +163,7 @@ describe('AST plugins', function(){
     tree = new TemplateCompiler(input.path(), htmlbarsOptions);
     output = createBuilder(tree);
     yield output.build();
-    assert.deepEqual(output.changes()['template.js'], 'create');
+    assert.deepStrictEqual(output.changes()['template.js'], 'create');
     // the "new" file is read from cache.
     templateOutput = output.readText('template.js');
     assert.ok(!templateOutput.match(/div/));
