@@ -121,7 +121,7 @@ describe('AST plugins', function(){
     // The state didn't change. the output should be cached
     // and the rewriter shouldn't be invoked.
     yield output.build();
-    assert.deepEqual(output.changes(), []);
+    assert.deepEqual(output.changes(), {});
     templateOutput = output.readText('template.js');
     assert.ok(!templateOutput.match(/div/));
     assert.ok(templateOutput.match(/my-custom-element/));
@@ -133,6 +133,7 @@ describe('AST plugins', function(){
       'template.tagname': 'MyChangedElement'
     });
     yield output.build();
+    assert.deepEqual(output.changes(), { 'template.js': 'change', 'template.tagname': 'change' });
     templateOutput = output.readText('template.js');
     assert.strictEqual(rewriterCallCount, 2);
     assert.ok(templateOutput.match(/my-changed-element/));
