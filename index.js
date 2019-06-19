@@ -51,7 +51,7 @@ class TemplateCompiler extends Filter {
     // This is a super obtuse way to get access to the plugins we've registered
     // it also returns other plugins that are registered by ember itself.
     let options = this.options.templateCompiler.compileOptions();
-    return options.plugins.ast;
+    return options.plugins && options.plugins.ast || [];
   }
 
   registerPlugins() {

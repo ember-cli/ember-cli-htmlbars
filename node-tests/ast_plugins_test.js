@@ -28,7 +28,9 @@ describe('AST plugins', function(){
 
   afterEach(co.wrap(function*() {
     if (tree) {
-      tree.unregisterPlugins();
+      if (tree.unregisterPlugins) {
+        tree.unregisterPlugins();
+      }
       if (tree.processor.processor._cache) {
         yield tree.processor.processor._cache.clear();
       }
