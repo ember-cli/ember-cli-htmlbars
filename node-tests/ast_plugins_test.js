@@ -139,51 +139,65 @@ describe('AST plugins', function(){
     assert.ok(templateOutput.match(/my-changed-element/));
   }));
 
-  they('will bust the persistent cache if the template cache key changes.', co.wrap(function* () {
-    Object.assign(htmlbarsOptions, {
-      plugins: {
-        ast: [DivRewriter]
-      },
-      dependencyInvalidation: true,
+  describe("with persistent caching enabled", function () {
+    let forcePersistenceValue;
+    before(function() {
+      forcePersistenceValue = process.env.FORCE_PERSISTENCE_IN_CI;
+      process.env.FORCE_PERSISTENCE_IN_CI = "true"
     });
 
-    tree = new TemplateCompiler(input.path(), htmlbarsOptions);
-
-    output = createBuilder(tree);
-    yield output.build();
-    let templateOutput = output.readText('template.js');
-    assert.ok(!templateOutput.match(/div/));
-    assert.ok(templateOutput.match(/my-custom-element/));
-    assert.strictEqual(rewriterCallCount, 1);
-    yield output.dispose();
-    tree.unregisterPlugins();
-
-    // The state didn't change. the output should be cached
-    // and the rewriter shouldn't be invoked.
-    tree = new TemplateCompiler(input.path(), htmlbarsOptions);
-    output = createBuilder(tree);
-    yield output.build();
-    assert.deepStrictEqual(output.changes()['template.js'], 'create');
-    // the "new" file is read from cache.
-    templateOutput = output.readText('template.js');
-    assert.ok(!templateOutput.match(/div/));
-    assert.ok(templateOutput.match(/my-custom-element/));
-    assert.strictEqual(rewriterCallCount, 1);
-    yield output.dispose();
-    tree.unregisterPlugins();
-
-    // The state changes. the cache key updates and the template
-    // should be recompiled.
-    input.write({
-      'template.tagname': 'MyChangedElement'
+    after(function() {
+      process.env.FORCE_PERSISTENCE_IN_CI = forcePersistenceValue;
     });
 
-    tree = new TemplateCompiler(input.path(), htmlbarsOptions);
-    output = createBuilder(tree);
-    yield output.build();
-    templateOutput = output.readText('template.js');
-    assert.strictEqual(rewriterCallCount, 2);
-    assert.ok(templateOutput.match(/my-changed-element/));
-    assert.strictEqual(rewriterCallCount, 2);
-  }));
+    they('will bust the persistent cache if the template cache key changes.', co.wrap(function* () {
+      Object.assign(htmlbarsOptions, {
+        plugins: {
+          ast: [DivRewriter]
+        },
+        dependencyInvalidation: true,
+      });
+
+      tree = new TemplateCompiler(input.path(), htmlbarsOptions);
+
+      output = createBuilder(tree);
+      yield output.build();
+      let templateOutput = output.readText('template.js');
+      assert.ok(!templateOutput.match(/div/));
+      assert.ok(templateOutput.match(/my-custom-element/));
+      assert.strictEqual(rewriterCallCount, 1);
+      yield output.dispose();
+      tree.unregisterPlugins();
+
+      // The state didn't change. the output should be cached
+      // and the rewriter shouldn't be invoked.
+      tree = new TemplateCompiler(input.path(), htmlbarsOptions);
+      output = createBuilder(tree);
+      yield output.build();
+      assert.deepStrictEqual(output.changes()['template.js'], 'create');
+      // the "new" file is read from cache.
+      templateOutput = output.readText('template.js');
+      assert.ok(!templateOutput.match(/div/));
+      assert.ok(templateOutput.match(/my-custom-element/));
+      assert.strictEqual(rewriterCallCount, 1);
+      yield output.dispose();
+      tree.unregisterPlugins();
+
+      // The state changes. the cache key updates and the template
+      // should be recompiled.
+      input.write({
+        'template.tagname': 'MyChangedElement'
+      });
+
+      tree = new TemplateCompiler(input.path(), htmlbarsOptions);
+      output = createBuilder(tree);
+      yield output.build();
+      templateOutput = output.readText('template.js');
+      assert.strictEqual(rewriterCallCount, 2);
+      assert.ok(templateOutput.match(/my-changed-element/));
+      assert.strictEqual(rewriterCallCount, 2);
+    }));
+
+  });
+
 });
