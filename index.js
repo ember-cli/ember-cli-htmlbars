@@ -37,7 +37,7 @@ class TemplateCompiler extends Filter {
 
     this.precompile = this.options.templateCompiler.precompile;
     this.registerPlugin = this.options.templateCompiler.registerPlugin;
-    this.unregisterPlugin = this.options.templateCompiler.unregisterPlugin
+    this.unregisterPlugin = this.options.templateCompiler.removePlugin || this.options.templateCompiler.unregisterPlugin
 
     this.registerPlugins();
     this.initializeFeatures();
