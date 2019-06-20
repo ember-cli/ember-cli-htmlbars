@@ -9,6 +9,8 @@ const co = require('co');
 const { createTempDir, createBuilder } = require('broccoli-test-helper');
 const fixturify = require('fixturify');
 const addDependencyTracker = require("../addDependencyTracker");
+const templateCompiler = require('ember-source/dist/ember-template-compiler.js');
+const REQUIRES_LEGACY_AST_PLUGINS = typeof templateCompiler.removePlugin === "function"; // XXX Is there a better way to detect this? I'd rather just skip this test.
 
 describe('AST plugins', function(){
   const they = it;
@@ -22,15 +24,13 @@ describe('AST plugins', function(){
     input.write(fixturify.readSync(`${__dirname}/fixtures`));
     htmlbarsOptions = {
       isHTMLBars: true,
-      templateCompiler: require('ember-source/dist/ember-template-compiler.js')
+      templateCompiler: templateCompiler
     };
   }));
 
   afterEach(co.wrap(function*() {
     if (tree) {
-      if (tree.unregisterPlugins) {
-        tree.unregisterPlugins();
-      }
+      tree.unregisterPlugins();
       if (tree.processor.processor._cache) {
         yield tree.processor.processor._cache.clear();
       }
@@ -88,6 +88,9 @@ describe('AST plugins', function(){
   const DivRewriter = addDependencyTracker(DivRewriterImpl, true);
 
   they('are accepted and used.', co.wrap(function* () {
+    if (REQUIRES_LEGACY_AST_PLUGINS) {
+      this.skip();
+    }
     htmlbarsOptions.plugins = {
       ast: [DivRewriter],
     };
@@ -104,6 +107,9 @@ describe('AST plugins', function(){
   }));
 
   they('will bust the hot cache if the dependency changes.', co.wrap(function* () {
+    if (REQUIRES_LEGACY_AST_PLUGINS) {
+      this.skip();
+    }
     Object.assign(htmlbarsOptions, {
       plugins: {
         ast: [DivRewriter]
@@ -115,6 +121,7 @@ describe('AST plugins', function(){
 
     output = createBuilder(tree);
     yield output.build();
+
     let templateOutput = output.readText('template.js');
     assert.ok(!templateOutput.match(/div/));
     assert.ok(templateOutput.match(/my-custom-element/));
@@ -153,6 +160,9 @@ describe('AST plugins', function(){
     });
 
     they('will bust the persistent cache if the template cache key changes.', co.wrap(function* () {
+      if (REQUIRES_LEGACY_AST_PLUGINS) {
+        this.skip();
+      }
       Object.assign(htmlbarsOptions, {
         plugins: {
           ast: [DivRewriter]
@@ -164,6 +174,7 @@ describe('AST plugins', function(){
 
       output = createBuilder(tree);
       yield output.build();
+
       let templateOutput = output.readText('template.js');
       assert.ok(!templateOutput.match(/div/));
       assert.ok(templateOutput.match(/my-custom-element/));
@@ -199,7 +210,5 @@ describe('AST plugins', function(){
       assert.ok(templateOutput.match(/my-changed-element/));
       assert.strictEqual(rewriterCallCount, 2);
     }));
-
   });
-
 });
