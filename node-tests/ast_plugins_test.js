@@ -10,7 +10,7 @@ const { createTempDir, createBuilder } = require('broccoli-test-helper');
 const fixturify = require('fixturify');
 const addDependencyTracker = require("../addDependencyTracker");
 const templateCompiler = require('ember-source/dist/ember-template-compiler.js');
-const REQUIRES_LEGACY_AST_PLUGINS = typeof templateCompiler.removePlugin === "function"; // XXX Is there a better way to detect this? I'd rather just skip this test.
+const CANNOT_UNREGISTER_PLUGINS = !(templateCompiler.unregisterPlugin);
 
 describe('AST plugins', function(){
   const they = it;
@@ -88,7 +88,7 @@ describe('AST plugins', function(){
   const DivRewriter = addDependencyTracker(DivRewriterImpl, true);
 
   they('are accepted and used.', co.wrap(function* () {
-    if (REQUIRES_LEGACY_AST_PLUGINS) {
+    if (CANNOT_UNREGISTER_PLUGINS) {
       this.skip();
     }
     htmlbarsOptions.plugins = {
@@ -107,7 +107,7 @@ describe('AST plugins', function(){
   }));
 
   they('will bust the hot cache if the dependency changes.', co.wrap(function* () {
-    if (REQUIRES_LEGACY_AST_PLUGINS) {
+    if (CANNOT_UNREGISTER_PLUGINS) {
       this.skip();
     }
     Object.assign(htmlbarsOptions, {
@@ -160,7 +160,7 @@ describe('AST plugins', function(){
     });
 
     they('will bust the persistent cache if the template cache key changes.', co.wrap(function* () {
-      if (REQUIRES_LEGACY_AST_PLUGINS) {
+      if (CANNOT_UNREGISTER_PLUGINS) {
         this.skip();
       }
       Object.assign(htmlbarsOptions, {
