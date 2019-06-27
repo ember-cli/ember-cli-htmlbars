@@ -49,6 +49,7 @@ describe('AST plugins', function(){
 
   let rewriterCallCount;
   function DivRewriterImpl(env) {
+    let programStackDepth = 0;
     let rewriter = {
       name: "test-div-rewriter",
       tagNameFile: undefined,
@@ -61,19 +62,27 @@ describe('AST plugins', function(){
         return rewriter.tagNameFile ? [rewriter.tagNameFile] : [];
       },
       visitor: {
-        Program() {
-          let sourceFile = env.meta.moduleName;
-          let pathInfo = sourceFile && path.parse(sourceFile);
-          if (pathInfo) {
-            if (pathInfo.base === "template.hbs") {
-              rewriterCallCount++;
+        Program: {
+          enter() {
+            programStackDepth++;
+            if (programStackDepth === 1) {
+              let sourceFile = env.meta.moduleName;
+              let pathInfo = sourceFile && path.parse(sourceFile);
+              if (pathInfo) {
+                if (pathInfo.base === "template.hbs") {
+                  rewriterCallCount++;
+                }
+                let tagNameFile = input.path(`${pathInfo.name}.tagname`);
+                if (fs.existsSync(tagNameFile)) {
+                  let tagName = fs.readFileSync(tagNameFile, "utf-8").trim();
+                  rewriter.tagName = tagName;
+                  rewriter.tagNameFile = tagNameFile;
+                }
+              }
             }
-            let tagNameFile = input.path(`${pathInfo.name}.tagname`);
-            if (fs.existsSync(tagNameFile)) {
-              let tagName = fs.readFileSync(tagNameFile, "utf-8").trim();
-              rewriter.tagName = tagName;
-              rewriter.tagNameFile = tagNameFile;
-            }
+          },
+          exit() {
+            programStackDepth--;
           }
         },
         ElementNode(node) {

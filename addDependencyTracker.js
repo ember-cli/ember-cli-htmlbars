@@ -16,6 +16,7 @@ function addDependencyTracker(plugin, enableInvalidation) {
   // we can access.
   let lastDependencies = {};
   let trackedPlugin = (env) => {
+    let templateStackDepth = 0;
     let realPlugin = plugin(env);
     let visitor = realPlugin.visitor;
     let origProgram = visitor.Program;
@@ -31,20 +32,30 @@ function addDependencyTracker(plugin, enableInvalidation) {
         origKeys = origProgram.keys;
       }
     }
+    // Ideally we'd use visitor.Template but we still support versions of
+    // handlebars where the template node didn't exist yet. Templates can have
+    // nested Program nodes. Since we can't rely on the Template node yet, we
+    // have to keep a stack counter of Program nodes that we've seen so far.
     visitor.Program = {
       keys: origKeys,
       enter: (node) => {
-        if (realPlugin.resetDependencies) {
-          realPlugin.resetDependencies(env.meta.moduleName);
+        templateStackDepth++;
+        if (templateStackDepth === 1) {
+          if (realPlugin.resetDependencies) {
+            realPlugin.resetDependencies(env.meta.moduleName);
+          }
+          delete lastDependencies[env.meta.moduleName];
         }
-        delete lastDependencies[env.meta.moduleName];
         if (origEnter) origEnter(node);
       },
       exit: (node) => {
-        if (realPlugin.dependencies) {
-          lastDependencies[env.meta.moduleName] = realPlugin.dependencies(env.meta.moduleName);
+        if (templateStackDepth === 1) {
+          if (realPlugin.dependencies) {
+            lastDependencies[env.meta.moduleName] = realPlugin.dependencies(env.meta.moduleName);
+          }
         }
         if (origExit) origExit(node)
+        templateStackDepth--;
       }
     };
     return realPlugin;
