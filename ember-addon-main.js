@@ -2,6 +2,7 @@
 
 const path = require('path');
 const utils = require('./utils');
+const addDependencyTracker = require("./addDependencyTracker");
 const hashForDep = require('hash-for-dep');
 
 module.exports = {
@@ -106,6 +107,8 @@ module.exports = {
         ast: pluginInfo.plugins
       },
 
+      dependencyInvalidation: pluginInfo.dependencyInvalidation,
+
       pluginCacheKey: pluginInfo.cacheKeys
     };
 
@@ -121,16 +124,18 @@ module.exports = {
     let pluginWrappers = this.parentRegistry.load('htmlbars-ast-plugin');
     let plugins = [];
     let cacheKeys = [];
+    let dependencyInvalidation = false;
 
     for (let i = 0; i < pluginWrappers.length; i++) {
       let wrapper = pluginWrappers[i];
+      dependencyInvalidation = dependencyInvalidation || wrapper.dependencyInvalidation;
+      plugins.push(addDependencyTracker(wrapper.plugin, wrapper.dependencyInvalidation));
 
-      plugins.push(wrapper.plugin);
 
       let providesBaseDir = typeof wrapper.baseDir === 'function';
       let augmentsCacheKey = typeof wrapper.cacheKey === 'function';
 
-      if (providesBaseDir || augmentsCacheKey) {
+      if (providesBaseDir || augmentsCacheKey || wrapper.dependencyInvalidation) {
         if (providesBaseDir) {
           let pluginHashForDep = hashForDep(wrapper.baseDir());
           cacheKeys.push(pluginHashForDep);
@@ -147,7 +152,8 @@ module.exports = {
 
     return {
       plugins: plugins,
-      cacheKeys: cacheKeys
+      cacheKeys: cacheKeys,
+      dependencyInvalidation: dependencyInvalidation,
     };
   }
 };

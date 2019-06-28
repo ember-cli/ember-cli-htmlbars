@@ -18,6 +18,7 @@
   "author": "Jonathan Jackson & Chase McCarthy",
   "files": [
     "index.js",
+    "addDependencyTracker.js",
     "ember-addon-main.js",
     "utils.js"
   ],
