@@ -55,7 +55,7 @@ const TEMPLATE = ${this.options.precompile(templateContents)};
 export default setComponentTemplate(TEMPLATE, CLASS);`;
       } else {
         // create JS file, use null component pattern
-        jsContents = `import templateOnlyComponent from "@ember/component/template-only";
+        jsContents = `const templateOnlyComponent = Ember._templateOnlyComponent;
 const setComponentTemplate = Ember._setComponentTemplate;
 const TEMPLATE = ${this.options.precompile(templateContents)};
 const CLASS = templateOnlyComponent();
