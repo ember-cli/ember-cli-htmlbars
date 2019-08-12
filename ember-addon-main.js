@@ -23,7 +23,16 @@ class ColocatedTemplateProcessor extends Plugin {
     files.forEach(filePath => {
       let filePathParts = path.parse(filePath);
       let inputPath = path.join(this.inputPaths[0], filePath);
-      let isInsideComponentsFolder = filePath.includes('/components/');
+
+      // TODO: why are these different?
+      // Apps: my-app/components/foo.hbs, my-app/templates/components/foo.hbs
+      // Addons: components/foo.js, templates/components/foo.hbs
+
+      // TODO: make this more robust
+      let isInsideComponentsFolder =
+        (filePath.includes('/components/') || filePath.startsWith('components/')) &&
+        !filePath.includes('/templates/components/') &&
+        !filePath.startsWith('templates/components');
 
       // copy forward non-hbs files
       // TODO: don't copy .js files that will ultimately be overridden
