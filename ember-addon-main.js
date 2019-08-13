@@ -58,7 +58,15 @@ class ColocatedTemplateProcessor extends Plugin {
         // add the template, call setComponentTemplate
 
         jsContents = fs.readFileSync(path.join(this.inputPaths[0], possibleJSPath), { encoding: 'utf8' });
-        jsContents = `${jsContents.replace('export default', 'const CLASS =')}\n;
+
+        if (jsContents.includes('export default')) {
+          jsContents = jsContents.replace('export default', 'const CLASS =');
+        } else {
+          let message = `${filePath}\` does not contain a \`default export\`. Did you forget to export the component class?`;
+          jsContents = `${jsContents}\nthrow new Error(${JSON.stringify(message)})`;
+        }
+
+        jsContents = `${jsContents}
 const setComponentTemplate = Ember._setComponentTemplate;
 const TEMPLATE = ${this.options.precompile(templateContents)};
 export default setComponentTemplate(TEMPLATE, CLASS);`;
