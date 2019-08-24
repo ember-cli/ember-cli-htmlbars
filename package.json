@@ -36,8 +36,10 @@
   "dependencies": {
     "broccoli-persistent-filter": "^2.3.1",
     "broccoli-plugin": "^2.0.0",
+    "fs-copy-file-sync": "^1.1.1",
     "hash-for-dep": "^1.5.1",
     "json-stable-stringify": "^1.0.1",
+    "mkdirp": "^0.5.1",
     "strip-bom": "^3.0.0",
     "walk-sync": "^1.1.3"
   },

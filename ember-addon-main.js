@@ -1,6 +1,8 @@
 'use strict';
 
 const fs = require('fs');
+const mkdirp = require('mkdirp');
+const copyFileSync = require('fs-copy-file-sync');
 const path = require('path');
 const utils = require('./utils');
 const addDependencyTracker = require("./addDependencyTracker");
@@ -82,10 +84,8 @@ export default setComponentTemplate(TEMPLATE, CLASS);`;
 
       let outputPath = path.join(this.outputPath, possibleJSPath);
 
-      // TODO: check for compat with Node 8 (recursive may only be present in 10+)
       // TODO: don't speculatively mkdirSync (likely do in a try/catch with ENOENT)
-      fs.mkdirSync(path.dirname(outputPath), { recursive: true });
-
+      mkdirp.sync(path.dirname(outputPath));
       fs.writeFileSync(outputPath, jsContents, { encoding: 'utf8' });
     });
 
@@ -98,10 +98,9 @@ export default setComponentTemplate(TEMPLATE, CLASS);`;
         return;
       }
 
-      // TODO: check for compat with Node 8 (recursive may only be present in 10+)
       // TODO: don't speculatively mkdirSync (likely do in a try/catch with ENOENT)
-      fs.mkdirSync(path.dirname(outputPath), { recursive: true });
-      fs.copyFileSync(inputPath, outputPath);
+      mkdirp.sync(path.dirname(outputPath));
+      copyFileSync(inputPath, outputPath);
     })
   }
 }
