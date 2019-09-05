@@ -3,7 +3,7 @@ dist: trusty
 
 language: node_js
 node_js:
-  - "10"
+  - "12"
 
 addons:
   chrome: stable
@@ -31,15 +31,15 @@ jobs:
     # runs linting and tests with current locked deps
 
     - stage: "Tests"
-      name: "Node 10"
+      name: "Node 12"
       script:
         - yarn lint:hbs
         - yarn lint:js
         - yarn test:node
-    - name: "Node 8"
+    - name: "Node 10"
       script:
         - yarn test:node
-    - name: "Node 6"
+    - name: "Node 8"
       script:
         - yarn test:node
     - name: "Floating Dependencies"

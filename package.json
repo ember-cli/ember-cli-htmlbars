@@ -68,7 +68,7 @@
     "qunit-dom": "^0.8.5"
   },
   "engines": {
-    "node": "6.* || 8.* || >= 10.*"
+    "node": "8.* || 10.* || >= 12.*"
   },
   "ember-addon": {
     "main": "ember-addon-main.js",
