@@ -11,6 +11,17 @@ module.exports = {
 
   parentRegistry: null,
 
+  _getDebugTree() {
+    if (!this._cachedDebugTree) {
+      // when this.parent === this.project, `this.parent.name` is a function 😭
+      let parentName = typeof this.parent.name === 'function' ? this.parent.name() : this.parent.name;
+
+      this._cachedDebugTree = require('broccoli-debug').buildDebugCallback(`ember-cli-htmlbars:${parentName}`);
+    }
+
+    return this._cachedDebugTree;
+  },
+
   purgeModule(templateCompilerPath) {
     // ensure we get a fresh templateCompilerModuleInstance per ember-addon
     // instance NOTE: this is a quick hack, and will only work as long as
@@ -44,16 +55,20 @@ module.exports = {
       return utils.template(templateCompiler, string);
     }
 
+    let debugTree = this._getDebugTree();
+
     registry.add('template', {
       name: 'ember-cli-htmlbars',
       ext: 'hbs',
       _addon: this,
       toTree(tree) {
-        let htmlbarsOptions = this._addon.htmlbarsOptions();
-        let TemplateCompiler = require('./index');
-        let unifiedColocatedTemplates = new ColocatedTemplateProcessor(tree, { precompile });
+        let inputTree = debugTree(tree, '01-input');
 
-        return new TemplateCompiler(unifiedColocatedTemplates, htmlbarsOptions);
+        let htmlbarsOptions = this._addon.htmlbarsOptions();
+        let unifiedColocatedTemplates = debugTree(new ColocatedTemplateProcessor(inputTree, { precompile }), '02-colocated-output');
+
+        let TemplateCompiler = require('./index');
+        return debugTree(new TemplateCompiler(unifiedColocatedTemplates, htmlbarsOptions), '03-output');
       },
 
       precompile,
