@@ -17,9 +17,10 @@
   "license": "MIT",
   "author": "Jonathan Jackson & Chase McCarthy",
   "files": [
-    "index.js",
     "addDependencyTracker.js",
+    "colocated-broccoli-plugin.js",
     "ember-addon-main.js",
+    "index.js",
     "utils.js"
   ],
   "main": "index.js",

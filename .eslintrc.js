@@ -22,6 +22,7 @@ module.exports = {
     {
       files: [
         '.template-lintrc.js',
+        'colocated-broccoli-plugin.js',
         'ember-cli-build.js',
         'ember-addon-main.js',
         'index.js',
