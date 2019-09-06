@@ -91,12 +91,12 @@ describe('ColocatedTemplateCompiler', function() {
       'app-name-here': {
         components: {
           'foo.js': stripIndent`
+            import { setComponentTemplate } from '@ember/component';
+            import hbs from 'ember-cli-htmlbars-inline-precompile';
+            const __COLOCATED_TEMPLATE__ = hbs\`{{yield}}\`;
             import Component from '@glimmer/component';
 
-            const CLASS = class FooComponent extends Component {}
-            const setComponentTemplate = Ember._setComponentTemplate;
-            const TEMPLATE = {"template":"{{yield}}"};
-            export default setComponentTemplate(TEMPLATE, CLASS);
+            export default class FooComponent extends Component {}
           `,
         },
         templates: {
@@ -215,4 +215,6 @@ describe('ColocatedTemplateCompiler', function() {
       },
     });
   });
+
+  it('does not break class decorator usage');
 });
