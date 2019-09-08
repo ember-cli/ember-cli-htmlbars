@@ -1,25 +1,6 @@
 # Ember CLI HTMLBars
 
-[![Build Status](https://travis-ci.org/ember-cli/ember-cli-htmlbars.svg?branch=master)](https://travis-ci.org/ember-cli/ember-cli-htmlbars)
-[![Build status](https://ci.appveyor.com/api/projects/status/b5njc8lsjce76mv6/branch/master?svg=true)](https://ci.appveyor.com/project/embercli/ember-cli-htmlbars/branch/master)
-
-### Handlebars 2.0 Support
-
-Handlebars 2.0 support has been removed. If you are using ember-cli-htmlbars with a 1.9.x project please continue
-to use ember-cli-htmlbars@0.6.x.
-
-### Using as a Broccoli Plugin
-
-```javascript
-var HtmlbarsCompiler = require('ember-cli-htmlbars');
-
-var templateTree = new HtmlbarsCompiler('app/templates', {
-  isHTMLBars: true,
-
-  // provide the templateCompiler that is paired with your Ember version
-  templateCompiler: require('./bower_components/ember/ember-template-compiler')
-});
-```
+<a href="https://github.com/ember-cli/ember-cli-htmlbars/actions"><img alt="Build Status" src="https://github.com/ember-cli/ember-cli-htmlbars/workflows/ci/badge.svg"></a>
 
 ### Registering a Plugin
 
@@ -110,4 +91,22 @@ module.exports = {
     var precompiled = htmlbarsPlugin.precompile("{{my-component}}");
   }
 };
+```
+
+### Handlebars 2.0 Support (Ember < 1.10)
+
+Handlebars 2.0 support has been removed. If you are using ember-cli-htmlbars with a 1.9.x project please continue
+to use ember-cli-htmlbars@0.6.x.
+
+### Using as a Broccoli Plugin
+
+```javascript
+var HtmlbarsCompiler = require('ember-cli-htmlbars');
+
+var templateTree = new HtmlbarsCompiler('app/templates', {
+  isHTMLBars: true,
+
+  // provide the templateCompiler that is paired with your Ember version
+  templateCompiler: require('./bower_components/ember/ember-template-compiler')
+});
 ```
