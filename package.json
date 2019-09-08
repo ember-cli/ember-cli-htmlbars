@@ -17,12 +17,9 @@
   "license": "MIT",
   "author": "Jonathan Jackson & Chase McCarthy",
   "files": [
-    "index.js",
-    "addDependencyTracker.js",
-    "ember-addon-main.js",
-    "utils.js"
+    "lib/"
   ],
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
     "build": "ember build",
     "lint:hbs": "ember-template-lint .",
@@ -74,7 +71,7 @@
     "node": "8.* || 10.* || >= 12.*"
   },
   "ember-addon": {
-    "main": "ember-addon-main.js",
+    "main": "lib/ember-addon-main.js",
     "configPath": "tests/dummy/config"
   }
 }

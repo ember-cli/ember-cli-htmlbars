@@ -1,6 +1,6 @@
 'use strict';
 
-const purgeModule = require('../ember-addon-main').purgeModule;
+const purgeModule = require('../lib/ember-addon-main').purgeModule;
 const expect = require('chai').expect;
 
 describe('purgeModule', function() {
