@@ -60,7 +60,7 @@
     "ember-try": "^1.2.1",
     "eslint": "^6.3.0",
     "eslint-config-prettier": "^6.2.0",
-    "eslint-plugin-ember": "^6.10.0",
+    "eslint-plugin-ember": "^7.0.0",
     "eslint-plugin-mocha": "^5.3.0",
     "eslint-plugin-node": "^8.0.0",
     "eslint-plugin-prettier": "^3.1.0",
