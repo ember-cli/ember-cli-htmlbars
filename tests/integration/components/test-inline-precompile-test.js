@@ -3,7 +3,8 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbsOne from 'htmlbars-inline-precompile';
 import hbsTwo from 'ember-cli-htmlbars-inline-precompile';
-import { hbs as hbsThree } from 'ember-cli-htmlbars';
+// TODO: fix this to import a named export
+import hbsThree from 'ember-cli-htmlbars';
 
 module('tests/integration/components/test-inline-precompile', function(hooks) {
   setupRenderingTest(hooks);
