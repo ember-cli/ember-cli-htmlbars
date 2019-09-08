@@ -1,7 +1,7 @@
 'use strict';
 
 const assert = require('assert');
-const TemplateCompiler = require('../index');
+const TemplateCompiler = require('../lib/template-compiler-plugin');
 const co = require('co');
 const { createTempDir, createBuilder } = require('broccoli-test-helper');
 const fixturify = require('fixturify');

@@ -4,11 +4,11 @@
 const path = require('path');
 const assert = require('assert');
 const fs = require('fs');
-const TemplateCompiler = require('../index');
+const TemplateCompiler = require('../lib/template-compiler-plugin');
 const co = require('co');
 const { createTempDir, createBuilder } = require('broccoli-test-helper');
 const fixturify = require('fixturify');
-const addDependencyTracker = require('../addDependencyTracker');
+const addDependencyTracker = require('../lib/addDependencyTracker');
 const templateCompiler = require('ember-source/dist/ember-template-compiler.js');
 const CANNOT_UNREGISTER_PLUGINS = !templateCompiler.unregisterPlugin;
 
