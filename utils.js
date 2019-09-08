@@ -2,7 +2,9 @@
 
 module.exports = {
   initializeEmberENV(templateCompiler, EmberENV) {
-    if (!templateCompiler || !EmberENV) { return; }
+    if (!templateCompiler || !EmberENV) {
+      return;
+    }
 
     let props;
 
@@ -18,7 +20,9 @@ module.exports = {
       props = Object.keys(EmberENV);
 
       props.forEach(prop => {
-        if (prop === 'FEATURES') { return; }
+        if (prop === 'FEATURES') {
+          return;
+        }
 
         templateCompiler._Ember.ENV[prop] = EmberENV[prop];
       });
@@ -28,5 +32,5 @@ module.exports = {
   template(templateCompiler, string, options) {
     let precompiled = templateCompiler.precompile(string, options);
     return 'Ember.HTMLBars.template(' + precompiled + ')';
-  }
+  },
 };
