@@ -9,7 +9,9 @@ const stringify = require('json-stable-stringify');
 const stripBom = require('strip-bom');
 
 function rethrowBuildError(error) {
-  if (!error) { throw new Error('Unknown Error'); }
+  if (!error) {
+    throw new Error('Unknown Error');
+  }
 
   if (typeof error === 'string') {
     throw new Error('[string exception]: ' + error);
@@ -26,7 +28,7 @@ class TemplateCompiler extends Filter {
   constructor(inputTree, _options) {
     let options = _options || {};
 
-    if (!Object.hasOwnProperty(options, 'persist')) {
+    if (!('persist' in options)) {
       options.persist = true;
     }
 
@@ -51,7 +53,7 @@ class TemplateCompiler extends Filter {
     // This is a super obtuse way to get access to the plugins we've registered
     // it also returns other plugins that are registered by ember itself.
     let options = this.options.templateCompiler.compileOptions();
-    return options.plugins && options.plugins.ast || [];
+    return (options.plugins && options.plugins.ast) || [];
   }
 
   registerPlugins() {
@@ -84,7 +86,9 @@ class TemplateCompiler extends Filter {
 
     if (FEATURES) {
       // eslint-disable-next-line no-console
-      console.warn('Using `options.FEATURES` with ember-cli-htmlbars is deprecated.  Please provide the full EmberENV as options.EmberENV instead.');
+      console.warn(
+        'Using `options.FEATURES` with ember-cli-htmlbars is deprecated.  Please provide the full EmberENV as options.EmberENV instead.'
+      );
       EmberENV = EmberENV || {};
       EmberENV.FEATURES = FEATURES;
     }
@@ -96,13 +100,16 @@ class TemplateCompiler extends Filter {
     let srcDir = this.inputPaths[0];
     let srcName = path.join(srcDir, relativePath);
     try {
-      let result = 'export default ' + utils.template(this.options.templateCompiler, stripBom(string), {
-        contents: string,
-        moduleName: relativePath,
-        parseOptions: {
-          srcName: srcName
-        }
-      }) + ';';
+      let result =
+        'export default ' +
+        utils.template(this.options.templateCompiler, stripBom(string), {
+          contents: string,
+          moduleName: relativePath,
+          parseOptions: {
+            srcName: srcName,
+          },
+        }) +
+        ';';
       if (this.options.dependencyInvalidation) {
         let plugins = pluginsWithDependencies(this.registeredASTPlugins());
         let dependencies = [];
@@ -113,7 +120,7 @@ class TemplateCompiler extends Filter {
         this.dependencies.setDependencies(relativePath, dependencies);
       }
       return result;
-    } catch(error) {
+    } catch (error) {
       rethrowBuildError(error);
     }
   }
@@ -140,7 +147,8 @@ class TemplateCompiler extends Filter {
 
   optionsHash() {
     if (!this._optionsHash) {
-      this._optionsHash = crypto.createHash('md5')
+      this._optionsHash = crypto
+        .createHash('md5')
         .update(stringify(this._buildOptionsForHash()), 'utf8')
         .update(stringify(this._templateCompilerContents()), 'utf8')
         .digest('hex');
@@ -150,7 +158,9 @@ class TemplateCompiler extends Filter {
   }
 
   cacheKeyProcessString(string, relativePath) {
-    return this.optionsHash() + Filter.prototype.cacheKeyProcessString.call(this, string, relativePath);
+    return (
+      this.optionsHash() + Filter.prototype.cacheKeyProcessString.call(this, string, relativePath)
+    );
   }
 }
 

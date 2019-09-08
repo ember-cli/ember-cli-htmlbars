@@ -2,7 +2,7 @@
 
 const path = require('path');
 const utils = require('./utils');
-const addDependencyTracker = require("./addDependencyTracker");
+const addDependencyTracker = require('./addDependencyTracker');
 const hashForDep = require('hash-for-dep');
 
 module.exports = {
@@ -26,7 +26,9 @@ module.exports = {
       if (index >= 0) {
         mod.parent.children.splice(index, 1);
       } else {
-        throw new TypeError(`ember-cli-htmlbars attempted to purge '${templateCompilerPath}' but something went wrong.`);
+        throw new TypeError(
+          `ember-cli-htmlbars attempted to purge '${templateCompilerPath}' but something went wrong.`
+        );
       }
     }
 
@@ -51,7 +53,7 @@ module.exports = {
         let htmlbarsOptions = this._addon.htmlbarsOptions();
         let templateCompiler = htmlbarsOptions.templateCompiler;
         return utils.template(templateCompiler, string);
-      }
+      },
     });
 
     if (type === 'parent') {
@@ -65,7 +67,8 @@ module.exports = {
 
   templateCompilerPath() {
     let config = this.projectConfig();
-    let templateCompilerPath = config['ember-cli-htmlbars'] && config['ember-cli-htmlbars'].templateCompilerPath;
+    let templateCompilerPath =
+      config['ember-cli-htmlbars'] && config['ember-cli-htmlbars'].templateCompilerPath;
 
     let ember = this.project.findAddonByName('ember-source');
     if (ember) {
@@ -104,12 +107,12 @@ module.exports = {
       templateCompilerPath: templateCompilerPath,
 
       plugins: {
-        ast: pluginInfo.plugins
+        ast: pluginInfo.plugins,
       },
 
       dependencyInvalidation: pluginInfo.dependencyInvalidation,
 
-      pluginCacheKey: pluginInfo.cacheKeys
+      pluginCacheKey: pluginInfo.cacheKeys,
     };
 
     this.purgeModule(templateCompilerPath);
@@ -131,7 +134,6 @@ module.exports = {
       dependencyInvalidation = dependencyInvalidation || wrapper.dependencyInvalidation;
       plugins.push(addDependencyTracker(wrapper.plugin, wrapper.dependencyInvalidation));
 
-
       let providesBaseDir = typeof wrapper.baseDir === 'function';
       let augmentsCacheKey = typeof wrapper.cacheKey === 'function';
 
@@ -145,8 +147,12 @@ module.exports = {
         }
       } else {
         // support for ember-cli < 2.2.0
-        this.ui.writeDeprecateLine('ember-cli-htmlbars is opting out of caching due to an AST plugin that does not provide a caching strategy: `' + wrapper.name + '`.');
-        cacheKeys.push((new Date()).getTime() + '|' + Math.random());
+        this.ui.writeDeprecateLine(
+          'ember-cli-htmlbars is opting out of caching due to an AST plugin that does not provide a caching strategy: `' +
+            wrapper.name +
+            '`.'
+        );
+        cacheKeys.push(new Date().getTime() + '|' + Math.random());
       }
     }
 
@@ -155,5 +161,5 @@ module.exports = {
       cacheKeys: cacheKeys,
       dependencyInvalidation: dependencyInvalidation,
     };
-  }
+  },
 };
