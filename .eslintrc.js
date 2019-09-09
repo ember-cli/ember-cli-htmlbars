@@ -2,7 +2,7 @@ module.exports = {
   root: true,
   parserOptions: {
     ecmaVersion: 2018,
-    sourceType: 'module'
+    sourceType: 'module',
   },
   plugins: ['ember', 'prettier'],
   extends: ['eslint:recommended', 'plugin:ember/recommended', 'plugin:prettier/recommended'],
@@ -28,7 +28,7 @@ module.exports = {
       excludedFiles: ['addon/**', 'addon-test-support/**', 'app/**', 'tests/dummy/app/**'],
       parserOptions: {
         sourceType: 'script',
-        ecmaVersion: 2018
+        ecmaVersion: 2018,
       },
       env: {
         browser: false,
@@ -45,7 +45,7 @@ module.exports = {
       files: ['node-tests/**/*.js'],
       parserOptions: {
         sourceType: 'script',
-        ecmaVersion: 2018
+        ecmaVersion: 2018,
       },
       env: {
         browser: false,

@@ -1,7 +1,7 @@
 'use strict';
 
 const assert = require('assert');
-const ColocatedTemplateCompiler = require('../colocated-broccoli-plugin');
+const ColocatedTemplateCompiler = require('../lib/colocated-broccoli-plugin');
 const { createTempDir, createBuilder } = require('broccoli-test-helper');
 const { stripIndent } = require('common-tags');
 
@@ -120,7 +120,7 @@ describe('ColocatedTemplateCompiler', function() {
           'application.hbs': `{{outlet}}`,
           components: {
             'foo.hbs': `{{yield}}`,
-          }
+          },
         },
       },
     });
