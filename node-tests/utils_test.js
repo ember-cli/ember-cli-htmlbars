@@ -6,29 +6,104 @@ const assert = require('assert');
 describe('utils', function() {
   let templateCompiler;
 
-  beforeEach(function() {
-    templateCompiler = require('ember-source/dist/ember-template-compiler');
+  describe('initializeEmberENV', function() {
+    beforeEach(function() {
+      templateCompiler = require('ember-source/dist/ember-template-compiler');
+    });
+
+    it('passes other ENV variables to compiler when provided', function() {
+      let EmberENV = {
+        FOO_BAR: true,
+      };
+
+      utils.initializeEmberENV(templateCompiler, EmberENV);
+
+      assert.strictEqual(templateCompiler._Ember.ENV.FOO_BAR, true);
+    });
+
+    it('passes features through when provided', function() {
+      let EmberENV = {
+        FEATURES: {
+          BLAH: true,
+        },
+      };
+
+      utils.initializeEmberENV(templateCompiler, EmberENV);
+
+      assert.strictEqual(templateCompiler._Ember.FEATURES.BLAH, true);
+    });
   });
 
-  it('passes other ENV variables to compiler when provided', function() {
-    let EmberENV = {
-      FOO_BAR: true,
-    };
+  describe('setupPlugins', function() {
+    it('for 0 plugins', function() {
+      let pluginWrappers = [];
 
-    utils.initializeEmberENV(templateCompiler, EmberENV);
+      let actual = utils.setupPlugins(pluginWrappers);
 
-    assert.strictEqual(templateCompiler._Ember.ENV.FOO_BAR, true);
-  });
+      assert.deepStrictEqual(actual, {
+        plugins: [],
+        cacheKeys: [],
+        parallelConfigs: [],
+        canParallelize: true,
+        hasDependencyInvalidation: false,
+      });
+    });
 
-  it('passes features through when provided', function() {
-    let EmberENV = {
-      FEATURES: {
-        BLAH: true,
-      },
-    };
+    it('canParallelize for 1+ plugins with "parallelBabel" property', function() {
+      let pluginWrappers = [
+        {
+          plugin() {},
+          cacheKey() {
+            return this.parallelBabel;
+          },
+          parallelBabel: 'something',
+        },
+        {
+          plugin() {},
+          cacheKey() {
+            return this.parallelBabel;
+          },
+          parallelBabel: 'something else',
+        },
+      ];
 
-    utils.initializeEmberENV(templateCompiler, EmberENV);
+      let actual = utils.setupPlugins(pluginWrappers);
 
-    assert.strictEqual(templateCompiler._Ember.FEATURES.BLAH, true);
+      assert.deepStrictEqual(actual, {
+        plugins: pluginWrappers.map(w => w.plugin),
+        cacheKeys: ['something', 'something else'],
+        parallelConfigs: ['something', 'something else'],
+        canParallelize: true,
+        hasDependencyInvalidation: false,
+      });
+    });
+
+    it('canParallelize is false for 1+ plugins without "parallelBabel" property', function() {
+      let pluginWrappers = [
+        {
+          plugin() {},
+          cacheKey() {
+            return this.parallelBabel;
+          },
+          parallelBabel: 'something',
+        },
+        {
+          plugin() {},
+          cacheKey() {
+            return 'something else';
+          },
+        },
+      ];
+
+      let actual = utils.setupPlugins(pluginWrappers);
+
+      assert.deepStrictEqual(actual, {
+        plugins: pluginWrappers.map(w => w.plugin),
+        cacheKeys: ['something', 'something else'],
+        parallelConfigs: ['something'],
+        canParallelize: false,
+        hasDependencyInvalidation: false,
+      });
+    });
   });
 });

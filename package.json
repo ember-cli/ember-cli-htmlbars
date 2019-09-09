@@ -31,8 +31,10 @@
     "test:node:debug": "mocha debug node-tests/*.js"
   },
   "dependencies": {
+    "babel-plugin-htmlbars-inline-precompile": "^2.1.0",
     "broccoli-persistent-filter": "^2.3.1",
     "hash-for-dep": "^1.5.1",
+    "heimdalljs-logger": "^0.1.10",
     "json-stable-stringify": "^1.0.1",
     "strip-bom": "^4.0.0"
   },

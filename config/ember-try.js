@@ -102,6 +102,14 @@ module.exports = function() {
           },
         },
         {
+          name: 'with-ember-cli-htmlbars-inline-precompile',
+          npm: {
+            devDependencies: {
+              'ember-cli-htmlbars-inline-precompile': '^2.1.0',
+            },
+          },
+        },
+        {
           name: 'ember-default-with-jquery',
           env: {
             EMBER_OPTIONAL_FEATURES: JSON.stringify({
