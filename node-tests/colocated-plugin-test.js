@@ -46,13 +46,13 @@ describe('ColocatedTemplateCompiler', function() {
     assert.deepStrictEqual(output.read(), {
       'app-name-here': {
         components: {
-          'foo.js': stripIndent`
-            import templateOnly from '@ember/component/template-only';
+          'foo.js':
+            stripIndent`
             import { hbs } from 'ember-cli-htmlbars';
             const __COLOCATED_TEMPLATE__ = hbs\`{{yield}}\`;
+            import templateOnly from '@ember/component/template-only';
 
-            export default templateOnly();
-          `,
+            export default templateOnly();` + '\n',
         },
         templates: {
           'application.hbs': '{{outlet}}',
