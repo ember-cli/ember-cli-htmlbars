@@ -92,6 +92,7 @@ jobs:
          - ember-canary
          - ember-default
          - ember-default-with-jquery
+         - with-ember-cli-htmlbars-inline-precompile
 
     steps:
     - uses: actions/checkout@v1
