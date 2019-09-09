@@ -47,11 +47,11 @@ describe('ColocatedTemplateCompiler', function() {
       'app-name-here': {
         components: {
           'foo.js': stripIndent`
-            const templateOnlyComponent = Ember._templateOnlyComponent;
-            const setComponentTemplate = Ember._setComponentTemplate;
-            const TEMPLATE = {"template":"{{yield}}"};
-            const CLASS = templateOnlyComponent();
-            export default setComponentTemplate(TEMPLATE, CLASS);
+            import templateOnly from '@ember/component/template-only';
+            import { hbs } from 'ember-cli-htmlbars';
+            const __COLOCATED_TEMPLATE__ = hbs\`{{yield}}\`;
+
+            export default templateOnly();
           `,
         },
         templates: {
@@ -91,8 +91,7 @@ describe('ColocatedTemplateCompiler', function() {
       'app-name-here': {
         components: {
           'foo.js': stripIndent`
-            import { setComponentTemplate } from '@ember/component';
-            import hbs from 'ember-cli-htmlbars-inline-precompile';
+            import { hbs } from 'ember-cli-htmlbars';
             const __COLOCATED_TEMPLATE__ = hbs\`{{yield}}\`;
             import Component from '@glimmer/component';
 
