@@ -105,6 +105,97 @@ describe('ColocatedTemplateCompiler', function() {
     });
   });
 
+  it('works for scoped addon using template only component', async function() {
+    input.write({
+      '@scope-name': {
+        'addon-name-here': {
+          components: {
+            'foo.hbs': `{{yield}}`,
+          },
+          templates: {
+            'application.hbs': `{{outlet}}`,
+          },
+        },
+      },
+    });
+
+    let tree = new ColocatedTemplateCompiler(input.path(), {
+      precompile(template) {
+        return JSON.stringify({ template });
+      },
+    });
+
+    output = createBuilder(tree);
+    await output.build();
+
+    assert.deepStrictEqual(output.read(), {
+      '@scope-name': {
+        'addon-name-here': {
+          components: {
+            'foo.js':
+              stripIndent`
+            import { hbs } from 'ember-cli-htmlbars';
+            const __COLOCATED_TEMPLATE__ = hbs\`{{yield}}\`;
+            import templateOnly from '@ember/component/template-only';
+
+            export default templateOnly();` + '\n',
+          },
+          templates: {
+            'application.hbs': '{{outlet}}',
+          },
+        },
+      },
+    });
+  });
+
+  it('works for scoped addon using component with template and class', async function() {
+    input.write({
+      '@scope-name': {
+        'addon-name-here': {
+          components: {
+            'foo.hbs': `{{yield}}`,
+            'foo.js': stripIndent`
+            import Component from '@glimmer/component';
+
+            export default class FooComponent extends Component {}
+          `,
+          },
+          templates: {
+            'application.hbs': `{{outlet}}`,
+          },
+        },
+      },
+    });
+
+    let tree = new ColocatedTemplateCompiler(input.path(), {
+      precompile(template) {
+        return JSON.stringify({ template });
+      },
+    });
+
+    output = createBuilder(tree);
+    await output.build();
+
+    assert.deepStrictEqual(output.read(), {
+      '@scope-name': {
+        'addon-name-here': {
+          components: {
+            'foo.js': stripIndent`
+            import { hbs } from 'ember-cli-htmlbars';
+            const __COLOCATED_TEMPLATE__ = hbs\`{{yield}}\`;
+            import Component from '@glimmer/component';
+
+            export default class FooComponent extends Component {}
+          `,
+          },
+          templates: {
+            'application.hbs': '{{outlet}}',
+          },
+        },
+      },
+    });
+  });
+
   it('does nothing for "classic" location components', async function() {
     input.write({
       'app-name-here': {
