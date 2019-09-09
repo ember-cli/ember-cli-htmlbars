@@ -17,17 +17,13 @@
   "license": "MIT",
   "author": "Jonathan Jackson & Chase McCarthy",
   "files": [
-    "addDependencyTracker.js",
-    "colocated-broccoli-plugin.js",
-    "ember-addon-main.js",
-    "index.js",
-    "utils.js"
+    "lib/"
   ],
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
     "build": "ember build",
     "lint:hbs": "ember-template-lint .",
-    "lint:js": "eslint .",
+    "lint:js": "eslint --cache .",
     "start": "ember serve",
     "test": "yarn run test:ember && yarn run test:node",
     "test:ember": "ember test",
@@ -35,11 +31,13 @@
     "test:node:debug": "mocha debug node-tests/*.js"
   },
   "dependencies": {
+    "babel-plugin-htmlbars-inline-precompile": "^2.1.0",
     "broccoli-debug": "^0.6.5",
     "broccoli-persistent-filter": "^2.3.1",
     "broccoli-plugin": "^2.0.0",
     "fs-copy-file-sync": "^1.1.1",
     "hash-for-dep": "^1.5.1",
+    "heimdalljs-logger": "^0.1.10",
     "json-stable-stringify": "^1.0.1",
     "mkdirp": "^0.5.1",
     "strip-bom": "^3.0.0",
@@ -55,7 +53,6 @@
     "ember-cli-app-version": "^3.2.0",
     "ember-cli-babel": "^7.11.0",
     "ember-cli-dependency-checker": "^3.2.0",
-    "ember-cli-eslint": "^5.1.0",
     "ember-cli-inject-live-reload": "^2.0.1",
     "ember-cli-template-lint": "^1.0.0-beta.3",
     "ember-export-application-global": "^2.0.0",
@@ -63,22 +60,26 @@
     "ember-maybe-import-regenerator": "^0.1.6",
     "ember-qunit": "^4.5.1",
     "ember-resolver": "^5.2.1",
-    "ember-source": "~3.11.1",
-    "ember-source-channel-url": "^1.1.0",
+    "ember-source": "~3.12.0",
+    "ember-source-channel-url": "^2.0.1",
     "ember-try": "^1.2.1",
-    "eslint-plugin-ember": "^6.10.0",
-    "eslint-plugin-mocha": "^5.3.0",
-    "eslint-plugin-node": "^8.0.0",
+    "eslint": "^6.3.0",
+    "eslint-config-prettier": "^6.2.0",
+    "eslint-plugin-ember": "^7.0.0",
+    "eslint-plugin-mocha": "^6.1.0",
+    "eslint-plugin-node": "^10.0.0",
+    "eslint-plugin-prettier": "^3.1.0",
     "fixturify": "^1.2.0",
     "loader.js": "^4.7.0",
     "mocha": "^6.2.0",
-    "qunit-dom": "^0.8.5"
+    "prettier": "^1.18.2",
+    "qunit-dom": "^0.9.0"
   },
   "engines": {
     "node": "8.* || 10.* || >= 12.*"
   },
   "ember-addon": {
-    "main": "ember-addon-main.js",
+    "main": "lib/ember-addon-main.js",
     "configPath": "tests/dummy/config"
   }
 }
