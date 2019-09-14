@@ -46,13 +46,13 @@ describe('ColocatedTemplateCompiler', function() {
     assert.deepStrictEqual(output.read(), {
       'app-name-here': {
         components: {
-          'foo.js': stripIndent`
-            const templateOnlyComponent = Ember._templateOnlyComponent;
-            const setComponentTemplate = Ember._setComponentTemplate;
-            const TEMPLATE = {"template":"{{yield}}"};
-            const CLASS = templateOnlyComponent();
-            export default setComponentTemplate(TEMPLATE, CLASS);
-          `,
+          'foo.js':
+            stripIndent`
+            import { hbs } from 'ember-cli-htmlbars';
+            const __COLOCATED_TEMPLATE__ = hbs\`{{yield}}\`;
+            import templateOnly from '@ember/component/template-only';
+
+            export default templateOnly();` + '\n',
         },
         templates: {
           'application.hbs': '{{outlet}}',
@@ -91,16 +91,106 @@ describe('ColocatedTemplateCompiler', function() {
       'app-name-here': {
         components: {
           'foo.js': stripIndent`
+            import { hbs } from 'ember-cli-htmlbars';
+            const __COLOCATED_TEMPLATE__ = hbs\`{{yield}}\`;
             import Component from '@glimmer/component';
 
-            const CLASS = class FooComponent extends Component {}
-            const setComponentTemplate = Ember._setComponentTemplate;
-            const TEMPLATE = {"template":"{{yield}}"};
-            export default setComponentTemplate(TEMPLATE, CLASS);
+            export default class FooComponent extends Component {}
           `,
         },
         templates: {
           'application.hbs': '{{outlet}}',
+        },
+      },
+    });
+  });
+
+  it('works for scoped addon using template only component', async function() {
+    input.write({
+      '@scope-name': {
+        'addon-name-here': {
+          components: {
+            'foo.hbs': `{{yield}}`,
+          },
+          templates: {
+            'application.hbs': `{{outlet}}`,
+          },
+        },
+      },
+    });
+
+    let tree = new ColocatedTemplateCompiler(input.path(), {
+      precompile(template) {
+        return JSON.stringify({ template });
+      },
+    });
+
+    output = createBuilder(tree);
+    await output.build();
+
+    assert.deepStrictEqual(output.read(), {
+      '@scope-name': {
+        'addon-name-here': {
+          components: {
+            'foo.js':
+              stripIndent`
+            import { hbs } from 'ember-cli-htmlbars';
+            const __COLOCATED_TEMPLATE__ = hbs\`{{yield}}\`;
+            import templateOnly from '@ember/component/template-only';
+
+            export default templateOnly();` + '\n',
+          },
+          templates: {
+            'application.hbs': '{{outlet}}',
+          },
+        },
+      },
+    });
+  });
+
+  it('works for scoped addon using component with template and class', async function() {
+    input.write({
+      '@scope-name': {
+        'addon-name-here': {
+          components: {
+            'foo.hbs': `{{yield}}`,
+            'foo.js': stripIndent`
+            import Component from '@glimmer/component';
+
+            export default class FooComponent extends Component {}
+          `,
+          },
+          templates: {
+            'application.hbs': `{{outlet}}`,
+          },
+        },
+      },
+    });
+
+    let tree = new ColocatedTemplateCompiler(input.path(), {
+      precompile(template) {
+        return JSON.stringify({ template });
+      },
+    });
+
+    output = createBuilder(tree);
+    await output.build();
+
+    assert.deepStrictEqual(output.read(), {
+      '@scope-name': {
+        'addon-name-here': {
+          components: {
+            'foo.js': stripIndent`
+            import { hbs } from 'ember-cli-htmlbars';
+            const __COLOCATED_TEMPLATE__ = hbs\`{{yield}}\`;
+            import Component from '@glimmer/component';
+
+            export default class FooComponent extends Component {}
+          `,
+          },
+          templates: {
+            'application.hbs': '{{outlet}}',
+          },
         },
       },
     });
@@ -136,4 +226,85 @@ describe('ColocatedTemplateCompiler', function() {
 
     assert.deepStrictEqual(output.read(), input.read());
   });
+
+  it('it works if input is manually using setComponentTemplate - no colocated template exists', async function() {
+    input.write({
+      'app-name-here': {
+        components: {
+          'foo.js': stripIndent`
+            import Component from '@glimmer/component';
+            import { setComponentTemplate } from '@ember/component';
+            import hbs from 'ember-cli-htmlbars-inline-precompile';
+
+            export default class FooComponent extends Component {}
+            setComponentTemplate(FooComponent, hbs\`sometemplate\`);
+          `,
+        },
+        templates: {
+          'application.hbs': `{{outlet}}`,
+        },
+      },
+    });
+
+    let tree = new ColocatedTemplateCompiler(input.path(), {
+      precompile(template) {
+        return JSON.stringify({ template });
+      },
+    });
+
+    output = createBuilder(tree);
+    await output.build();
+
+    assert.deepStrictEqual(output.read(), {
+      'app-name-here': {
+        components: {
+          'foo.js': stripIndent`
+            import Component from '@glimmer/component';
+            import { setComponentTemplate } from '@ember/component';
+            import hbs from 'ember-cli-htmlbars-inline-precompile';
+
+            export default class FooComponent extends Component {}
+            setComponentTemplate(FooComponent, hbs\`sometemplate\`);
+          `,
+        },
+        templates: {
+          'application.hbs': '{{outlet}}',
+        },
+      },
+    });
+  });
+
+  it('emits an error when a default export is not present in a component JS file', async function() {
+    input.write({
+      'app-name-here': {
+        components: {
+          'foo.hbs': `{{yield}}`,
+          'foo.js': stripIndent`
+            export function whatever() {}
+          `,
+        },
+      },
+    });
+
+    let tree = new ColocatedTemplateCompiler(input.path(), {
+      precompile(template) {
+        return JSON.stringify({ template });
+      },
+    });
+
+    output = createBuilder(tree);
+    await output.build();
+
+    assert.deepStrictEqual(output.read(), {
+      'app-name-here': {
+        components: {
+          'foo.js': stripIndent`
+            export function whatever() {}\nthrow new Error("\`app-name-here/components/foo.hbs\` does not contain a \`default export\`. Did you forget to export the component class?");
+          `,
+        },
+      },
+    });
+  });
+
+  it('does not break class decorator usage');
 });
