@@ -31,6 +31,7 @@
     "test:node:debug": "mocha debug node-tests/*.js"
   },
   "dependencies": {
+    "@ember/edition-utils": "^1.1.1",
     "babel-plugin-htmlbars-inline-precompile": "^2.1.0",
     "broccoli-debug": "^0.6.5",
     "broccoli-persistent-filter": "^2.3.1",
