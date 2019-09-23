@@ -39,7 +39,7 @@
     "strip-bom": "^4.0.0"
   },
   "devDependencies": {
-    "@ember/optional-features": "^0.7.0",
+    "@ember/optional-features": "^1.0.0",
     "broccoli-test-helper": "^2.0.0",
     "chai": "^4.2.0",
     "co": "^4.6.0",
