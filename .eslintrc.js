@@ -1,7 +1,7 @@
 module.exports = {
   root: true,
   parserOptions: {
-    ecmaVersion: 2017,
+    ecmaVersion: 2018,
     sourceType: 'module',
   },
   plugins: ['ember', 'prettier'],
@@ -17,6 +17,7 @@ module.exports = {
         '.eslintrc.js',
         '.prettierrc.js',
         '.template-lintrc.js',
+        'colocated-broccoli-plugin.js',
         'ember-cli-build.js',
         'lib/**/*.js',
         'testem.js',
@@ -27,7 +28,7 @@ module.exports = {
       excludedFiles: ['addon/**', 'addon-test-support/**', 'app/**', 'tests/dummy/app/**'],
       parserOptions: {
         sourceType: 'script',
-        ecmaVersion: 2015,
+        ecmaVersion: 2018,
       },
       env: {
         browser: false,
@@ -44,7 +45,7 @@ module.exports = {
       files: ['node-tests/**/*.js'],
       parserOptions: {
         sourceType: 'script',
-        ecmaVersion: 2015,
+        ecmaVersion: 2018,
       },
       env: {
         browser: false,
