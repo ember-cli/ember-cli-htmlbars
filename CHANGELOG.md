@@ -1,3 +1,11 @@
+## v4.0.1 (2019-09-25)
+
+#### :bug: Bug Fix
+* [#304](https://github.com/ember-cli/ember-cli-htmlbars/pull/304) Do nothing in ColocatedTemplateProcessor if input tree is empty. ([@rwjblue](https://github.com/rwjblue))
+
+#### Committers: 1
+- Robert Jackson ([@rwjblue](https://github.com/rwjblue))
+
 ## v4.0.0 (2019-09-24)
 
 #### :boom: Breaking Change
