@@ -227,6 +227,21 @@ describe('ColocatedTemplateCompiler', function() {
     assert.deepStrictEqual(output.read(), input.read());
   });
 
+  it('it works if there are no input files', async function() {
+    input.write({});
+
+    let tree = new ColocatedTemplateCompiler(input.path(), {
+      precompile(template) {
+        return JSON.stringify({ template });
+      },
+    });
+
+    output = createBuilder(tree);
+    await output.build();
+
+    assert.deepStrictEqual(output.read(), {});
+  });
+
   it('it works if input is manually using setComponentTemplate - no colocated template exists', async function() {
     input.write({
       'app-name-here': {
