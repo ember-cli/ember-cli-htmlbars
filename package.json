@@ -32,7 +32,7 @@
   },
   "dependencies": {
     "@ember/edition-utils": "^1.1.1",
-    "babel-plugin-htmlbars-inline-precompile": "^2.1.0",
+    "babel-plugin-htmlbars-inline-precompile": "^2.1.1",
     "broccoli-debug": "^0.6.5",
     "broccoli-persistent-filter": "^2.3.1",
     "broccoli-plugin": "^2.0.0",
