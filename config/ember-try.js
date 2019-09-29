@@ -102,6 +102,16 @@ module.exports = function() {
           },
         },
         {
+          name: 'ember-octane',
+          ENV: {
+            // need to add a convienient API for this to @ember/edition-utils
+            EMBER_EDITION: 'octane',
+          },
+          npm: {
+            devDependencies: {},
+          },
+        },
+        {
           name: 'with-ember-cli-htmlbars-inline-precompile',
           npm: {
             devDependencies: {

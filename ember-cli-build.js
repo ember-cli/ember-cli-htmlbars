@@ -1,11 +1,43 @@
 'use strict';
 
 const EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
+const MergeTree = require('broccoli-merge-trees');
+const { has } = require('@ember/edition-utils');
 
 module.exports = function(defaults) {
+  let hasOctane = has('octane');
+  let appTree = 'tests/dummy/app';
+  if (hasOctane) {
+    appTree = new MergeTree(['tests/dummy/app', 'tests/colocation/app']);
+  }
+
   let app = new EmberAddon(defaults, {
     // Add options here
     throwUnlessParallelizable: true,
+
+    trees: {
+      app: appTree,
+    },
+
+    babel: {
+      plugins: [
+        [
+          require.resolve('babel-plugin-debug-macros'),
+          {
+            flags: [
+              {
+                name: '@ember/edition-fake-module',
+                source: '@ember/edition-fake-module',
+                flags: {
+                  HAS_OCTANE: hasOctane,
+                },
+              },
+            ],
+          },
+          'debug macros - octane flag',
+        ],
+      ],
+    },
   });
 
   /*
