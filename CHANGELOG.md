@@ -1,3 +1,12 @@
+## v4.0.2 (2019-09-30)
+
+#### :bug: Bug Fix
+* [#309](https://github.com/ember-cli/ember-cli-htmlbars/pull/309) Ensure inline precompile and colocated templates run template AST plugins. ([@rwjblue](https://github.com/rwjblue))
+* [#310](https://github.com/ember-cli/ember-cli-htmlbars/pull/310) Fix issues using inline precompilation with JSON.stringify'ed options. ([@rwjblue](https://github.com/rwjblue))
+
+#### Committers: 1
+- Robert Jackson ([@rwjblue](https://github.com/rwjblue))
+
 ## v4.0.1 (2019-09-25)
 
 #### :bug: Bug Fix
