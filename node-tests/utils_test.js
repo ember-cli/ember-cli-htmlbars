@@ -45,6 +45,7 @@ describe('utils', function() {
         cacheKeys: [],
         parallelConfigs: [],
         canParallelize: true,
+        unparallelizableWrappers: [],
         hasDependencyInvalidation: false,
       });
     });
@@ -74,6 +75,7 @@ describe('utils', function() {
         cacheKeys: ['something', 'something else'],
         parallelConfigs: ['something', 'something else'],
         canParallelize: true,
+        unparallelizableWrappers: [],
         hasDependencyInvalidation: false,
       });
     });
@@ -81,6 +83,7 @@ describe('utils', function() {
     it('canParallelize is false for 1+ plugins without "parallelBabel" property', function() {
       let pluginWrappers = [
         {
+          name: 'first',
           plugin() {},
           cacheKey() {
             return this.parallelBabel;
@@ -88,6 +91,7 @@ describe('utils', function() {
           parallelBabel: 'something',
         },
         {
+          name: 'second',
           plugin() {},
           cacheKey() {
             return 'something else';
@@ -102,6 +106,7 @@ describe('utils', function() {
         cacheKeys: ['something', 'something else'],
         parallelConfigs: ['something'],
         canParallelize: false,
+        unparallelizableWrappers: ['second'],
         hasDependencyInvalidation: false,
       });
     });
