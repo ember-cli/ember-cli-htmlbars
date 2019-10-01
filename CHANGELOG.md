@@ -1,3 +1,15 @@
+## v4.0.3 (2019-10-01)
+
+#### :bug: Bug Fix
+* [#317](https://github.com/ember-cli/ember-cli-htmlbars/pull/317) Avoid conflicts with ember-cli-htmlbars-inline-precompile ([@rwjblue](https://github.com/rwjblue))
+
+#### :memo: Documentation
+* [#318](https://github.com/ember-cli/ember-cli-htmlbars/pull/318) Ensure all debug logging is emitted with `DEBUG=ember-cli-htmlbars:*` ([@rwjblue](https://github.com/rwjblue))
+
+#### Committers: 2
+- Robert Jackson ([@rwjblue](https://github.com/rwjblue))
+- [@dependabot-preview[bot]](https://github.com/apps/dependabot-preview)
+
 ## v4.0.2 (2019-09-30)
 
 #### :bug: Bug Fix
