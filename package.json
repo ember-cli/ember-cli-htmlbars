@@ -44,7 +44,7 @@
     "json-stable-stringify": "^1.0.1",
     "mkdirp": "^0.5.1",
     "semver": "^6.3.0",
-    "strip-bom": "^3.0.0",
+    "strip-bom": "^4.0.0",
     "walk-sync": "^2.0.2"
   },
   "devDependencies": {
