@@ -35,7 +35,7 @@
     "babel-plugin-htmlbars-inline-precompile": "^2.1.1",
     "broccoli-debug": "^0.6.5",
     "broccoli-persistent-filter": "^2.3.1",
-    "broccoli-plugin": "^2.0.0",
+    "broccoli-plugin": "^3.0.0",
     "common-tags": "^1.8.0",
     "ember-cli-babel-plugin-helpers": "^1.1.0",
     "fs-copy-file-sync": "^1.1.1",
