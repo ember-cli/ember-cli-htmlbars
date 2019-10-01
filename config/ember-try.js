@@ -115,7 +115,7 @@ module.exports = function() {
           name: 'with-ember-cli-htmlbars-inline-precompile',
           npm: {
             devDependencies: {
-              'ember-cli-htmlbars-inline-precompile': '^2.1.0',
+              'ember-cli-htmlbars-inline-precompile': '^3.0.0',
             },
           },
         },
