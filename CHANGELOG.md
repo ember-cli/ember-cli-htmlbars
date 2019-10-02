@@ -1,3 +1,11 @@
+## v4.0.4 (2019-10-02)
+
+#### :bug: Bug Fix
+* [#322](https://github.com/ember-cli/ember-cli-htmlbars/pull/322) Fix issue with deduplcation of babel plugin when parallelized ([@rwjblue](https://github.com/rwjblue))
+
+#### Committers: 1
+- Robert Jackson ([@rwjblue](https://github.com/rwjblue))
+
 ## v4.0.3 (2019-10-01)
 
 #### :bug: Bug Fix
