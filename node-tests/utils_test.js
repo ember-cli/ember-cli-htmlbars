@@ -166,4 +166,18 @@ describe('utils', function() {
       assert.strictEqual(utils.isInlinePrecompileBabelPluginRegistered(plugins), true);
     });
   });
+
+  describe('isColocatedBabelPluginRegistered', function() {
+    it('is false when no plugins exist', function() {
+      let plugins = [];
+
+      assert.strictEqual(utils.isColocatedBabelPluginRegistered(plugins), false);
+    });
+
+    it('detects when the plugin exists', function() {
+      let plugins = [require.resolve('../lib/colocated-babel-plugin')];
+
+      assert.strictEqual(utils.isColocatedBabelPluginRegistered(plugins), true);
+    });
+  });
 });
