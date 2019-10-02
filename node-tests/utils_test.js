@@ -111,4 +111,73 @@ describe('utils', function() {
       });
     });
   });
+
+  describe('isInlinePrecompileBabelPluginRegistered', function() {
+    let nonParallelizablePlugin, parallelizablePlugin;
+
+    beforeEach(function() {
+      let modules = {
+        'ember-cli-htmlbars': 'hbs',
+        'ember-cli-htmlbars-inline-precompile': 'default',
+        'htmlbars-inline-precompile': 'default',
+      };
+
+      nonParallelizablePlugin = [
+        require.resolve('babel-plugin-htmlbars-inline-precompile'),
+        { precompile: null, modules },
+        'ember-cli-htmlbars:inline-precompile',
+      ];
+
+      parallelizablePlugin = {
+        baseDir: () => __dirname,
+        cacheKey: () => `${Date.now()}`,
+        _parallelBabel: {
+          requireFile: require.resolve('../lib/require-from-worker'),
+          buildUsing: 'build',
+          params: {
+            templateCompilerPath: null,
+            parallelConfigs: [],
+            modules,
+          },
+        },
+      };
+      [
+        require.resolve('babel-plugin-htmlbars-inline-precompile'),
+        { precompile: null, modules },
+        'ember-cli-htmlbars:inline-precompile',
+      ];
+    });
+
+    it('is false when no plugins exist', function() {
+      let plugins = [];
+
+      assert.strictEqual(utils.isInlinePrecompileBabelPluginRegistered(plugins), false);
+    });
+
+    it('detects when the non-parallelizable version of the plugin has been installed', function() {
+      let plugins = [nonParallelizablePlugin];
+
+      assert.strictEqual(utils.isInlinePrecompileBabelPluginRegistered(plugins), true);
+    });
+
+    it('detects when the parallelizable version of the plugin has been installed', function() {
+      let plugins = [parallelizablePlugin];
+
+      assert.strictEqual(utils.isInlinePrecompileBabelPluginRegistered(plugins), true);
+    });
+  });
+
+  describe('isColocatedBabelPluginRegistered', function() {
+    it('is false when no plugins exist', function() {
+      let plugins = [];
+
+      assert.strictEqual(utils.isColocatedBabelPluginRegistered(plugins), false);
+    });
+
+    it('detects when the plugin exists', function() {
+      let plugins = [require.resolve('../lib/colocated-babel-plugin')];
+
+      assert.strictEqual(utils.isColocatedBabelPluginRegistered(plugins), true);
+    });
+  });
 });
