@@ -15,6 +15,8 @@ module.exports = {
     if (checker.forEmber().gte('3.1.0')) {
       registry.add('htmlbars-ast-plugin', this.buildPlugin());
     }
+
+    registry.add('htmlbars-ast-plugin', this.buildLegacyPlugin());
   },
 
   buildPlugin() {
@@ -38,11 +40,56 @@ module.exports = {
           visitor: {
             PathExpression(node) {
               if (node.original === 'module-name-inliner') {
+                // replacing the path with a string literal, like this
+                // {{"the-module-name-here"}}
                 return builders.string(env.moduleName);
               }
             },
           },
         };
+      },
+    };
+  },
+
+  // this type of plugin has worked since at least Ember 2.4+
+  buildLegacyPlugin() {
+    return {
+      name: 'module-name-inliner',
+      baseDir() {
+        return __dirname;
+      },
+      parallelBabel: {
+        requireFile: __filename,
+        buildUsing: 'buildPlugin',
+        params: {},
+      },
+
+      plugin: class LegacyPlugin {
+        constructor(options) {
+          this.options = options;
+        }
+
+        transform(ast) {
+          let { meta } = this.options;
+          let b = this.syntax.builders;
+
+          this.syntax.traverse(ast, {
+            // replacing the mustache with text, like this
+            // {{module-name-reverser}} -> `some-module-name`
+            MustacheStatement(node) {
+              if (node.path.original === 'module-name-reverser') {
+                return b.text(
+                  meta.moduleName
+                    .split('')
+                    .reverse()
+                    .join('')
+                );
+              }
+            },
+          });
+
+          return ast;
+        }
       },
     };
   },
