@@ -1,3 +1,14 @@
+## v4.0.5 (2019-10-04)
+
+#### :bug: Bug Fix
+* [#324](https://github.com/ember-cli/ember-cli-htmlbars/pull/324) More fixes for proper babel plugin deduplication. ([@rwjblue](https://github.com/rwjblue))
+
+#### :memo: Documentation
+* [#323](https://github.com/ember-cli/ember-cli-htmlbars/pull/323) Ensure deprecation message shows correct heirarchy. ([@rwjblue](https://github.com/rwjblue))
+
+#### Committers: 1
+- Robert Jackson ([@rwjblue](https://github.com/rwjblue))
+
 ## v4.0.4 (2019-10-02)
 
 #### :bug: Bug Fix
