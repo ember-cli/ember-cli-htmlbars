@@ -128,19 +128,12 @@ describe('utils', function() {
         'ember-cli-htmlbars:inline-precompile',
       ];
 
-      parallelizablePlugin = {
-        baseDir: () => __dirname,
-        cacheKey: () => `${Date.now()}`,
-        _parallelBabel: {
-          requireFile: require.resolve('../lib/require-from-worker'),
-          buildUsing: 'build',
-          params: {
-            templateCompilerPath: null,
-            parallelConfigs: [],
-            modules,
-          },
-        },
-      };
+      let pluginInfo = { parallelConfigs: [], cacheKeys: [] };
+      parallelizablePlugin = utils.buildParalleizedBabelPlugin(
+        pluginInfo,
+        require.resolve('ember-source/dist/ember-template-compiler')
+      );
+
       [
         require.resolve('babel-plugin-htmlbars-inline-precompile'),
         { precompile: null, modules },
