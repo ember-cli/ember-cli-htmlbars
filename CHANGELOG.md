@@ -1,3 +1,19 @@
+## v4.0.6 (2019-10-17)
+
+#### :rocket: Enhancement
+* [#334](https://github.com/ember-cli/ember-cli-htmlbars/pull/334) Add parent's name to logging output. ([@rwjblue](https://github.com/rwjblue))
+
+#### :bug: Bug Fix
+* [#333](https://github.com/ember-cli/ember-cli-htmlbars/pull/333) Enable colocated component classes to be TypeScript ([@rwjblue](https://github.com/rwjblue))
+* [#332](https://github.com/ember-cli/ember-cli-htmlbars/pull/332) Ensure "pods style" templates are compiled properly. ([@rwjblue](https://github.com/rwjblue))
+
+#### :house: Internal
+* [#125](https://github.com/ember-cli/ember-cli-htmlbars/pull/125) Add more tests using AST plugins (inline and standalone) ([@stefanpenner](https://github.com/stefanpenner))
+
+#### Committers: 2
+- Robert Jackson ([@rwjblue](https://github.com/rwjblue))
+- Stefan Penner ([@stefanpenner](https://github.com/stefanpenner))
+
 ## v4.0.5 (2019-10-04)
 
 #### :bug: Bug Fix
