@@ -105,6 +105,50 @@ describe('ColocatedTemplateCompiler', function() {
     });
   });
 
+  it('works for typescript component class with template', async function() {
+    input.write({
+      'app-name-here': {
+        components: {
+          'foo.hbs': `{{yield}}`,
+          'foo.ts': stripIndent`
+            import Component from '@glimmer/component';
+
+            export default class FooComponent extends Component {}
+          `,
+        },
+        templates: {
+          'application.hbs': `{{outlet}}`,
+        },
+      },
+    });
+
+    let tree = new ColocatedTemplateCompiler(input.path(), {
+      precompile(template) {
+        return JSON.stringify({ template });
+      },
+    });
+
+    output = createBuilder(tree);
+    await output.build();
+
+    assert.deepStrictEqual(output.read(), {
+      'app-name-here': {
+        components: {
+          'foo.ts': stripIndent`
+            import { hbs } from 'ember-cli-htmlbars';
+            const __COLOCATED_TEMPLATE__ = hbs("{{yield}}", {"contents":"{{yield}}","moduleName":"app-name-here/components/foo.hbs","parseOptions":{"srcName":"app-name-here/components/foo.hbs"}});
+            import Component from '@glimmer/component';
+
+            export default class FooComponent extends Component {}
+          `,
+        },
+        templates: {
+          'application.hbs': '{{outlet}}',
+        },
+      },
+    });
+  });
+
   it('works for scoped addon using template only component', async function() {
     input.write({
       '@scope-name': {
