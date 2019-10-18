@@ -17,4 +17,22 @@ module('tests/integration/components/test-inline-precompile', function(hooks) {
 
     assert.equal(this.element.textContent.trim(), 'Module: dummy/components/foo.hbs');
   });
+
+  test('registered ast plugins run against nested colocated templates (template-only)', async function(assert) {
+    await render(hbs`<Foo::Bar />`);
+
+    assert.equal(this.element.textContent.trim(), 'Module: dummy/components/foo/bar.hbs');
+  });
+
+  test('registered ast plugins run against colocated template index files (template-only)', async function(assert) {
+    await render(hbs`<Baz />`);
+
+    assert.equal(this.element.textContent.trim(), 'Module: dummy/components/baz/index.hbs');
+  });
+
+  test('registered ast plugins run against nested colocated template index files (template-only)', async function(assert) {
+    await render(hbs`<Foo::Baz />`);
+
+    assert.equal(this.element.textContent.trim(), 'Module: dummy/components/foo/baz/index.hbs');
+  });
 });
