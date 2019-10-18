@@ -1,3 +1,15 @@
+## v4.0.7 (2019-10-18)
+
+#### :bug: Bug Fix
+* [#336](https://github.com/ember-cli/ember-cli-htmlbars/pull/336) Support `as default` exports with template colocation ([@dfreeman](https://github.com/dfreeman))
+
+#### :house: Internal
+* [#335](https://github.com/ember-cli/ember-cli-htmlbars/pull/335) Add additional tests for Colocated Components ([@camerondubas](https://github.com/camerondubas))
+
+#### Committers: 2
+- Cameron Dubas ([@camerondubas](https://github.com/camerondubas))
+- Dan Freeman ([@dfreeman](https://github.com/dfreeman))
+
 ## v4.0.6 (2019-10-17)
 
 #### :rocket: Enhancement
