@@ -49,6 +49,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.6.4",
+    "@babel/plugin-transform-typescript": "^7.6.3",
     "@ember/optional-features": "^1.0.0",
     "babel-plugin-debug-macros": "^0.3.3",
     "broccoli-merge-trees": "^3.0.2",
