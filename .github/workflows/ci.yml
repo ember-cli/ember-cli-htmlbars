@@ -88,6 +88,7 @@ jobs:
          - ember-lts-3.8
          - ember-lts-3.12
          - ember-release
+         - ember-octane
          - ember-beta
          - ember-canary
          - ember-default
