@@ -35,4 +35,10 @@ module('tests/integration/components/test-inline-precompile', function(hooks) {
 
     assert.equal(this.element.textContent.trim(), 'Module: dummy/components/foo/baz/index.hbs');
   });
+
+  test('can invoke native class based component with decorators', async function(assert) {
+    await render(hbs`<ItsNative />`);
+
+    assert.equal(this.element.textContent.trim(), 'Hello!');
+  });
 });
