@@ -1,3 +1,15 @@
+## v4.0.8 (2019-10-19)
+
+#### :bug: Bug Fix
+* [#340](https://github.com/ember-cli/ember-cli-htmlbars/pull/340) Fix issues when using colocated component's with decorators. ([@rwjblue](https://github.com/rwjblue))
+
+#### :house: Internal
+* [#341](https://github.com/ember-cli/ember-cli-htmlbars/pull/341) Add test using native classes + decorators. ([@rwjblue](https://github.com/rwjblue))
+* [#338](https://github.com/ember-cli/ember-cli-htmlbars/pull/338) Add broccoli plugin + babel plugin colocation tests ([@rwjblue](https://github.com/rwjblue))
+
+#### Committers: 1
+- Robert Jackson ([@rwjblue](https://github.com/rwjblue))
+
 ## v4.0.7 (2019-10-18)
 
 #### :bug: Bug Fix
