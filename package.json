@@ -54,7 +54,7 @@
     "@babel/plugin-transform-runtime": "^7.6.2",
     "@babel/plugin-transform-typescript": "^7.6.3",
     "@babel/runtime": "^7.6.3",
-    "@ember/optional-features": "^1.0.0",
+    "@ember/optional-features": "^1.1.0",
     "babel-eslint": "^10.0.3",
     "babel-plugin-debug-macros": "^0.3.3",
     "broccoli-merge-trees": "^3.0.2",
