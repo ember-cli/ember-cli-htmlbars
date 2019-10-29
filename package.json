@@ -88,7 +88,7 @@
     "module-name-inliner": "link:./tests/dummy/lib/module-name-inliner",
     "prettier": "^1.18.2",
     "qunit-dom": "^0.9.1",
-    "release-it": "^12.4.2",
+    "release-it": "^12.4.3",
     "release-it-lerna-changelog": "^1.0.3"
   },
   "engines": {
