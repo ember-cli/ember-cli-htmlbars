@@ -93,6 +93,38 @@ module.exports = {
 };
 ```
 
+### Tagged Template Usage / Migrating from `htmlbars-inline-precompile`
+
+Starting with version 4.0, this addon now includes the testing helper from [ember-cli-htmlbars-inline-precompile](https://github.com/ember-cli/ember-cli-htmlbars-inline-precompile)
+
+This will require an update to the imports of the `hbs` helper in your tests:
+
+Prior syntax:
+
+```
+import hbs from 'htmlbars-inline-precompile';
+
+...
+
+await render(hbs`
+  <MyComponent />
+`);
+```
+
+New syntax:
+
+```
+import { hbs } from 'ember-cli-htmlbars';
+
+...
+
+await render(hbs`
+  <MyComponent />
+`);
+```
+
+There is a [codemod](https://github.com/ember-codemods/ember-cli-htmlbars-inline-precompile-codemod) available to automate this change.
+
 ### Handlebars 2.0 Support (Ember < 1.10)
 
 Handlebars 2.0 support has been removed. If you are using ember-cli-htmlbars with a 1.9.x project please continue
