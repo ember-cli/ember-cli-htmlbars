@@ -1,3 +1,19 @@
+## v4.0.9 (2019-12-04)
+
+#### :rocket: Enhancement
+* [#373](https://github.com/ember-cli/ember-cli-htmlbars/pull/373) Add co-location support to CoffeeScript component class files ([@locks](https://github.com/locks))
+
+#### :memo: Documentation
+* [#351](https://github.com/ember-cli/ember-cli-htmlbars/pull/351) Update Readme with syntax for usage with tagged templates ([@thec0keman](https://github.com/thec0keman))
+
+#### :house: Internal
+* [#342](https://github.com/ember-cli/ember-cli-htmlbars/pull/342) Add `ember-octane` test suite run to CI. ([@rwjblue](https://github.com/rwjblue))
+
+#### Committers: 3
+- John Ratcliff ([@thec0keman](https://github.com/thec0keman))
+- Ricardo Mendes ([@locks](https://github.com/locks))
+- Robert Jackson ([@rwjblue](https://github.com/rwjblue))
+
 ## v4.0.8 (2019-10-19)
 
 #### :bug: Bug Fix
