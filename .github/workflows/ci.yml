@@ -19,8 +19,6 @@ jobs:
     - uses: actions/setup-node@v1
       with:
         node-version: 12.x
-    - name: install yarn
-      run: npm install -g yarn
     - name: install dependencies
       run: yarn install
     - name: lint:js
@@ -42,8 +40,6 @@ jobs:
     - uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - name: install yarn
-      run: npm install -g yarn
     - name: install dependencies
       run: yarn install
     - name: node tests
@@ -62,8 +58,6 @@ jobs:
     - uses: actions/setup-node@v1
       with:
         node-version: 12.x
-    - name: install yarn
-      run: npm install -g yarn
     - name: install dependencies
       run: yarn install --ignore-lockfile
     - name: node tests
@@ -100,8 +94,6 @@ jobs:
     - uses: actions/setup-node@v1
       with:
         node-version: 12.x
-    - name: install yarn
-      run: npm install -g yarn
     - name: install dependencies
       run: yarn install
     - name: test
