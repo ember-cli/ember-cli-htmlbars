@@ -149,6 +149,48 @@ describe('ColocatedTemplateCompiler', function() {
     });
   });
 
+  it('works for coffeescript component class with template', async function() {
+    input.write({
+      'app-name-here': {
+        components: {
+          'foo.hbs': `{{yield}}`,
+          'foo.coffee': stripIndent`
+            import Component from '@ember/component'
+            export default class extends Component
+          `,
+        },
+        templates: {
+          'application.hbs': `{{outlet}}`,
+        },
+      },
+    });
+
+    let tree = new ColocatedTemplateCompiler(input.path(), {
+      precompile(template) {
+        return JSON.stringify({ template });
+      },
+    });
+
+    output = createBuilder(tree);
+    await output.build();
+
+    assert.deepStrictEqual(output.read(), {
+      'app-name-here': {
+        components: {
+          'foo.coffee': stripIndent`
+            import { hbs } from 'ember-cli-htmlbars'
+            __COLOCATED_TEMPLATE__ = hbs("{{yield}}", {"contents":"{{yield}}","moduleName":"app-name-here/components/foo.hbs","parseOptions":{"srcName":"app-name-here/components/foo.hbs"}})
+            import Component from '@ember/component'
+            export default class extends Component
+          `,
+        },
+        templates: {
+          'application.hbs': '{{outlet}}',
+        },
+      },
+    });
+  });
+
   it('works for scoped addon using template only component', async function() {
     input.write({
       '@scope-name': {
