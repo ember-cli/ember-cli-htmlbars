@@ -59,6 +59,10 @@ describe('ColocatedTemplateCompiler', function() {
         },
       },
     });
+
+    await output.build();
+
+    assert.deepStrictEqual(output.changes(), {}, 'NOOP update has no changes');
   });
 
   it('works for component with template and class', async function() {
@@ -103,6 +107,10 @@ describe('ColocatedTemplateCompiler', function() {
         },
       },
     });
+
+    await output.build();
+
+    assert.deepStrictEqual(output.changes(), {}, 'NOOP update has no changes');
   });
 
   it('works for typescript component class with template', async function() {
@@ -147,6 +155,10 @@ describe('ColocatedTemplateCompiler', function() {
         },
       },
     });
+
+    await output.build();
+
+    assert.deepStrictEqual(output.changes(), {}, 'NOOP update has no changes');
   });
 
   it('works for coffeescript component class with template', async function() {
@@ -189,6 +201,10 @@ describe('ColocatedTemplateCompiler', function() {
         },
       },
     });
+
+    await output.build();
+
+    assert.deepStrictEqual(output.changes(), {}, 'NOOP update has no changes');
   });
 
   it('works for scoped addon using template only component', async function() {
@@ -232,6 +248,10 @@ describe('ColocatedTemplateCompiler', function() {
         },
       },
     });
+
+    await output.build();
+
+    assert.deepStrictEqual(output.changes(), {}, 'NOOP update has no changes');
   });
 
   it('works for scoped addon using component with template and class', async function() {
@@ -280,6 +300,10 @@ describe('ColocatedTemplateCompiler', function() {
         },
       },
     });
+
+    await output.build();
+
+    assert.deepStrictEqual(output.changes(), {}, 'NOOP update has no changes');
   });
 
   it('does nothing for "classic" location components', async function() {
@@ -311,6 +335,10 @@ describe('ColocatedTemplateCompiler', function() {
     await output.build();
 
     assert.deepStrictEqual(output.read(), input.read());
+
+    await output.build();
+
+    assert.deepStrictEqual(output.changes(), {}, 'NOOP update has no changes');
   });
 
   it('does nothing for "pod" location templates', async function() {
@@ -334,6 +362,10 @@ describe('ColocatedTemplateCompiler', function() {
     await output.build();
 
     assert.deepStrictEqual(output.read(), input.read());
+
+    await output.build();
+
+    assert.deepStrictEqual(output.changes(), {}, 'NOOP update has no changes');
   });
 
   it('it works if there are no input files', async function() {
@@ -349,6 +381,10 @@ describe('ColocatedTemplateCompiler', function() {
     await output.build();
 
     assert.deepStrictEqual(output.read(), {});
+
+    await output.build();
+
+    assert.deepStrictEqual(output.changes(), {}, 'NOOP update has no changes');
   });
 
   it('it works if input is manually using setComponentTemplate - no colocated template exists', async function() {
@@ -396,6 +432,10 @@ describe('ColocatedTemplateCompiler', function() {
         },
       },
     });
+
+    await output.build();
+
+    assert.deepStrictEqual(output.changes(), {}, 'NOOP update has no changes');
   });
 
   it('emits an error when a default export is not present in a component JS file', async function() {
@@ -428,6 +468,10 @@ describe('ColocatedTemplateCompiler', function() {
         },
       },
     });
+
+    await output.build();
+
+    assert.deepStrictEqual(output.changes(), {}, 'NOOP update has no changes');
   });
 
   it('does not break class decorator usage');
