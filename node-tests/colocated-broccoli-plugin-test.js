@@ -34,11 +34,7 @@ describe('ColocatedTemplateCompiler', function() {
       },
     });
 
-    let tree = new ColocatedTemplateCompiler(input.path(), {
-      precompile(template) {
-        return JSON.stringify({ template });
-      },
-    });
+    let tree = new ColocatedTemplateCompiler(input.path());
 
     output = createBuilder(tree);
     await output.build();
@@ -82,11 +78,7 @@ describe('ColocatedTemplateCompiler', function() {
       },
     });
 
-    let tree = new ColocatedTemplateCompiler(input.path(), {
-      precompile(template) {
-        return JSON.stringify({ template });
-      },
-    });
+    let tree = new ColocatedTemplateCompiler(input.path());
 
     output = createBuilder(tree);
     await output.build();
@@ -130,11 +122,7 @@ describe('ColocatedTemplateCompiler', function() {
       },
     });
 
-    let tree = new ColocatedTemplateCompiler(input.path(), {
-      precompile(template) {
-        return JSON.stringify({ template });
-      },
-    });
+    let tree = new ColocatedTemplateCompiler(input.path());
 
     output = createBuilder(tree);
     await output.build();
@@ -177,11 +165,7 @@ describe('ColocatedTemplateCompiler', function() {
       },
     });
 
-    let tree = new ColocatedTemplateCompiler(input.path(), {
-      precompile(template) {
-        return JSON.stringify({ template });
-      },
-    });
+    let tree = new ColocatedTemplateCompiler(input.path());
 
     output = createBuilder(tree);
     await output.build();
@@ -221,11 +205,7 @@ describe('ColocatedTemplateCompiler', function() {
       },
     });
 
-    let tree = new ColocatedTemplateCompiler(input.path(), {
-      precompile(template) {
-        return JSON.stringify({ template });
-      },
-    });
+    let tree = new ColocatedTemplateCompiler(input.path());
 
     output = createBuilder(tree);
     await output.build();
@@ -273,11 +253,7 @@ describe('ColocatedTemplateCompiler', function() {
       },
     });
 
-    let tree = new ColocatedTemplateCompiler(input.path(), {
-      precompile(template) {
-        return JSON.stringify({ template });
-      },
-    });
+    let tree = new ColocatedTemplateCompiler(input.path());
 
     output = createBuilder(tree);
     await output.build();
@@ -325,11 +301,7 @@ describe('ColocatedTemplateCompiler', function() {
       },
     });
 
-    let tree = new ColocatedTemplateCompiler(input.path(), {
-      precompile(template) {
-        return JSON.stringify({ template });
-      },
-    });
+    let tree = new ColocatedTemplateCompiler(input.path());
 
     output = createBuilder(tree);
     await output.build();
@@ -352,11 +324,7 @@ describe('ColocatedTemplateCompiler', function() {
       },
     });
 
-    let tree = new ColocatedTemplateCompiler(input.path(), {
-      precompile(template) {
-        return JSON.stringify({ template });
-      },
-    });
+    let tree = new ColocatedTemplateCompiler(input.path());
 
     output = createBuilder(tree);
     await output.build();
@@ -371,11 +339,7 @@ describe('ColocatedTemplateCompiler', function() {
   it('it works if there are no input files', async function() {
     input.write({});
 
-    let tree = new ColocatedTemplateCompiler(input.path(), {
-      precompile(template) {
-        return JSON.stringify({ template });
-      },
-    });
+    let tree = new ColocatedTemplateCompiler(input.path());
 
     output = createBuilder(tree);
     await output.build();
@@ -406,11 +370,7 @@ describe('ColocatedTemplateCompiler', function() {
       },
     });
 
-    let tree = new ColocatedTemplateCompiler(input.path(), {
-      precompile(template) {
-        return JSON.stringify({ template });
-      },
-    });
+    let tree = new ColocatedTemplateCompiler(input.path());
 
     output = createBuilder(tree);
     await output.build();
@@ -450,11 +410,7 @@ describe('ColocatedTemplateCompiler', function() {
       },
     });
 
-    let tree = new ColocatedTemplateCompiler(input.path(), {
-      precompile(template) {
-        return JSON.stringify({ template });
-      },
-    });
+    let tree = new ColocatedTemplateCompiler(input.path());
 
     output = createBuilder(tree);
     await output.build();
