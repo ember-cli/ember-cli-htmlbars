@@ -38,11 +38,10 @@
     "broccoli-plugin": "^3.0.0",
     "common-tags": "^1.8.0",
     "ember-cli-babel-plugin-helpers": "^1.1.0",
-    "fs-copy-file-sync": "^1.1.1",
+    "fs-tree-diff": "^2.0.1",
     "hash-for-dep": "^1.5.1",
     "heimdalljs-logger": "^0.1.10",
     "json-stable-stringify": "^1.0.1",
-    "mkdirp": "^0.5.1",
     "semver": "^6.3.0",
     "strip-bom": "^4.0.0",
     "walk-sync": "^2.0.2"
