@@ -1,3 +1,11 @@
+## v4.1.0 (2019-12-10)
+
+#### :rocket: Enhancement
+* [#380](https://github.com/ember-cli/ember-cli-htmlbars/pull/380) Implement basic patching strategy for colocated components. ([@rwjblue](https://github.com/rwjblue))
+
+#### Committers: 1
+- Robert Jackson ([@rwjblue](https://github.com/rwjblue))
+
 ## v4.0.9 (2019-12-04)
 
 #### :rocket: Enhancement
