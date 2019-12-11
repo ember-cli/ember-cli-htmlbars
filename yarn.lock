@@ -6873,9 +6873,8 @@ mocha@^6.2.2:
     yargs-unparser "1.6.0"
 
 "module-name-inliner@link:./tests/dummy/lib/module-name-inliner":
-  version "0.1.0"
-  dependencies:
-    ember-cli-version-checker "*"
+  version "0.0.0"
+  uid ""
 
 morgan@^1.9.1:
   version "1.9.1"
