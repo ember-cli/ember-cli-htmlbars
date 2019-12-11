@@ -1,3 +1,11 @@
+## v4.1.1 (2019-12-11)
+
+#### :bug: Bug Fix
+* [#390](https://github.com/ember-cli/ember-cli-htmlbars/pull/390) Ensure reexported components do not throw an error. ([@rwjblue](https://github.com/rwjblue))
+
+#### Committers: 1
+- Robert Jackson ([@rwjblue](https://github.com/rwjblue))
+
 ## v4.1.0 (2019-12-10)
 
 #### :rocket: Enhancement
