@@ -1,3 +1,11 @@
+## v4.2.0 (2019-12-11)
+
+#### :rocket: Enhancement
+* [#384](https://github.com/ember-cli/ember-cli-htmlbars/pull/384) Remove `setEdition` requirement for colocation. ([@rwjblue](https://github.com/rwjblue))
+
+#### Committers: 1
+- Robert Jackson ([@rwjblue](https://github.com/rwjblue))
+
 ## v4.1.1 (2019-12-11)
 
 #### :bug: Bug Fix
