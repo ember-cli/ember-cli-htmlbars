@@ -1,3 +1,13 @@
+## v4.3.0 (2020-01-09)
+
+#### :bug: Bug Fix
+* [#423](https://github.com/ember-cli/ember-cli-htmlbars/pull/423) Only check semver range if ember-source is present ([@mixonic](https://github.com/mixonic))
+* [#392](https://github.com/ember-cli/ember-cli-htmlbars/pull/392) Ensure inline precompilation does not error when a template contains `*/` ([@rwjblue](https://github.com/rwjblue))
+
+#### Committers: 2
+- Matthew Beale ([@mixonic](https://github.com/mixonic))
+- Robert Jackson ([@rwjblue](https://github.com/rwjblue))
+
 ## v4.2.0 (2019-12-11)
 
 #### :rocket: Enhancement
