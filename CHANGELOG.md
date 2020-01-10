@@ -1,4 +1,4 @@
-## v4.3.0 (2020-01-09)
+## v4.2.1 (2020-01-09)
 
 #### :bug: Bug Fix
 * [#423](https://github.com/ember-cli/ember-cli-htmlbars/pull/423) Only check semver range if ember-source is present ([@mixonic](https://github.com/mixonic))
