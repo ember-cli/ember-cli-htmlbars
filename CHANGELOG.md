@@ -1,3 +1,16 @@
+## v4.2.2 (2020-01-15)
+
+#### :bug: Bug Fix
+* [#437](https://github.com/ember-cli/ember-cli-htmlbars/pull/437) Revert "Bump semver from 6.3.0 to 7.0.0" ([@rwjblue](https://github.com/rwjblue))
+
+#### :memo: Documentation
+* [#425](https://github.com/ember-cli/ember-cli-htmlbars/pull/425) Changelog: Fix wrong version  ([@Turbo87](https://github.com/Turbo87))
+
+#### Committers: 3
+- Robert Jackson ([@rwjblue](https://github.com/rwjblue))
+- Tobias Bieniek ([@Turbo87](https://github.com/Turbo87))
+- [@dependabot-preview[bot]](https://github.com/apps/dependabot-preview)
+
 ## v4.2.1 (2020-01-09)
 
 #### :bug: Bug Fix
