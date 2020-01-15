@@ -47,7 +47,7 @@
     "walk-sync": "^2.0.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.8.0",
+    "@babel/core": "^7.8.3",
     "@babel/plugin-proposal-class-properties": "^7.8.3",
     "@babel/plugin-proposal-decorators": "^7.8.0",
     "@babel/plugin-transform-runtime": "^7.8.3",
