@@ -42,7 +42,7 @@
     "hash-for-dep": "^1.5.1",
     "heimdalljs-logger": "^0.1.10",
     "json-stable-stringify": "^1.0.1",
-    "semver": "^6.3.0",
+    "semver": "^7.1.2",
     "strip-bom": "^4.0.0",
     "walk-sync": "^2.0.2"
   },
