@@ -46,7 +46,7 @@ describe('utils', function() {
         parallelConfigs: [],
         canParallelize: true,
         unparallelizableWrappers: [],
-        hasDependencyInvalidation: false,
+        dependencyInvalidation: false,
       });
     });
 
@@ -76,7 +76,7 @@ describe('utils', function() {
         parallelConfigs: ['something', 'something else'],
         canParallelize: true,
         unparallelizableWrappers: [],
-        hasDependencyInvalidation: false,
+        dependencyInvalidation: false,
       });
     });
 
@@ -107,7 +107,7 @@ describe('utils', function() {
         parallelConfigs: ['something'],
         canParallelize: false,
         unparallelizableWrappers: ['second'],
-        hasDependencyInvalidation: false,
+        dependencyInvalidation: false,
       });
     });
   });
