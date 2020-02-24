@@ -1,3 +1,13 @@
+## v4.2.3 (2020-02-24)
+
+#### :house: Internal
+* [#464](https://github.com/ember-cli/ember-cli-htmlbars/pull/464) Remove usage of legacy `checker.forEmber` API. ([@rwjblue](https://github.com/rwjblue))
+* [#463](https://github.com/ember-cli/ember-cli-htmlbars/pull/463) fix: Standardize the option name for dependency invalidation. ([@chriseppstein](https://github.com/chriseppstein))
+
+#### Committers: 2
+- Chris Eppstein ([@chriseppstein](https://github.com/chriseppstein))
+- Robert Jackson ([@rwjblue](https://github.com/rwjblue))
+
 ## v4.2.2 (2020-01-15)
 
 #### :bug: Bug Fix
