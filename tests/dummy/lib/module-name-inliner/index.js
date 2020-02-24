@@ -12,7 +12,7 @@ module.exports = {
   setupPreprocessorRegistry(type, registry) {
     // can only add the plugin with this style on newer Ember versions
     let checker = new VersionChecker(this.project);
-    if (checker.forEmber().gte('3.1.0')) {
+    if (checker.for('ember-source').gte('3.1.0')) {
       registry.add('htmlbars-ast-plugin', this.buildPlugin());
     }
 
