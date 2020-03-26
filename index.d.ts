@@ -20,11 +20,13 @@ export interface PrecompileOptions {
 }
 
 /**
- * A helper for rendering components in tests.
+ * A helper for rendering components.
  *
- * @param tagged The template to render for the test.
+ * @param tagged The template to render.
  *
- * ## Example usage
+ * ## Usage
+ *
+ * ### With tagged template
  *
  * ```ts
  * import { module, test } from 'qunit';
@@ -40,6 +42,23 @@ export interface PrecompileOptions {
  *     assert.ok(true);
  *   });
  * });
+ * ```
+ *
+ * ## With string and options
+ *
+ * ```ts
+ * import Component from '@glimmer/component';
+ * import { setComponentTemplate } from '@ember/component';
+ * import { hbs } from 'ember-cli-htmlbars';
+ *
+ * class Hello extends Component {
+ *   greeting = 'hello world';
+ * }
+ *
+ * setComponentTemplate(
+ *   hbs('<p>{{this.greeting}}</p>', { moduleName: 'hello.hbs' }),
+ *   MyComponent
+ * );
  * ```
  */
 export function hbs(template: string, options?: PrecompileOptions): TemplateFactory;
