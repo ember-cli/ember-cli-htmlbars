@@ -1,3 +1,11 @@
+## v4.3.0 (2020-04-08)
+
+#### :memo: Documentation
+* [#481](https://github.com/ember-cli/ember-cli-htmlbars/pull/481) Add type definition for test helper import ([@chriskrycho](https://github.com/chriskrycho))
+
+#### Committers: 1
+- Chris Krycho ([@chriskrycho](https://github.com/chriskrycho))
+
 ## v4.2.3 (2020-02-24)
 
 #### :house: Internal
