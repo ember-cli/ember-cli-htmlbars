@@ -16,11 +16,11 @@
   },
   "license": "MIT",
   "author": "Jonathan Jackson & Chase McCarthy",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "files": [
     "lib/"
   ],
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
   "scripts": {
     "build": "ember build",
     "lint:hbs": "ember-template-lint .",
