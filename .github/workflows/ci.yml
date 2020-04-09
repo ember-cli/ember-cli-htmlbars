@@ -75,17 +75,13 @@ jobs:
     strategy:
       matrix:
         ember-try-scenario:
-         - ember-lts-2.12
-         - ember-lts-2.16
-         - ember-lts-2.18
-         - ember-lts-3.4
          - ember-lts-3.8
          - ember-lts-3.12
+         - ember-lts-3.16
          - ember-release
          - ember-octane
          - ember-beta
          - ember-canary
-         - ember-default
          - ember-default-with-jquery
          - with-ember-cli-htmlbars-inline-precompile
 

@@ -2,7 +2,6 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
-import hasEmberVersion from '@ember/test-helpers/has-ember-version';
 
 module('tests/integration/components/ast-plugins-test', function (hooks) {
   setupRenderingTest(hooks);
@@ -16,14 +15,12 @@ module('tests/integration/components/ast-plugins-test', function (hooks) {
     );
   });
 
-  if (hasEmberVersion(3, 1)) {
-    test('stand alone templates have AST plugins ran', async function (assert) {
-      await render(hbs`{{x-module-name-inlined-component}}`);
+  test('stand alone templates have AST plugins ran', async function (assert) {
+    await render(hbs`{{x-module-name-inlined-component}}`);
 
-      assert.equal(
-        this.element.textContent.trim(),
-        'dummy/templates/components/x-module-name-inlined-component.hbs'
-      );
-    });
-  }
+    assert.equal(
+      this.element.textContent.trim(),
+      'dummy/templates/components/x-module-name-inlined-component.hbs'
+    );
+  });
 });

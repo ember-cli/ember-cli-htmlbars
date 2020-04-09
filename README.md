@@ -2,7 +2,13 @@
 
 <a href="https://github.com/ember-cli/ember-cli-htmlbars/actions"><img alt="Build Status" src="https://github.com/ember-cli/ember-cli-htmlbars/workflows/ci/badge.svg"></a>
 
-### Registering a Plugin
+## Compatibility
+
+* Ember.js v3.8 or above
+* Ember CLI v3.8 or above
+* Node.js v10 or above
+
+## Registering a Plugin
 
 ```javascript
 var SomeTransform = require('./some-path/transform');
@@ -22,7 +28,7 @@ module.exports = {
 };
 ```
 
-#### Options for registering a `htmlbars-ast-plugin`
+### Options for registering a `htmlbars-ast-plugin`
 
 * `name` - String. The name of the AST transform for debugging purposes.
 * `plugin` - A function of type [`ASTPluginBuilder`](https://github.com/glimmerjs/glimmer-vm/blob/master/packages/%40glimmer/syntax/lib/parser/tokenizer-event-handlers.ts#L329-L341).
@@ -30,7 +36,7 @@ module.exports = {
 * `cacheKey` - function that returns any JSON-compatible value - The value returned is used to invalidate the persistent cache across restarts, usually in the case of a dependency or configuration change.
 * `baseDir` - `() => string`. A function that returns the directory on disk of the npm module for the plugin. If provided, a basic cache invalidation is performed if any of the dependencies change (e.g. due to a npm install/upgrade).
 
-#### Implementing Dependency Invalidation in an AST Plugin
+### Implementing Dependency Invalidation in an AST Plugin
 
 Plugins that set the `dependencyInvalidation` option to `true` can provide function for the `plugin` of type `ASTDependencyPlugin` as given below.
 
@@ -71,7 +77,7 @@ export interface ASTPluginWithDeps extends ASTPlugin {
 }
 ```
 
-### Precompile HTMLBars template strings within other addons
+## Precompile HTMLBars template strings within other addons
 
 ```javascript
 module.exports = {
@@ -93,7 +99,7 @@ module.exports = {
 };
 ```
 
-### Tagged Template Usage / Migrating from `htmlbars-inline-precompile`
+## Tagged Template Usage / Migrating from `htmlbars-inline-precompile`
 
 Starting with version 4.0, this addon now includes the testing helper from [ember-cli-htmlbars-inline-precompile](https://github.com/ember-cli/ember-cli-htmlbars-inline-precompile)
 
@@ -142,12 +148,7 @@ module.exports = function(defaults) {
 };
 ```
 
-### Handlebars 2.0 Support (Ember < 1.10)
-
-Handlebars 2.0 support has been removed. If you are using ember-cli-htmlbars with a 1.9.x project please continue
-to use ember-cli-htmlbars@0.6.x.
-
-### Using as a Broccoli Plugin
+## Using as a Broccoli Plugin
 
 ```javascript
 var HtmlbarsCompiler = require('ember-cli-htmlbars');
