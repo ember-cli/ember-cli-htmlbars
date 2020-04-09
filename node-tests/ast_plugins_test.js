@@ -12,14 +12,14 @@ const addDependencyTracker = require('../lib/addDependencyTracker');
 const templateCompiler = require('ember-source/dist/ember-template-compiler.js');
 const CANNOT_UNREGISTER_PLUGINS = !templateCompiler.unregisterPlugin;
 
-describe('AST plugins', function() {
+describe('AST plugins', function () {
   const they = it;
   this.timeout(10000);
 
   let input, output, builder, tree, htmlbarsOptions;
 
   beforeEach(
-    co.wrap(function*() {
+    co.wrap(function* () {
       rewriterCallCount = 0;
       input = yield createTempDir();
       input.write(fixturify.readSync(`${__dirname}/fixtures`));
@@ -31,7 +31,7 @@ describe('AST plugins', function() {
   );
 
   afterEach(
-    co.wrap(function*() {
+    co.wrap(function* () {
       if (tree) {
         tree.unregisterPlugins();
         if (tree.processor.processor._cache) {
@@ -102,7 +102,7 @@ describe('AST plugins', function() {
 
   they(
     'are accepted and used.',
-    co.wrap(function*() {
+    co.wrap(function* () {
       if (CANNOT_UNREGISTER_PLUGINS) {
         this.skip();
       }
@@ -124,7 +124,7 @@ describe('AST plugins', function() {
 
   they(
     'will bust the hot cache if the dependency changes.',
-    co.wrap(function*() {
+    co.wrap(function* () {
       if (CANNOT_UNREGISTER_PLUGINS) {
         this.skip();
       }
@@ -170,20 +170,20 @@ describe('AST plugins', function() {
     })
   );
 
-  describe('with persistent caching enabled', function() {
+  describe('with persistent caching enabled', function () {
     let forcePersistenceValue;
-    before(function() {
+    before(function () {
       forcePersistenceValue = process.env.FORCE_PERSISTENCE_IN_CI;
       process.env.FORCE_PERSISTENCE_IN_CI = 'true';
     });
 
-    after(function() {
+    after(function () {
       process.env.FORCE_PERSISTENCE_IN_CI = forcePersistenceValue;
     });
 
     they(
       'will bust the persistent cache if the template cache key changes.',
-      co.wrap(function*() {
+      co.wrap(function* () {
         if (CANNOT_UNREGISTER_PLUGINS) {
           this.skip();
         }

@@ -3,10 +3,10 @@
 const purgeModule = require('../lib/utils').purgeModule;
 const expect = require('chai').expect;
 
-describe('purgeModule', function() {
+describe('purgeModule', function () {
   const FIXTURE_COMPILER_PATH = require.resolve('./fixtures/compiler');
 
-  it('it works correctly', function() {
+  it('it works correctly', function () {
     expect(purgeModule('asdfasdfasdfaf-unknown-file')).to.eql(undefined);
 
     expect(require.cache[FIXTURE_COMPILER_PATH]).to.eql(undefined);

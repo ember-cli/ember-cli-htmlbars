@@ -4,10 +4,10 @@ import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import hasEmberVersion from '@ember/test-helpers/has-ember-version';
 
-module('tests/integration/components/ast-plugins-test', function(hooks) {
+module('tests/integration/components/ast-plugins-test', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('stand alone templates have "legacy" AST plugins ran', async function(assert) {
+  test('stand alone templates have "legacy" AST plugins ran', async function (assert) {
     await render(hbs`{{x-module-name-reversed-component}}`);
 
     assert.equal(
@@ -17,7 +17,7 @@ module('tests/integration/components/ast-plugins-test', function(hooks) {
   });
 
   if (hasEmberVersion(3, 1)) {
-    test('stand alone templates have AST plugins ran', async function(assert) {
+    test('stand alone templates have AST plugins ran', async function (assert) {
       await render(hbs`{{x-module-name-inlined-component}}`);
 
       assert.equal(

@@ -5,16 +5,16 @@ const ColocatedTemplateCompiler = require('../lib/colocated-broccoli-plugin');
 const { createTempDir, createBuilder } = require('broccoli-test-helper');
 const { stripIndent } = require('common-tags');
 
-describe('ColocatedTemplateCompiler', function() {
+describe('ColocatedTemplateCompiler', function () {
   this.timeout(10000);
 
   let input, output;
 
-  beforeEach(async function() {
+  beforeEach(async function () {
     input = await createTempDir();
   });
 
-  afterEach(async function() {
+  afterEach(async function () {
     await input.dispose();
 
     if (output) {
@@ -22,7 +22,7 @@ describe('ColocatedTemplateCompiler', function() {
     }
   });
 
-  it('works for template only component', async function() {
+  it('works for template only component', async function () {
     input.write({
       'app-name-here': {
         'router.js': '// stuff here',
@@ -77,7 +77,7 @@ describe('ColocatedTemplateCompiler', function() {
     );
   });
 
-  it('works for component with template and class', async function() {
+  it('works for component with template and class', async function () {
     input.write({
       'app-name-here': {
         'router.js': '// stuff here',
@@ -137,7 +137,7 @@ describe('ColocatedTemplateCompiler', function() {
     );
   });
 
-  it('works for re-exported component without a template', async function() {
+  it('works for re-exported component without a template', async function () {
     input.write({
       'app-name-here': {
         'router.js': '// stuff here',
@@ -186,7 +186,7 @@ describe('ColocatedTemplateCompiler', function() {
     );
   });
 
-  it('works for typescript component class with template', async function() {
+  it('works for typescript component class with template', async function () {
     input.write({
       'app-name-here': {
         components: {
@@ -230,7 +230,7 @@ describe('ColocatedTemplateCompiler', function() {
     assert.deepStrictEqual(output.changes(), {}, 'NOOP update has no changes');
   });
 
-  it('works for coffeescript component class with template', async function() {
+  it('works for coffeescript component class with template', async function () {
     input.write({
       'app-name-here': {
         components: {
@@ -272,7 +272,7 @@ describe('ColocatedTemplateCompiler', function() {
     assert.deepStrictEqual(output.changes(), {}, 'NOOP update has no changes');
   });
 
-  it('works for scoped addon using template only component', async function() {
+  it('works for scoped addon using template only component', async function () {
     input.write({
       '@scope-name': {
         'addon-name-here': {
@@ -315,7 +315,7 @@ describe('ColocatedTemplateCompiler', function() {
     assert.deepStrictEqual(output.changes(), {}, 'NOOP update has no changes');
   });
 
-  it('works for scoped addon using component with template and class', async function() {
+  it('works for scoped addon using component with template and class', async function () {
     input.write({
       '@scope-name': {
         'addon-name-here': {
@@ -363,7 +363,7 @@ describe('ColocatedTemplateCompiler', function() {
     assert.deepStrictEqual(output.changes(), {}, 'NOOP update has no changes');
   });
 
-  it('does nothing for "classic" location components', async function() {
+  it('does nothing for "classic" location components', async function () {
     input.write({
       'app-name-here': {
         components: {
@@ -394,7 +394,7 @@ describe('ColocatedTemplateCompiler', function() {
     assert.deepStrictEqual(output.changes(), {}, 'NOOP update has no changes');
   });
 
-  it('does nothing for "pod" location templates', async function() {
+  it('does nothing for "pod" location templates', async function () {
     input.write({
       'addon-name-here': {
         components: {
@@ -417,7 +417,7 @@ describe('ColocatedTemplateCompiler', function() {
     assert.deepStrictEqual(output.changes(), {}, 'NOOP update has no changes');
   });
 
-  it('it works if there are no input files', async function() {
+  it('it works if there are no input files', async function () {
     input.write({});
 
     let tree = new ColocatedTemplateCompiler(input.path());
@@ -432,7 +432,7 @@ describe('ColocatedTemplateCompiler', function() {
     assert.deepStrictEqual(output.changes(), {}, 'NOOP update has no changes');
   });
 
-  it('it works if input is manually using setComponentTemplate - no colocated template exists', async function() {
+  it('it works if input is manually using setComponentTemplate - no colocated template exists', async function () {
     input.write({
       'app-name-here': {
         components: {
@@ -479,7 +479,7 @@ describe('ColocatedTemplateCompiler', function() {
     assert.deepStrictEqual(output.changes(), {}, 'NOOP update has no changes');
   });
 
-  it('emits an error when a default export is not present in a component JS file', async function() {
+  it('emits an error when a default export is not present in a component JS file', async function () {
     input.write({
       'app-name-here': {
         components: {
@@ -513,8 +513,8 @@ describe('ColocatedTemplateCompiler', function() {
 
   it('does not break class decorator usage');
 
-  describe('changes', function() {
-    it('initial template only, add a JS file', async function() {
+  describe('changes', function () {
+    it('initial template only, add a JS file', async function () {
       input.write({
         'app-name-here': {
           'router.js': '// stuff here',
@@ -601,7 +601,7 @@ describe('ColocatedTemplateCompiler', function() {
       );
     });
 
-    it('initial JS only, add a template', async function() {
+    it('initial JS only, add a template', async function () {
       input.write({
         'app-name-here': {
           'router.js': '// stuff here',
@@ -686,7 +686,7 @@ describe('ColocatedTemplateCompiler', function() {
       );
     });
 
-    it('initial JS only, delete JS', async function() {
+    it('initial JS only, delete JS', async function () {
       input.write({
         'app-name-here': {
           'router.js': '// stuff here',
@@ -763,7 +763,7 @@ describe('ColocatedTemplateCompiler', function() {
       );
     });
 
-    it('initial template only, delete template', async function() {
+    it('initial template only, delete template', async function () {
       input.write({
         'app-name-here': {
           'router.js': '// stuff here',
@@ -824,7 +824,7 @@ describe('ColocatedTemplateCompiler', function() {
       );
     });
 
-    it('initial template, update template', async function() {
+    it('initial template, update template', async function () {
       input.write({
         'app-name-here': {
           'router.js': '// stuff here',
@@ -907,7 +907,7 @@ describe('ColocatedTemplateCompiler', function() {
       );
     });
 
-    it('initial JS + template, update template', async function() {
+    it('initial JS + template, update template', async function () {
       input.write({
         'app-name-here': {
           'router.js': '// stuff here',
@@ -995,7 +995,7 @@ describe('ColocatedTemplateCompiler', function() {
       );
     });
 
-    it('initial JS + template, update JS', async function() {
+    it('initial JS + template, update JS', async function () {
       input.write({
         'app-name-here': {
           'router.js': '// stuff here',
@@ -1087,7 +1087,7 @@ describe('ColocatedTemplateCompiler', function() {
       );
     });
 
-    it('initial JS + template, delete JS file', async function() {
+    it('initial JS + template, delete JS file', async function () {
       input.write({
         'app-name-here': {
           'router.js': '// stuff here',

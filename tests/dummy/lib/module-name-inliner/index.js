@@ -78,12 +78,7 @@ module.exports = {
             // {{module-name-reverser}} -> `some-module-name`
             MustacheStatement(node) {
               if (node.path.original === 'module-name-reverser') {
-                return b.text(
-                  meta.moduleName
-                    .split('')
-                    .reverse()
-                    .join('')
-                );
+                return b.text(meta.moduleName.split('').reverse().join(''));
               }
             },
           });

@@ -32,16 +32,16 @@ class BabelTranspiler extends BroccoliPersistentFilter {
   }
 }
 
-describe('Colocation - Broccoli + Babel Integration', function() {
+describe('Colocation - Broccoli + Babel Integration', function () {
   this.timeout(10000);
 
   let input, output;
 
-  beforeEach(async function() {
+  beforeEach(async function () {
     input = await createTempDir();
   });
 
-  afterEach(async function() {
+  afterEach(async function () {
     await input.dispose();
 
     if (output) {
@@ -65,7 +65,7 @@ describe('Colocation - Broccoli + Babel Integration', function() {
     return output;
   }
 
-  it('works for template only component', async function() {
+  it('works for template only component', async function () {
     input.write({
       'app-name-here': {
         components: {
@@ -106,7 +106,7 @@ describe('Colocation - Broccoli + Babel Integration', function() {
     });
   });
 
-  it('works for component with template and class', async function() {
+  it('works for component with template and class', async function () {
     input.write({
       'app-name-here': {
         components: {
@@ -154,7 +154,7 @@ describe('Colocation - Broccoli + Babel Integration', function() {
     });
   });
 
-  it('works for typescript component class with template', async function() {
+  it('works for typescript component class with template', async function () {
     input.write({
       'app-name-here': {
         components: {
@@ -202,7 +202,7 @@ describe('Colocation - Broccoli + Babel Integration', function() {
     });
   });
 
-  it('works for scoped addon using template only component', async function() {
+  it('works for scoped addon using template only component', async function () {
     input.write({
       '@scope-name': {
         'addon-name-here': {
@@ -247,7 +247,7 @@ describe('Colocation - Broccoli + Babel Integration', function() {
     });
   });
 
-  it('works for scoped addon using component with template and class', async function() {
+  it('works for scoped addon using component with template and class', async function () {
     input.write({
       '@scope-name': {
         'addon-name-here': {
@@ -298,7 +298,7 @@ describe('Colocation - Broccoli + Babel Integration', function() {
     });
   });
 
-  it('does nothing for "classic" location components', async function() {
+  it('does nothing for "classic" location components', async function () {
     input.write({
       'app-name-here': {
         components: {
@@ -323,7 +323,7 @@ describe('Colocation - Broccoli + Babel Integration', function() {
     assert.deepStrictEqual(output.read(), input.read());
   });
 
-  it('does nothing for "pod" location templates', async function() {
+  it('does nothing for "pod" location templates', async function () {
     input.write({
       'addon-name-here': {
         components: {
@@ -340,7 +340,7 @@ describe('Colocation - Broccoli + Babel Integration', function() {
     assert.deepStrictEqual(output.read(), input.read());
   });
 
-  it('it works if there are no input files', async function() {
+  it('it works if there are no input files', async function () {
     input.write({});
 
     createBuilder();
@@ -349,7 +349,7 @@ describe('Colocation - Broccoli + Babel Integration', function() {
     assert.deepStrictEqual(output.read(), {});
   });
 
-  it('it works if input is manually using setComponentTemplate - no colocated template exists', async function() {
+  it('it works if input is manually using setComponentTemplate - no colocated template exists', async function () {
     input.write({
       'app-name-here': {
         components: {
@@ -388,7 +388,7 @@ describe('Colocation - Broccoli + Babel Integration', function() {
     });
   });
 
-  it('emits an error when a default export is not present in a component JS file', async function() {
+  it('emits an error when a default export is not present in a component JS file', async function () {
     input.write({
       'app-name-here': {
         components: {
