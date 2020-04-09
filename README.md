@@ -125,6 +125,23 @@ await render(hbs`
 
 There is a [codemod](https://github.com/ember-codemods/ember-cli-htmlbars-inline-precompile-codemod) available to automate this change.
 
+### Custom Template Compiler
+
+You can still provide a custom path to the template compiler (e.g. to test
+custom template compiler tweaks in an application) by:
+
+```js
+// ember-cli-build.js
+
+module.exports = function(defaults) {
+  let app = new EmberApp(defaults, {
+    'ember-cli-htmlbars': {
+      templateCompilerPath: `some_path/to/ember-template-compiler.js`,
+    }
+  });
+};
+```
+
 ### Handlebars 2.0 Support (Ember < 1.10)
 
 Handlebars 2.0 support has been removed. If you are using ember-cli-htmlbars with a 1.9.x project please continue
