@@ -20,7 +20,7 @@
     "lib/"
   ],
   "main": "lib/index.js",
-  "types": "index.d.ts",
+  "types": "lib/index.d.ts",
   "scripts": {
     "build": "ember build",
     "lint:hbs": "ember-template-lint .",
