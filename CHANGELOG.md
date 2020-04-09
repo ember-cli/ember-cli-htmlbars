@@ -1,3 +1,11 @@
+## v4.3.1 (2020-04-09)
+
+#### :bug: Bug Fix
+* [#494](https://github.com/ember-cli/ember-cli-htmlbars/pull/494) Ensure types file gets published. ([@rwjblue](https://github.com/rwjblue))
+
+#### Committers: 1
+- Robert Jackson ([@rwjblue](https://github.com/rwjblue))
+
 ## v4.3.0 (2020-04-08)
 
 #### :memo: Documentation
