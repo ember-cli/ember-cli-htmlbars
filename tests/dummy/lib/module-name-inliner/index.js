@@ -1,7 +1,5 @@
 'use strict';
 
-let VersionChecker = require('ember-cli-version-checker');
-
 module.exports = {
   name: require('./package').name,
 
@@ -11,11 +9,7 @@ module.exports = {
 
   setupPreprocessorRegistry(type, registry) {
     // can only add the plugin with this style on newer Ember versions
-    let checker = new VersionChecker(this.project);
-    if (checker.for('ember-source').gte('3.1.0')) {
-      registry.add('htmlbars-ast-plugin', this.buildPlugin());
-    }
-
+    registry.add('htmlbars-ast-plugin', this.buildPlugin());
     registry.add('htmlbars-ast-plugin', this.buildLegacyPlugin());
   },
 

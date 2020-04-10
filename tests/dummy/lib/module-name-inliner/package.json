@@ -4,7 +4,5 @@
   "keywords": [
     "ember-addon"
   ],
-  "dependencies": {
-    "ember-cli-version-checker": "*"
-  }
+  "dependencies": {}
 }
