@@ -16,11 +16,11 @@
   },
   "license": "MIT",
   "author": "Jonathan Jackson & Chase McCarthy",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "files": [
     "lib/"
   ],
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
   "scripts": {
     "build": "ember build",
     "lint:hbs": "ember-template-lint .",
@@ -90,7 +90,7 @@
     "prettier": "^2.0.4",
     "qunit-dom": "^0.9.2",
     "release-it": "^13.5.2",
-    "release-it-lerna-changelog": "^1.0.3"
+    "release-it-lerna-changelog": "^2.1.2"
   },
   "engines": {
     "node": "10.* || >= 12.*"
@@ -105,14 +105,16 @@
   "release-it": {
     "plugins": {
       "release-it-lerna-changelog": {
-        "infile": "CHANGELOG.md"
+        "infile": "CHANGELOG.md",
+        "launchEditor": true
       }
     },
     "git": {
       "tagName": "v${version}"
     },
     "github": {
-      "release": true
+      "release": true,
+      "tokenRef": "GITHUB_AUTH"
     }
   }
 }
