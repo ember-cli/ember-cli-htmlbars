@@ -4,7 +4,7 @@ const EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
 const MergeTree = require('broccoli-merge-trees');
 const { has } = require('@ember/edition-utils');
 
-module.exports = function(defaults) {
+module.exports = function (defaults) {
   let hasOctane = has('octane');
   let appTree = 'tests/dummy/app';
   if (hasOctane) {
