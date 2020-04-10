@@ -6,20 +6,20 @@ const co = require('co');
 const { createTempDir, createBuilder } = require('broccoli-test-helper');
 const fixturify = require('fixturify');
 
-describe('TemplateCompiler', function() {
+describe('TemplateCompiler', function () {
   this.timeout(10000);
 
   let input, output, builder;
 
   beforeEach(
-    co.wrap(function*() {
+    co.wrap(function* () {
       input = yield createTempDir();
       input.write(fixturify.readSync(`${__dirname}/fixtures`));
     })
   );
 
   afterEach(
-    co.wrap(function*() {
+    co.wrap(function* () {
       if (builder) {
         builder.cleanup();
       }
@@ -34,7 +34,7 @@ describe('TemplateCompiler', function() {
 
   let htmlbarsOptions, htmlbarsPrecompile;
 
-  beforeEach(function() {
+  beforeEach(function () {
     htmlbarsOptions = {
       isHTMLBars: true,
       templateCompiler: require('ember-source/dist/ember-template-compiler.js'),
@@ -45,7 +45,7 @@ describe('TemplateCompiler', function() {
 
   it(
     'precompiles templates into htmlbars',
-    co.wrap(function*() {
+    co.wrap(function* () {
       let tree = new TemplateCompiler(input.path(), htmlbarsOptions);
 
       output = createBuilder(tree);
@@ -61,7 +61,7 @@ describe('TemplateCompiler', function() {
 
   it(
     'ignores utf-8 byte order marks',
-    co.wrap(function*() {
+    co.wrap(function* () {
       let tree = new TemplateCompiler(input.path(), htmlbarsOptions);
 
       output = createBuilder(tree);
@@ -78,7 +78,7 @@ describe('TemplateCompiler', function() {
 
   it(
     'passes FEATURES to compiler when provided as `FEATURES` [DEPRECATED]',
-    co.wrap(function*() {
+    co.wrap(function* () {
       htmlbarsOptions.FEATURES = {
         'ember-htmlbars-component-generation': true,
       };
@@ -99,7 +99,7 @@ describe('TemplateCompiler', function() {
 
   it(
     'passes FEATURES to compiler when provided as `EmberENV.FEATURES`',
-    co.wrap(function*() {
+    co.wrap(function* () {
       htmlbarsOptions.EmberENV = {
         FEATURES: {
           'ember-htmlbars-component-generation': true,

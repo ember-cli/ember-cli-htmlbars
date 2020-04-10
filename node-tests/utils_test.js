@@ -3,15 +3,15 @@
 const utils = require('../lib/utils');
 const assert = require('assert');
 
-describe('utils', function() {
+describe('utils', function () {
   let templateCompiler;
 
-  describe('initializeEmberENV', function() {
-    beforeEach(function() {
+  describe('initializeEmberENV', function () {
+    beforeEach(function () {
       templateCompiler = require('ember-source/dist/ember-template-compiler');
     });
 
-    it('passes other ENV variables to compiler when provided', function() {
+    it('passes other ENV variables to compiler when provided', function () {
       let EmberENV = {
         FOO_BAR: true,
       };
@@ -21,7 +21,7 @@ describe('utils', function() {
       assert.strictEqual(templateCompiler._Ember.ENV.FOO_BAR, true);
     });
 
-    it('passes features through when provided', function() {
+    it('passes features through when provided', function () {
       let EmberENV = {
         FEATURES: {
           BLAH: true,
@@ -34,8 +34,8 @@ describe('utils', function() {
     });
   });
 
-  describe('setupPlugins', function() {
-    it('for 0 plugins', function() {
+  describe('setupPlugins', function () {
+    it('for 0 plugins', function () {
       let pluginWrappers = [];
 
       let actual = utils.setupPlugins(pluginWrappers);
@@ -50,7 +50,7 @@ describe('utils', function() {
       });
     });
 
-    it('canParallelize for 1+ plugins with "parallelBabel" property', function() {
+    it('canParallelize for 1+ plugins with "parallelBabel" property', function () {
       let pluginWrappers = [
         {
           plugin() {},
@@ -71,7 +71,7 @@ describe('utils', function() {
       let actual = utils.setupPlugins(pluginWrappers);
 
       assert.deepStrictEqual(actual, {
-        plugins: pluginWrappers.map(w => w.plugin),
+        plugins: pluginWrappers.map((w) => w.plugin),
         cacheKeys: ['something', 'something else'],
         parallelConfigs: ['something', 'something else'],
         canParallelize: true,
@@ -80,7 +80,7 @@ describe('utils', function() {
       });
     });
 
-    it('canParallelize is false for 1+ plugins without "parallelBabel" property', function() {
+    it('canParallelize is false for 1+ plugins without "parallelBabel" property', function () {
       let pluginWrappers = [
         {
           name: 'first',
@@ -102,7 +102,7 @@ describe('utils', function() {
       let actual = utils.setupPlugins(pluginWrappers);
 
       assert.deepStrictEqual(actual, {
-        plugins: pluginWrappers.map(w => w.plugin),
+        plugins: pluginWrappers.map((w) => w.plugin),
         cacheKeys: ['something', 'something else'],
         parallelConfigs: ['something'],
         canParallelize: false,
@@ -112,10 +112,10 @@ describe('utils', function() {
     });
   });
 
-  describe('isInlinePrecompileBabelPluginRegistered', function() {
+  describe('isInlinePrecompileBabelPluginRegistered', function () {
     let nonParallelizablePlugin, parallelizablePlugin;
 
-    beforeEach(function() {
+    beforeEach(function () {
       let modules = {
         'ember-cli-htmlbars': 'hbs',
         'ember-cli-htmlbars-inline-precompile': 'default',
@@ -141,33 +141,33 @@ describe('utils', function() {
       ];
     });
 
-    it('is false when no plugins exist', function() {
+    it('is false when no plugins exist', function () {
       let plugins = [];
 
       assert.strictEqual(utils.isInlinePrecompileBabelPluginRegistered(plugins), false);
     });
 
-    it('detects when the non-parallelizable version of the plugin has been installed', function() {
+    it('detects when the non-parallelizable version of the plugin has been installed', function () {
       let plugins = [nonParallelizablePlugin];
 
       assert.strictEqual(utils.isInlinePrecompileBabelPluginRegistered(plugins), true);
     });
 
-    it('detects when the parallelizable version of the plugin has been installed', function() {
+    it('detects when the parallelizable version of the plugin has been installed', function () {
       let plugins = [parallelizablePlugin];
 
       assert.strictEqual(utils.isInlinePrecompileBabelPluginRegistered(plugins), true);
     });
   });
 
-  describe('isColocatedBabelPluginRegistered', function() {
-    it('is false when no plugins exist', function() {
+  describe('isColocatedBabelPluginRegistered', function () {
+    it('is false when no plugins exist', function () {
       let plugins = [];
 
       assert.strictEqual(utils.isColocatedBabelPluginRegistered(plugins), false);
     });
 
-    it('detects when the plugin exists', function() {
+    it('detects when the plugin exists', function () {
       let plugins = [require.resolve('../lib/colocated-babel-plugin')];
 
       assert.strictEqual(utils.isColocatedBabelPluginRegistered(plugins), true);

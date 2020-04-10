@@ -18,10 +18,10 @@ const RuntimePlugin = [
   },
 ];
 
-describe('ColocatedBabelPlugin', function() {
+describe('ColocatedBabelPlugin', function () {
   this.slow(500);
 
-  it('can be used with decorators', function() {
+  it('can be used with decorators', function () {
     let { code } = babel.transformSync(
       stripIndent`
         import Component from '@glimmer/component';
@@ -68,7 +68,7 @@ describe('ColocatedBabelPlugin', function() {
     );
   });
 
-  it('sets the template for non-class default exports', function() {
+  it('sets the template for non-class default exports', function () {
     let { code } = babel.transformSync(
       stripIndent`
         import MyComponent from 'other-module';
@@ -88,7 +88,7 @@ describe('ColocatedBabelPlugin', function() {
     );
   });
 
-  it('sets the template for named class default exports', function() {
+  it('sets the template for named class default exports', function () {
     let { code } = babel.transformSync(
       stripIndent`
         import Component from 'somewhere';
@@ -110,7 +110,7 @@ describe('ColocatedBabelPlugin', function() {
     );
   });
 
-  it('sets the template for anonymous class default exports', function() {
+  it('sets the template for anonymous class default exports', function () {
     let { code } = babel.transformSync(
       stripIndent`
         import Component from 'somewhere';
@@ -130,7 +130,7 @@ describe('ColocatedBabelPlugin', function() {
     );
   });
 
-  it('sets the template for identifier `as default` exports', function() {
+  it('sets the template for identifier `as default` exports', function () {
     let { code } = babel.transformSync(
       stripIndent`
         import Component from 'somewhere';
