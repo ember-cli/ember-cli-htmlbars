@@ -87,7 +87,7 @@
     "loader.js": "^4.7.0",
     "mocha": "^7.1.1",
     "module-name-inliner": "link:./tests/dummy/lib/module-name-inliner",
-    "prettier": "^2.0.4",
+    "prettier": "^2.0.5",
     "qunit-dom": "^1.2.0",
     "release-it": "^13.5.5",
     "release-it-lerna-changelog": "^2.2.0"
