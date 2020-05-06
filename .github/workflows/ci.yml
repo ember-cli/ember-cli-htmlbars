@@ -28,12 +28,12 @@ jobs:
 
   test:
     name: Tests
-    runs-on: ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}-latest
 
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest]
-        node-version: [10.x, 12.x, 13.x]
+        os: [ubuntu, windows]
+        node-version: [10.x, 12.x, 13.x, 14.x]
 
     steps:
     - uses: actions/checkout@v1
