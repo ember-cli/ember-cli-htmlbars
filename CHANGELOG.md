@@ -1,3 +1,12 @@
+## v5.1.0 (2020-05-06)
+
+#### :rocket: Enhancement
+* [#543](https://github.com/ember-cli/ember-cli-htmlbars/pull/543) Update babel-plugin-htmlbars-inline-precompile to 4.0.0. ([@rwjblue](https://github.com/rwjblue))
+
+#### Committers: 1
+- Robert Jackson ([@rwjblue](https://github.com/rwjblue))
+
+
 ## v5.0.0 (2020-05-04)
 
 #### :boom: Breaking Change
