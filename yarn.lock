@@ -1818,10 +1818,10 @@ babel-plugin-htmlbars-inline-precompile@^1.0.0:
   resolved "https://registry.yarnpkg.com/babel-plugin-htmlbars-inline-precompile/-/babel-plugin-htmlbars-inline-precompile-1.0.0.tgz#a9d2f6eaad8a3f3d361602de593a8cbef8179c22"
   integrity sha512-4jvKEHR1bAX03hBDZ94IXsYCj3bwk9vYsn6ux6JZNL2U5pvzCWjqyrGahfsGNrhERyxw8IqcirOi9Q6WCo3dkQ==
 
-babel-plugin-htmlbars-inline-precompile@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/babel-plugin-htmlbars-inline-precompile/-/babel-plugin-htmlbars-inline-precompile-4.0.0.tgz#3589f1046fa05c8323ca818d68faadc506671318"
-  integrity sha512-Pqknck27Hfm4uXyc1KDDs0OHlygqXe91UQcKRkHlYtKUxZROg01th+soTaBT9g2w72XGRVQzel7Aq2yjezLmFw==
+babel-plugin-htmlbars-inline-precompile@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/babel-plugin-htmlbars-inline-precompile/-/babel-plugin-htmlbars-inline-precompile-4.0.1.tgz#2650f6a0011faa2dc9494dedf945c1957d38c1b3"
+  integrity sha512-7ZOGqUFAuMl7mT1U7ktrnGhhj/BJ0UB0Km19pi6VTON8AEKrU9+wNjzkRBbPB9HpgdK4AeqTOER6aKMy/XMivA==
 
 babel-plugin-module-resolver@^3.1.1:
   version "3.2.0"
