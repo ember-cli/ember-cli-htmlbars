@@ -131,6 +131,7 @@ describe('utils', function () {
       let pluginInfo = { parallelConfigs: [], cacheKeys: [] };
       parallelizablePlugin = utils.buildParalleizedBabelPlugin(
         pluginInfo,
+        {},
         require.resolve('ember-source/dist/ember-template-compiler')
       );
 
