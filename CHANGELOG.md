@@ -1,3 +1,12 @@
+## v5.1.2 (2020-05-08)
+
+#### :bug: Bug Fix
+* [#553](https://github.com/ember-cli/ember-cli-htmlbars/pull/553) Ensure custom templateCompilerPath is an absolute path. ([@rwjblue](https://github.com/rwjblue))
+
+#### Committers: 1
+- Robert Jackson ([@rwjblue](https://github.com/rwjblue))
+
+
 ## v5.1.1 (2020-05-07)
 
 #### :bug: Bug Fix
