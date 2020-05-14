@@ -42,6 +42,7 @@ describe('utils', function () {
 
       assert.deepStrictEqual(actual, {
         plugins: [],
+        pluginNames: [],
         cacheKeys: [],
         parallelConfigs: [],
         canParallelize: true,
@@ -53,6 +54,7 @@ describe('utils', function () {
     it('canParallelize for 1+ plugins with "parallelBabel" property', function () {
       let pluginWrappers = [
         {
+          name: 'first',
           plugin() {},
           cacheKey() {
             return this.parallelBabel;
@@ -60,6 +62,7 @@ describe('utils', function () {
           parallelBabel: 'something',
         },
         {
+          name: 'second',
           plugin() {},
           cacheKey() {
             return this.parallelBabel;
@@ -72,6 +75,7 @@ describe('utils', function () {
 
       assert.deepStrictEqual(actual, {
         plugins: pluginWrappers.map((w) => w.plugin),
+        pluginNames: ['first', 'second'],
         cacheKeys: ['something', 'something else'],
         parallelConfigs: ['something', 'something else'],
         canParallelize: true,
@@ -103,6 +107,7 @@ describe('utils', function () {
 
       assert.deepStrictEqual(actual, {
         plugins: pluginWrappers.map((w) => w.plugin),
+        pluginNames: ['first', 'second'],
         cacheKeys: ['something', 'something else'],
         parallelConfigs: ['something'],
         canParallelize: false,
@@ -131,6 +136,7 @@ describe('utils', function () {
       let pluginInfo = { parallelConfigs: [], cacheKeys: [] };
       parallelizablePlugin = utils.buildParalleizedBabelPlugin(
         pluginInfo,
+        {},
         require.resolve('ember-source/dist/ember-template-compiler')
       );
 

@@ -1,3 +1,57 @@
+## v5.1.2 (2020-05-08)
+
+#### :bug: Bug Fix
+* [#553](https://github.com/ember-cli/ember-cli-htmlbars/pull/553) Ensure custom templateCompilerPath is an absolute path. ([@rwjblue](https://github.com/rwjblue))
+
+#### Committers: 1
+- Robert Jackson ([@rwjblue](https://github.com/rwjblue))
+
+
+## v5.1.1 (2020-05-07)
+
+#### :bug: Bug Fix
+* [#551](https://github.com/ember-cli/ember-cli-htmlbars/pull/551) Ensure `EmberENV` is available to inline template compilation ([@rwjblue](https://github.com/rwjblue))
+* [#550](https://github.com/ember-cli/ember-cli-htmlbars/pull/550) Fix specifying custom template compiler path. ([@rwjblue](https://github.com/rwjblue))
+
+#### :house: Internal
+* [#547](https://github.com/ember-cli/ember-cli-htmlbars/pull/547) Add some more helpful debug logging to list AST plugins ([@rwjblue](https://github.com/rwjblue))
+* [#544](https://github.com/ember-cli/ember-cli-htmlbars/pull/544) Add Node 14 to CI ([@rwjblue](https://github.com/rwjblue))
+
+#### Committers: 1
+- Robert Jackson ([@rwjblue](https://github.com/rwjblue))
+
+
+## v5.1.0 (2020-05-06)
+
+#### :rocket: Enhancement
+* [#543](https://github.com/ember-cli/ember-cli-htmlbars/pull/543) Update babel-plugin-htmlbars-inline-precompile to 4.0.0. ([@rwjblue](https://github.com/rwjblue))
+
+#### Committers: 1
+- Robert Jackson ([@rwjblue](https://github.com/rwjblue))
+
+
+## v5.0.0 (2020-05-04)
+
+#### :boom: Breaking Change
+* [#496](https://github.com/ember-cli/ember-cli-htmlbars/pull/496) Drop support for Ember < 3.8. ([@rwjblue](https://github.com/rwjblue))
+* [#493](https://github.com/ember-cli/ember-cli-htmlbars/pull/493) Drop Node 8 support. ([@rwjblue](https://github.com/rwjblue))
+* [#492](https://github.com/ember-cli/ember-cli-htmlbars/pull/492) Remove Bower support. ([@rwjblue](https://github.com/rwjblue))
+
+#### :rocket: Enhancement
+* [#528](https://github.com/ember-cli/ember-cli-htmlbars/pull/528) Use smaller cache key for `ember-template-compiler` (reduce overall memory overhead of caching) ([@xg-wang](https://github.com/xg-wang))
+* [#512](https://github.com/ember-cli/ember-cli-htmlbars/pull/512) Update Broccoli dependencies to latest. ([@rwjblue](https://github.com/rwjblue))
+
+#### :house: Internal
+* [#514](https://github.com/ember-cli/ember-cli-htmlbars/pull/514) Update fixturify and qunit-dom to latest. ([@rwjblue](https://github.com/rwjblue))
+* [#513](https://github.com/ember-cli/ember-cli-htmlbars/pull/513) Update semver to 7.1.2. ([@rwjblue](https://github.com/rwjblue))
+* [#508](https://github.com/ember-cli/ember-cli-htmlbars/pull/508) Update to prettier@2. ([@rwjblue](https://github.com/rwjblue))
+* [#507](https://github.com/ember-cli/ember-cli-htmlbars/pull/507) Update Babel related devDependencies. ([@rwjblue](https://github.com/rwjblue))
+
+#### Committers: 2
+- Robert Jackson ([@rwjblue](https://github.com/rwjblue))
+- Thomas Wang ([@xg-wang](https://github.com/xg-wang))
+
+
 ## v4.3.1 (2020-04-09)
 
 #### :bug: Bug Fix
