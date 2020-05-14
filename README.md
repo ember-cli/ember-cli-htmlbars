@@ -160,3 +160,47 @@ var templateTree = new HtmlbarsCompiler('app/templates', {
   templateCompiler: require('./bower_components/ember/ember-template-compiler')
 });
 ```
+
+## Extending or Wrapping the Broccoli Plugin within an Ember CLI Addon
+
+In some rare circumstances, it may be necessary for an ember-cli addon to extend the broccoli plugin used by this ember-cli addon to compile templates. For instance, the addon may want to write additional output files based on processing that was done by one of the AST plugins.
+
+To accomplish this, the `getTemplateCompiler(inputTree, htmlbarsOptions)` method provided by the ember-cli addon can be overridden. For example:
+
+```js
+const Plugin = require('broccoli-plugin');
+
+class MyTemplateCompilerWrapper extends Plugin {
+  build() { /* implementation */ }
+}
+
+module.exports = {
+  name: require('../package').name,
+
+  getTemplateCompiler(inputTree, htmlbarsOptions) {
+    const TemplateCompiler = require('./template-compiler-plugin');
+    return new TemplateCompiler(inputTree, htmlbarsOptions);
+  },
+
+  findSiblingAddon(name) {
+    if (this.parent.findOwnAddonByName) {
+      return this.parent.findOwnAddonByName(name);
+    } else {
+      return this.project.findAddonByName(name);
+    }
+  },
+
+  included() {
+    this._super.included.apply(this, arguments);
+    const htmlBarsAddon = this.findSiblingAddon('ember-cli-htmlbars');
+    if (!htmlBarsAddon) {
+      throw new Error('Projects and addons that depend on my-fancy-addon must also depend on ember-cli-htmlbars.');
+    }
+    let getRealTemplateCompiler = htmlBarsAddon.getTemplateCompiler;
+    htmlBarsAddon.getTemplateCompiler = function(inputTree, htmlbarsOptions) {
+      let htmlbarsTree = getRealTemplateCompiler.call(htmlBarsAddon, inputTree, htmlbarsOptions);
+      return new MyTemplateCompilerWrapper(htmlbarsTree);
+    }
+  },
+};
+```
