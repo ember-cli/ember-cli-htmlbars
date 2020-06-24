@@ -12,18 +12,19 @@ const createTempDir = BroccoliTestHelper.createTempDir;
 console.dir(AddonMixin);
 let Addon = CoreObject.extend(AddonMixin);
 
-describe('ember-cli-htmlbars addon', function() {
-
+describe('ember-cli-htmlbars addon', function () {
   const ORIGINAL_EMBER_ENV = process.env.EMBER_ENV;
 
-  beforeEach(function() {
+  beforeEach(function () {
     this.ui = new MockUI();
     let project = {
       isEmberCLIProject: () => true,
       _addonsInitialized: true,
       root: __dirname,
       emberCLIVersion: () => '2.16.2',
-      dependencies() { return {}; },
+      dependencies() {
+        return {};
+      },
       addons: [],
       targets: {
         browsers: ['ie 11'],
@@ -39,7 +40,7 @@ describe('ember-cli-htmlbars addon', function() {
     project.addons.push(this.addon);
   });
 
-  afterEach(function() {
+  afterEach(function () {
     if (ORIGINAL_EMBER_ENV === undefined) {
       delete process.env.EMBER_ENV;
     } else {
@@ -47,43 +48,49 @@ describe('ember-cli-htmlbars addon', function() {
     }
   });
 
-  describe('transpileTree', function() {
+  describe('transpileTree', function () {
     this.timeout(0);
 
     let input;
     let output;
     let subject;
 
-    beforeEach(co.wrap(function* () {
-      input = yield createTempDir();
-    }));
+    beforeEach(
+      co.wrap(function* () {
+        input = yield createTempDir();
+      })
+    );
 
-    afterEach(co.wrap(function* () {
-      yield input.dispose();
-      yield output.dispose();
-    }));
+    afterEach(
+      co.wrap(function* () {
+        yield input.dispose();
+        yield output.dispose();
+      })
+    );
 
-    it("should build", co.wrap(function* () {
-      input.write({
-        "hello.hbs": `<div>Hello, World!</div>`,
-      });
+    it(
+      'should build',
+      co.wrap(function* () {
+        input.write({
+          'hello.hbs': `<div>Hello, World!</div>`,
+        });
 
-      let htmlbarsOptions = {
-        isHTMLBars: true,
-        templateCompiler: require('ember-source/dist/ember-template-compiler.js'),
-      };
+        let htmlbarsOptions = {
+          isHTMLBars: true,
+          templateCompiler: require('ember-source/dist/ember-template-compiler.js'),
+        };
 
-      console.dir(this.addon);
-      subject = this.addon.transpileTree(input.path(), htmlbarsOptions);
-      output = createBuilder(subject);
+        console.dir(this.addon);
+        subject = this.addon.transpileTree(input.path(), htmlbarsOptions);
+        output = createBuilder(subject);
 
-      yield output.build();
+        yield output.build();
 
-      expect(
-        output.read()
-      ).to.deep.equal({
-        "hello.js": "export default Ember.HTMLBars.template({\"id\":\"QumOHSmG\",\"block\":\"{\\\"symbols\\\":[],\\\"statements\\\":[[10,\\\"div\\\"],[12],[2,\\\"Hello, World!\\\"],[13]],\\\"hasEval\\\":false,\\\"upvars\\\":[]}\",\"meta\":{\"moduleName\":\"hello.hbs\"}});",
-      });
-    }));
+        expect(output.read()).to.deep.equal({
+          'hello.js':
+            'export default Ember.HTMLBars.template({"id":"QumOHSmG","block":"{\\"symbols\\":[],\\"statements\\":[[10,\\"div\\"],[12],[2,\\"Hello, World!\\"],[13]],\\"hasEval\\":false,\\"upvars\\":[]}","meta":{"moduleName":"hello.hbs"}});',
+        });
+      })
+    );
   });
 });
