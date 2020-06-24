@@ -62,6 +62,8 @@
     "broccoli-test-helper": "^2.0.0",
     "chai": "^4.2.0",
     "co": "^4.6.0",
+    "console-ui": "^2.2.2",
+    "core-object": "^3.1.5",
     "ember-cli": "~3.18.0",
     "ember-cli-app-version": "^3.2.0",
     "ember-cli-babel": "^7.19.0",
