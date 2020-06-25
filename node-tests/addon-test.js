@@ -9,7 +9,6 @@ const BroccoliTestHelper = require('broccoli-test-helper');
 const createBuilder = BroccoliTestHelper.createBuilder;
 const createTempDir = BroccoliTestHelper.createTempDir;
 
-console.dir(AddonMixin);
 let Addon = CoreObject.extend(AddonMixin);
 
 describe('ember-cli-htmlbars addon', function () {
@@ -80,7 +79,6 @@ describe('ember-cli-htmlbars addon', function () {
           templateCompiler: require('ember-source/dist/ember-template-compiler.js'),
         };
 
-        console.dir(this.addon);
         subject = this.addon.transpileTree(input.path(), htmlbarsOptions);
         output = createBuilder(subject);
 
