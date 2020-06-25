@@ -1,3 +1,12 @@
+## v5.2.0 (2020-06-25)
+
+#### :rocket: Enhancement
+* [#527](https://github.com/ember-cli/ember-cli-htmlbars/pull/527) Move template compiler creation to a method on the addon ([@chriseppstein](https://github.com/chriseppstein))
+
+#### Committers: 1
+- Chris Eppstein ([@chriseppstein](https://github.com/chriseppstein))
+
+
 ## v5.1.2 (2020-05-08)
 
 #### :bug: Bug Fix
