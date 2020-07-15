@@ -13,7 +13,9 @@ module.exports = function (defaults) {
 
   let app = new EmberAddon(defaults, {
     // Add options here
-    throwUnlessParallelizable: true,
+    'ember-cli-babel': {
+      throwUnlessParallelizable: true,
+    },
 
     trees: {
       app: appTree,
