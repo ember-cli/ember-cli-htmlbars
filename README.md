@@ -8,9 +8,71 @@
 * Ember CLI v3.8 or above
 * Node.js v10 or above
 
-## Registering a Plugin
+## Tagged Template Usage / Migrating from `htmlbars-inline-precompile`
 
-```javascript
+Starting with version 4.0, this addon now includes the testing helper from [ember-cli-htmlbars-inline-precompile](https://github.com/ember-cli/ember-cli-htmlbars-inline-precompile)
+
+This will require an update to the imports of the `hbs` helper in your tests:
+
+Prior syntax:
+
+```
+import hbs from 'htmlbars-inline-precompile';
+
+...
+
+await render(hbs`
+  <MyComponent />
+`);
+```
+
+New syntax:
+
+```
+import { hbs } from 'ember-cli-htmlbars';
+
+...
+
+await render(hbs`
+  <MyComponent />
+`);
+```
+
+There is a [codemod](https://github.com/ember-codemods/ember-cli-htmlbars-inline-precompile-codemod) available to automate this change.
+
+## Additional Trees
+
+For addons which want additional customizations, they are able to interact with
+this addon directly.
+
+```ts
+interface EmberCLIHTMLBars {
+  /**
+    Supports easier transpilation of non-standard input paths (e.g. to transpile
+    a non-addon NPM dependency) while still leveraging the logic within
+    ember-cli-htmlbars for transpiling (e.g. custom AST transforms, colocation, etc).
+  */
+  transpileTree(inputTree: BroccoliTree): BroccoliTree;
+}
+```
+
+### `transpileTree` usage
+
+```js
+// find the ember-cli-htmlbars addon
+let htmlbarsAddon = this.addons.find(addon => addon.name === 'ember-cli-htmlbars');
+
+// invoke .transpileTree passing in the custom input tree
+let transpiledCustomTree = htmlbarsAddon.transpileTree(someCustomTree);
+```
+
+## Adding Custom Plugins
+
+You can add custom plugins to be used during transpilation of the `addon/` or
+`addon-test-support/` trees of your addon (or the `app/` and `tests/` trees of an application)
+by registering a custom AST transform.
+
+```js
 var SomeTransform = require('./some-path/transform');
 
 module.exports = {
@@ -28,7 +90,7 @@ module.exports = {
 };
 ```
 
-### Options for registering a `htmlbars-ast-plugin`
+### Options for registering a plugin
 
 * `name` - String. The name of the AST transform for debugging purposes.
 * `plugin` - A function of type [`ASTPluginBuilder`](https://github.com/glimmerjs/glimmer-vm/blob/master/packages/%40glimmer/syntax/lib/parser/tokenizer-event-handlers.ts#L329-L341).
@@ -98,38 +160,6 @@ module.exports = {
   }
 };
 ```
-
-## Tagged Template Usage / Migrating from `htmlbars-inline-precompile`
-
-Starting with version 4.0, this addon now includes the testing helper from [ember-cli-htmlbars-inline-precompile](https://github.com/ember-cli/ember-cli-htmlbars-inline-precompile)
-
-This will require an update to the imports of the `hbs` helper in your tests:
-
-Prior syntax:
-
-```
-import hbs from 'htmlbars-inline-precompile';
-
-...
-
-await render(hbs`
-  <MyComponent />
-`);
-```
-
-New syntax:
-
-```
-import { hbs } from 'ember-cli-htmlbars';
-
-...
-
-await render(hbs`
-  <MyComponent />
-`);
-```
-
-There is a [codemod](https://github.com/ember-codemods/ember-cli-htmlbars-inline-precompile-codemod) available to automate this change.
 
 ### Custom Template Compiler
 
