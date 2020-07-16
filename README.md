@@ -1,6 +1,6 @@
 # Ember CLI HTMLBars
 
-<a href="https://github.com/ember-cli/ember-cli-htmlbars/actions"><img alt="Build Status" src="https://github.com/ember-cli/ember-cli-htmlbars/workflows/ci/badge.svg"></a>
+<a href="https://github.com/ember-cli/ember-cli-htmlbars/actions"><img alt="Build Status" src="https://github.com/ember-cli/ember-cli-htmlbars/workflows/CI/badge.svg"></a>
 
 ## Compatibility
 
