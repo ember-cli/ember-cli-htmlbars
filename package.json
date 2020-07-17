@@ -39,6 +39,7 @@
     "broccoli-plugin": "^4.0.3",
     "common-tags": "^1.8.0",
     "ember-cli-babel-plugin-helpers": "^1.1.0",
+    "ember-template-lint": "^2.9.1",
     "fs-tree-diff": "^2.0.1",
     "hash-for-dep": "^1.5.1",
     "heimdalljs-logger": "^0.1.10",
