@@ -54,7 +54,7 @@ module.exports = {
       },
       parallelBabel: {
         requireFile: __filename,
-        buildUsing: 'buildPlugin',
+        buildUsing: 'buildLegacyPlugin',
         params: {},
       },
 
