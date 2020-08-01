@@ -4852,10 +4852,10 @@ eslint-config-prettier@^6.11.0:
   dependencies:
     get-stdin "^6.0.0"
 
-eslint-plugin-ember@^8.9.0:
-  version "8.9.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-ember/-/eslint-plugin-ember-8.9.0.tgz#010f720665b00847df151d5ae64f41e4671c825a"
-  integrity sha512-wSZuQM5AkDBc/FRL7jAIMVPQxzXSMUBgzGYzxhLNc4HOSBKVu6qqh2XZg7PTUmhst39VdYjDvep9QHmeRWdLkA==
+eslint-plugin-ember@^8.9.2:
+  version "8.9.2"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-ember/-/eslint-plugin-ember-8.9.2.tgz#064f2ca391958806885356d85d71962b3a69e665"
+  integrity sha512-oHQkQdCkT+q9TVjhYAdpqWQh7y6Z/a8thFgTS1LnlJVuv+M+J/evkOejjr+BM9wrZdBQwPG49d2OK0vIXsm9dw==
   dependencies:
     "@ember-data/rfc395-data" "^0.0.4"
     ember-rfc176-data "^0.3.13"
@@ -7686,8 +7686,7 @@ mocha@^8.0.1:
     yargs-unparser "1.6.0"
 
 "module-name-inliner@link:./tests/dummy/lib/module-name-inliner":
-  version "0.0.0"
-  uid ""
+  version "0.1.0"
 
 morgan@^1.9.1:
   version "1.9.1"
