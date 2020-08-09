@@ -36,7 +36,7 @@ module.exports = {
               if (node.original === 'module-name-inliner') {
                 // replacing the path with a string literal, like this
                 // {{"the-module-name-here"}}
-                return builders.string(env.moduleName);
+                return builders.string(env.meta.moduleName);
               }
             },
           },

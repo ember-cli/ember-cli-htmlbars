@@ -53,7 +53,9 @@ describe('TemplateCompiler', function () {
 
       let source = input.readText('template.hbs');
       let expected = `export default Ember.HTMLBars.template(${htmlbarsPrecompile(source, {
-        moduleName: 'template.hbs',
+        meta: {
+          moduleName: 'template.hbs',
+        },
       })});`;
       assert.strictEqual(output.readText('template.js'), expected);
     })
@@ -69,7 +71,9 @@ describe('TemplateCompiler', function () {
 
       let source = input.readText('template.hbs');
       let expected = `export default Ember.HTMLBars.template(${htmlbarsPrecompile(source, {
-        moduleName: 'template-with-bom.hbs',
+        meta: {
+          moduleName: 'template-with-bom.hbs',
+        },
       })});`;
 
       assert.strictEqual(output.readText('template-with-bom.js'), expected);
@@ -90,7 +94,9 @@ describe('TemplateCompiler', function () {
 
       let source = input.readText('web-component-template.hbs');
       let expected = `export default Ember.HTMLBars.template(${htmlbarsPrecompile(source, {
-        moduleName: 'web-component-template.hbs',
+        meta: {
+          moduleName: 'web-component-template.hbs',
+        },
       })});`;
 
       assert.strictEqual(output.readText('web-component-template.js'), expected);
@@ -113,7 +119,9 @@ describe('TemplateCompiler', function () {
 
       let source = input.readText('web-component-template.hbs');
       let expected = `export default Ember.HTMLBars.template(${htmlbarsPrecompile(source, {
-        moduleName: 'web-component-template.hbs',
+        meta: {
+          moduleName: 'web-component-template.hbs',
+        },
       })});`;
 
       assert.strictEqual(output.readText('web-component-template.js'), expected);

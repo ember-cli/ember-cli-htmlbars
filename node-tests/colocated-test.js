@@ -89,7 +89,9 @@ describe('Colocation - Broccoli + Babel Integration', function () {
 
             const __COLOCATED_TEMPLATE__ = hbs("{{yield}}", {
               "contents": "{{yield}}",
-              "moduleName": "app-name-here/components/foo.hbs",
+              "meta": {
+                "moduleName": "app-name-here/components/foo.hbs"
+              },
               "parseOptions": {
                 "srcName": "app-name-here/components/foo.hbs"
               }
@@ -135,7 +137,9 @@ describe('Colocation - Broccoli + Babel Integration', function () {
 
             const __COLOCATED_TEMPLATE__ = hbs("{{yield}}", {
               "contents": "{{yield}}",
-              "moduleName": "app-name-here/components/foo.hbs",
+              "meta": {
+                "moduleName": "app-name-here/components/foo.hbs"
+              },
               "parseOptions": {
                 "srcName": "app-name-here/components/foo.hbs"
               }
@@ -183,7 +187,9 @@ describe('Colocation - Broccoli + Babel Integration', function () {
 
             const __COLOCATED_TEMPLATE__ = hbs("{{yield}}", {
               "contents": "{{yield}}",
-              "moduleName": "app-name-here/components/foo.hbs",
+              "meta": {
+                "moduleName": "app-name-here/components/foo.hbs"
+              },
               "parseOptions": {
                 "srcName": "app-name-here/components/foo.hbs"
               }
@@ -229,7 +235,9 @@ describe('Colocation - Broccoli + Babel Integration', function () {
 
               const __COLOCATED_TEMPLATE__ = hbs("{{yield}}", {
                 "contents": "{{yield}}",
-                "moduleName": "@scope-name/addon-name-here/components/foo.hbs",
+                "meta": {
+                  "moduleName": "@scope-name/addon-name-here/components/foo.hbs"
+                },
                 "parseOptions": {
                   "srcName": "@scope-name/addon-name-here/components/foo.hbs"
                 }
@@ -278,7 +286,9 @@ describe('Colocation - Broccoli + Babel Integration', function () {
 
             const __COLOCATED_TEMPLATE__ = hbs("{{yield}}", {
               "contents": "{{yield}}",
-              "moduleName": "@scope-name/addon-name-here/components/foo.hbs",
+              "meta": {
+                "moduleName": "@scope-name/addon-name-here/components/foo.hbs"
+              },
               "parseOptions": {
                 "srcName": "@scope-name/addon-name-here/components/foo.hbs"
               }

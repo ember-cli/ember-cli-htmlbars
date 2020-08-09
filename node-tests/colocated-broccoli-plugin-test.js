@@ -47,7 +47,7 @@ describe('ColocatedTemplateCompiler', function () {
           'foo.js':
             stripIndent`
             import { hbs } from 'ember-cli-htmlbars';
-            const __COLOCATED_TEMPLATE__ = hbs("{{yield}}", {"contents":"{{yield}}","moduleName":"app-name-here/components/foo.hbs","parseOptions":{"srcName":"app-name-here/components/foo.hbs"}});
+            const __COLOCATED_TEMPLATE__ = hbs("{{yield}}", {"contents":"{{yield}}","meta":{"moduleName":"app-name-here/components/foo.hbs"},"parseOptions":{"srcName":"app-name-here/components/foo.hbs"}});
             import templateOnly from '@ember/component/template-only';
 
             export default templateOnly();` + '\n',
@@ -106,7 +106,7 @@ describe('ColocatedTemplateCompiler', function () {
         components: {
           'foo.js': stripIndent`
             import { hbs } from 'ember-cli-htmlbars';
-            const __COLOCATED_TEMPLATE__ = hbs("{{yield}}", {"contents":"{{yield}}","moduleName":"app-name-here/components/foo.hbs","parseOptions":{"srcName":"app-name-here/components/foo.hbs"}});
+            const __COLOCATED_TEMPLATE__ = hbs("{{yield}}", {"contents":"{{yield}}","meta":{"moduleName":"app-name-here/components/foo.hbs"},"parseOptions":{"srcName":"app-name-here/components/foo.hbs"}});
             import Component from '@glimmer/component';
 
             export default class FooComponent extends Component {}
@@ -213,7 +213,7 @@ describe('ColocatedTemplateCompiler', function () {
         components: {
           'foo.ts': stripIndent`
             import { hbs } from 'ember-cli-htmlbars';
-            const __COLOCATED_TEMPLATE__ = hbs("{{yield}}", {"contents":"{{yield}}","moduleName":"app-name-here/components/foo.hbs","parseOptions":{"srcName":"app-name-here/components/foo.hbs"}});
+            const __COLOCATED_TEMPLATE__ = hbs("{{yield}}", {"contents":"{{yield}}","meta":{"moduleName":"app-name-here/components/foo.hbs"},"parseOptions":{"srcName":"app-name-here/components/foo.hbs"}});
             import Component from '@glimmer/component';
 
             export default class FooComponent extends Component {}
@@ -256,7 +256,7 @@ describe('ColocatedTemplateCompiler', function () {
         components: {
           'foo.coffee': stripIndent`
             import { hbs } from 'ember-cli-htmlbars'
-            __COLOCATED_TEMPLATE__ = hbs("{{yield}}", {"contents":"{{yield}}","moduleName":"app-name-here/components/foo.hbs","parseOptions":{"srcName":"app-name-here/components/foo.hbs"}})
+            __COLOCATED_TEMPLATE__ = hbs("{{yield}}", {"contents":"{{yield}}","meta":{"moduleName":"app-name-here/components/foo.hbs"},"parseOptions":{"srcName":"app-name-here/components/foo.hbs"}})
             import Component from '@ember/component'
             export default class extends Component
           `,
@@ -298,7 +298,7 @@ describe('ColocatedTemplateCompiler', function () {
             'foo.js':
               stripIndent`
             import { hbs } from 'ember-cli-htmlbars';
-            const __COLOCATED_TEMPLATE__ = hbs("{{yield}}", {"contents":"{{yield}}","moduleName":"@scope-name/addon-name-here/components/foo.hbs","parseOptions":{"srcName":"@scope-name/addon-name-here/components/foo.hbs"}});
+            const __COLOCATED_TEMPLATE__ = hbs("{{yield}}", {"contents":"{{yield}}","meta":{"moduleName":"@scope-name/addon-name-here/components/foo.hbs"},"parseOptions":{"srcName":"@scope-name/addon-name-here/components/foo.hbs"}});
             import templateOnly from '@ember/component/template-only';
 
             export default templateOnly();` + '\n',
@@ -345,7 +345,7 @@ describe('ColocatedTemplateCompiler', function () {
           components: {
             'foo.js': stripIndent`
             import { hbs } from 'ember-cli-htmlbars';
-            const __COLOCATED_TEMPLATE__ = hbs("{{yield}}", {"contents":"{{yield}}","moduleName":"@scope-name/addon-name-here/components/foo.hbs","parseOptions":{"srcName":"@scope-name/addon-name-here/components/foo.hbs"}});
+            const __COLOCATED_TEMPLATE__ = hbs("{{yield}}", {"contents":"{{yield}}","meta":{"moduleName":"@scope-name/addon-name-here/components/foo.hbs"},"parseOptions":{"srcName":"@scope-name/addon-name-here/components/foo.hbs"}});
             import Component from '@glimmer/component';
 
             export default class FooComponent extends Component {}
@@ -541,7 +541,7 @@ describe('ColocatedTemplateCompiler', function () {
               'foo.js':
                 stripIndent`
             import { hbs } from 'ember-cli-htmlbars';
-            const __COLOCATED_TEMPLATE__ = hbs("{{yield}}", {"contents":"{{yield}}","moduleName":"app-name-here/components/foo.hbs","parseOptions":{"srcName":"app-name-here/components/foo.hbs"}});
+            const __COLOCATED_TEMPLATE__ = hbs("{{yield}}", {"contents":"{{yield}}","meta":{"moduleName":"app-name-here/components/foo.hbs"},"parseOptions":{"srcName":"app-name-here/components/foo.hbs"}});
             import templateOnly from '@ember/component/template-only';
 
             export default templateOnly();` + '\n',
@@ -586,7 +586,7 @@ describe('ColocatedTemplateCompiler', function () {
             components: {
               'foo.js': stripIndent`
               import { hbs } from 'ember-cli-htmlbars';
-              const __COLOCATED_TEMPLATE__ = hbs("{{yield}}", {"contents":"{{yield}}","moduleName":"app-name-here/components/foo.hbs","parseOptions":{"srcName":"app-name-here/components/foo.hbs"}});
+              const __COLOCATED_TEMPLATE__ = hbs("{{yield}}", {"contents":"{{yield}}","meta":{"moduleName":"app-name-here/components/foo.hbs"},"parseOptions":{"srcName":"app-name-here/components/foo.hbs"}});
               import Component from '@glimmer/component';
 
               export default class FooComponent extends Component {}
@@ -671,7 +671,7 @@ describe('ColocatedTemplateCompiler', function () {
             components: {
               'foo.js': stripIndent`
               import { hbs } from 'ember-cli-htmlbars';
-              const __COLOCATED_TEMPLATE__ = hbs("{{yield}}", {"contents":"{{yield}}","moduleName":"app-name-here/components/foo.hbs","parseOptions":{"srcName":"app-name-here/components/foo.hbs"}});
+              const __COLOCATED_TEMPLATE__ = hbs("{{yield}}", {"contents":"{{yield}}","meta":{"moduleName":"app-name-here/components/foo.hbs"},"parseOptions":{"srcName":"app-name-here/components/foo.hbs"}});
               import Component from '@glimmer/component';
 
               export default class FooComponent extends Component {}
@@ -790,7 +790,7 @@ describe('ColocatedTemplateCompiler', function () {
               'foo.js':
                 stripIndent`
                   import { hbs } from 'ember-cli-htmlbars';
-                  const __COLOCATED_TEMPLATE__ = hbs("{{yield}}", {"contents":"{{yield}}","moduleName":"app-name-here/components/foo.hbs","parseOptions":{"srcName":"app-name-here/components/foo.hbs"}});
+                  const __COLOCATED_TEMPLATE__ = hbs("{{yield}}", {"contents":"{{yield}}","meta":{"moduleName":"app-name-here/components/foo.hbs"},"parseOptions":{"srcName":"app-name-here/components/foo.hbs"}});
                   import templateOnly from '@ember/component/template-only';
 
                   export default templateOnly();` + '\n',
@@ -851,7 +851,7 @@ describe('ColocatedTemplateCompiler', function () {
               'foo.js':
                 stripIndent`
                   import { hbs } from 'ember-cli-htmlbars';
-                  const __COLOCATED_TEMPLATE__ = hbs("{{yield}}", {"contents":"{{yield}}","moduleName":"app-name-here/components/foo.hbs","parseOptions":{"srcName":"app-name-here/components/foo.hbs"}});
+                  const __COLOCATED_TEMPLATE__ = hbs("{{yield}}", {"contents":"{{yield}}","meta":{"moduleName":"app-name-here/components/foo.hbs"},"parseOptions":{"srcName":"app-name-here/components/foo.hbs"}});
                   import templateOnly from '@ember/component/template-only';
 
                   export default templateOnly();` + '\n',
@@ -893,7 +893,7 @@ describe('ColocatedTemplateCompiler', function () {
               'foo.js':
                 stripIndent`
                   import { hbs } from 'ember-cli-htmlbars';
-                  const __COLOCATED_TEMPLATE__ = hbs("whoops!", {"contents":"whoops!","moduleName":"app-name-here/components/foo.hbs","parseOptions":{"srcName":"app-name-here/components/foo.hbs"}});
+                  const __COLOCATED_TEMPLATE__ = hbs("whoops!", {"contents":"whoops!","meta":{"moduleName":"app-name-here/components/foo.hbs"},"parseOptions":{"srcName":"app-name-here/components/foo.hbs"}});
                   import templateOnly from '@ember/component/template-only';
 
                   export default templateOnly();` + '\n',
@@ -938,7 +938,7 @@ describe('ColocatedTemplateCompiler', function () {
             components: {
               'foo.js': stripIndent`
                 import { hbs } from 'ember-cli-htmlbars';
-                const __COLOCATED_TEMPLATE__ = hbs("{{yield}}", {"contents":"{{yield}}","moduleName":"app-name-here/components/foo.hbs","parseOptions":{"srcName":"app-name-here/components/foo.hbs"}});
+                const __COLOCATED_TEMPLATE__ = hbs("{{yield}}", {"contents":"{{yield}}","meta":{"moduleName":"app-name-here/components/foo.hbs"},"parseOptions":{"srcName":"app-name-here/components/foo.hbs"}});
                 import Component from '@glimmer/component';
 
                 export default class FooComponent extends Component {}
@@ -980,7 +980,7 @@ describe('ColocatedTemplateCompiler', function () {
             components: {
               'foo.js': stripIndent`
               import { hbs } from 'ember-cli-htmlbars';
-              const __COLOCATED_TEMPLATE__ = hbs("whoops!", {"contents":"whoops!","moduleName":"app-name-here/components/foo.hbs","parseOptions":{"srcName":"app-name-here/components/foo.hbs"}});
+              const __COLOCATED_TEMPLATE__ = hbs("whoops!", {"contents":"whoops!","meta":{"moduleName":"app-name-here/components/foo.hbs"},"parseOptions":{"srcName":"app-name-here/components/foo.hbs"}});
               import Component from '@glimmer/component';
 
               export default class FooComponent extends Component {}
@@ -1026,7 +1026,7 @@ describe('ColocatedTemplateCompiler', function () {
             components: {
               'foo.js': stripIndent`
                 import { hbs } from 'ember-cli-htmlbars';
-                const __COLOCATED_TEMPLATE__ = hbs("{{yield}}", {"contents":"{{yield}}","moduleName":"app-name-here/components/foo.hbs","parseOptions":{"srcName":"app-name-here/components/foo.hbs"}});
+                const __COLOCATED_TEMPLATE__ = hbs("{{yield}}", {"contents":"{{yield}}","meta":{"moduleName":"app-name-here/components/foo.hbs"},"parseOptions":{"srcName":"app-name-here/components/foo.hbs"}});
                 import Component from '@glimmer/component';
 
                 export default class FooComponent extends Component {}
@@ -1066,7 +1066,7 @@ describe('ColocatedTemplateCompiler', function () {
             components: {
               'foo.js': stripIndent`
               import { hbs } from 'ember-cli-htmlbars';
-              const __COLOCATED_TEMPLATE__ = hbs("{{yield}}", {"contents":"{{yield}}","moduleName":"app-name-here/components/foo.hbs","parseOptions":{"srcName":"app-name-here/components/foo.hbs"}});
+              const __COLOCATED_TEMPLATE__ = hbs("{{yield}}", {"contents":"{{yield}}","meta":{"moduleName":"app-name-here/components/foo.hbs"},"parseOptions":{"srcName":"app-name-here/components/foo.hbs"}});
               import Component from '@glimmer/component';
 
               export default class FooBarComponent extends Component {}
@@ -1118,7 +1118,7 @@ describe('ColocatedTemplateCompiler', function () {
             components: {
               'foo.js': stripIndent`
                 import { hbs } from 'ember-cli-htmlbars';
-                const __COLOCATED_TEMPLATE__ = hbs("{{yield}}", {"contents":"{{yield}}","moduleName":"app-name-here/components/foo.hbs","parseOptions":{"srcName":"app-name-here/components/foo.hbs"}});
+                const __COLOCATED_TEMPLATE__ = hbs("{{yield}}", {"contents":"{{yield}}","meta":{"moduleName":"app-name-here/components/foo.hbs"},"parseOptions":{"srcName":"app-name-here/components/foo.hbs"}});
                 import Component from '@glimmer/component';
 
                 export default class FooComponent extends Component {}
@@ -1161,7 +1161,7 @@ describe('ColocatedTemplateCompiler', function () {
               'foo.js':
                 stripIndent`
                   import { hbs } from 'ember-cli-htmlbars';
-                  const __COLOCATED_TEMPLATE__ = hbs("{{yield}}", {"contents":"{{yield}}","moduleName":"app-name-here/components/foo.hbs","parseOptions":{"srcName":"app-name-here/components/foo.hbs"}});
+                  const __COLOCATED_TEMPLATE__ = hbs("{{yield}}", {"contents":"{{yield}}","meta":{"moduleName":"app-name-here/components/foo.hbs"},"parseOptions":{"srcName":"app-name-here/components/foo.hbs"}});
                   import templateOnly from '@ember/component/template-only';
 
                   export default templateOnly();` + '\n',
