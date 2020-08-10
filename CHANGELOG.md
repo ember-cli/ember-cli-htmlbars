@@ -1,3 +1,19 @@
+## v5.3.0 (2020-08-10)
+
+#### :rocket: Enhancement
+* [#597](https://github.com/ember-cli/ember-cli-htmlbars/pull/597) Pass `isProduction` to Ember template compiler. ([@rwjblue](https://github.com/rwjblue))
+
+#### :memo: Documentation
+* [#585](https://github.com/ember-cli/ember-cli-htmlbars/pull/585) Refactor README ([@rwjblue](https://github.com/rwjblue))
+
+#### :house: Internal
+* [#584](https://github.com/ember-cli/ember-cli-htmlbars/pull/584) Replace `ember-cli-template-lint` with `ember-template-lint` ([@arthirm](https://github.com/arthirm))
+
+#### Committers: 2
+- Arthi ([@arthirm](https://github.com/arthirm))
+- Robert Jackson ([@rwjblue](https://github.com/rwjblue))
+
+
 ## v5.2.0 (2020-06-25)
 
 #### :rocket: Enhancement
