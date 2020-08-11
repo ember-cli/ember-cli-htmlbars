@@ -1,3 +1,11 @@
+## v5.3.1 (2020-08-11)
+
+#### :bug: Bug Fix
+* [#599](https://github.com/ember-cli/ember-cli-htmlbars/pull/599) Move `ember-template-lint` to `devDependencies` (from `dependencies`) ([@jamescdavis](https://github.com/jamescdavis))
+
+#### Committers: 1
+- James C. Davis ([@jamescdavis](https://github.com/jamescdavis))
+
 ## v5.3.0 (2020-08-10)
 
 #### :rocket: Enhancement
