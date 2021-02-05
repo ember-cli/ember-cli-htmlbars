@@ -1,3 +1,11 @@
+## v4.4.1 (2021-02-05)
+
+#### :rocket: Enhancement
+* [#598](https://github.com/ember-cli/ember-cli-htmlbars/pull/657) Make `cacheKey` calculation lazy ([@krisselden](https://github.com/krisselden))
+
+#### Committers: 1
+- Kris Selden ([@krisselden](https://github.com/krisselden))
+
 ## v4.4.0 (2020-08-11)
 
 #### :rocket: Enhancement
