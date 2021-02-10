@@ -1,3 +1,13 @@
+## v5.3.2 (2021-02-10)
+
+#### :rocket: Enhancement
+* [#657](https://github.com/ember-cli/ember-cli-htmlbars/pull/657) Make cacheKey lazy ([@krisselden](https://github.com/krisselden))
+
+#### Committers: 2
+- Kris Selden ([@krisselden](https://github.com/krisselden))
+- [@dependabot-preview[bot]](https://github.com/apps/dependabot-preview)
+
+
 ## v5.3.1 (2020-08-11)
 
 #### :bug: Bug Fix
