@@ -1,5 +1,14 @@
 # Changelog
 
+## v5.4.0 (2021-02-24)
+
+#### :house: Internal
+* [#659](https://github.com/ember-cli/ember-cli-htmlbars/pull/659) Enable experimentation via `ember-template-imports` addon ([@pzuraq](https://github.com/pzuraq))
+
+#### Committers: 1
+- Chris Garrett ([@pzuraq](https://github.com/pzuraq))
+
+
 ## v5.3.2 (2021-02-10)
 
 #### :rocket: Enhancement
