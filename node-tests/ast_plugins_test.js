@@ -26,6 +26,7 @@ describe('AST plugins', function() {
       htmlbarsOptions = {
         isHTMLBars: true,
         templateCompiler: templateCompiler,
+        templateCompilerPath: require.resolve('ember-source/dist/ember-template-compiler.js'),
       };
     })
   );
