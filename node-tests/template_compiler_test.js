@@ -41,6 +41,7 @@ describe('TemplateCompiler', function () {
         ast: [],
       },
       templateCompiler: require('ember-source/dist/ember-template-compiler.js'),
+      templateCompilerPath: require.resolve('ember-source/dist/ember-template-compiler.js'),
     };
 
     htmlbarsPrecompile = htmlbarsOptions.templateCompiler.precompile;
