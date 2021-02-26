@@ -1,5 +1,14 @@
 # Changelog
 
+## v5.5.0 (2021-02-26)
+
+#### :rocket: Enhancement
+* [#660](https://github.com/ember-cli/ember-cli-htmlbars/pull/660) Replace `purgeModule` cache busting with `vm` based sandboxing ([@rwjblue](https://github.com/rwjblue))
+
+#### Committers: 1
+- Robert Jackson ([@rwjblue](https://github.com/rwjblue))
+
+
 ## v5.4.0 (2021-02-24)
 
 #### :house: Internal
