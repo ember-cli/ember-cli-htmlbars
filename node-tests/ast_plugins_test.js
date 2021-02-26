@@ -10,13 +10,18 @@ const { createTempDir, createBuilder } = require('broccoli-test-helper');
 const fixturify = require('fixturify');
 const addDependencyTracker = require('../lib/addDependencyTracker');
 const templateCompiler = require('ember-source/dist/ember-template-compiler.js');
-const CANNOT_UNREGISTER_PLUGINS = !templateCompiler.unregisterPlugin;
 
 describe('AST plugins', function() {
   const they = it;
   this.timeout(10000);
 
   let input, output, builder, tree, htmlbarsOptions;
+
+  let clearTreeCache = co.wrap(function* clearTreeCache(tree) {
+    if (tree && tree.processor.processor._cache) {
+      yield tree.processor.processor._cache.clear();
+    }
+  });
 
   beforeEach(
     co.wrap(function*() {
@@ -33,12 +38,7 @@ describe('AST plugins', function() {
 
   afterEach(
     co.wrap(function*() {
-      if (tree) {
-        tree.unregisterPlugins();
-        if (tree.processor.processor._cache) {
-          yield tree.processor.processor._cache.clear();
-        }
-      }
+      yield clearTreeCache(tree);
 
       if (builder) {
         builder.cleanup();
@@ -104,9 +104,6 @@ describe('AST plugins', function() {
   they(
     'are accepted and used.',
     co.wrap(function*() {
-      if (CANNOT_UNREGISTER_PLUGINS) {
-        this.skip();
-      }
       htmlbarsOptions.plugins = {
         ast: [DivRewriter],
       };
@@ -126,9 +123,6 @@ describe('AST plugins', function() {
   they(
     'will bust the hot cache if the dependency changes.',
     co.wrap(function*() {
-      if (CANNOT_UNREGISTER_PLUGINS) {
-        this.skip();
-      }
       Object.assign(htmlbarsOptions, {
         plugins: {
           ast: [DivRewriter],
@@ -185,9 +179,6 @@ describe('AST plugins', function() {
     they(
       'will bust the persistent cache if the template cache key changes.',
       co.wrap(function*() {
-        if (CANNOT_UNREGISTER_PLUGINS) {
-          this.skip();
-        }
         Object.assign(htmlbarsOptions, {
           plugins: {
             ast: [DivRewriter],
@@ -195,55 +186,60 @@ describe('AST plugins', function() {
           dependencyInvalidation: true,
         });
 
-        let firstTree = new TemplateCompiler(input.path(), htmlbarsOptions);
+        let firstTree, secondTree, thirdTree;
 
         try {
-          output = createBuilder(firstTree);
-          yield output.build();
+          firstTree = new TemplateCompiler(input.path(), htmlbarsOptions);
 
-          let templateOutput = output.readText('template.js');
-          assert.ok(!templateOutput.match(/div/));
-          assert.ok(templateOutput.match(/my-custom-element/));
-          assert.strictEqual(rewriterCallCount, 1);
+          try {
+            output = createBuilder(firstTree);
+            yield output.build();
+
+            let templateOutput = output.readText('template.js');
+            assert.ok(!templateOutput.match(/div/));
+            assert.ok(templateOutput.match(/my-custom-element/));
+            assert.strictEqual(rewriterCallCount, 1);
+          } finally {
+            yield output.dispose();
+          }
+
+          // The state didn't change. the output should be cached
+          // and the rewriter shouldn't be invoked.
+          secondTree = new TemplateCompiler(input.path(), htmlbarsOptions);
+          try {
+            let output = createBuilder(secondTree);
+            yield output.build();
+            assert.deepStrictEqual(output.changes()['template.js'], 'create');
+            // the "new" file is read from cache.
+            let templateOutput = output.readText('template.js');
+            assert.ok(!templateOutput.match(/div/));
+            assert.ok(templateOutput.match(/my-custom-element/));
+            assert.strictEqual(rewriterCallCount, 1);
+          } finally {
+            yield output.dispose();
+          }
+
+          // The state changes. the cache key updates and the template
+          // should be recompiled.
+          input.write({
+            'template.tagname': 'MyChangedElement',
+          });
+
+          thirdTree = new TemplateCompiler(input.path(), htmlbarsOptions);
+          try {
+            let output = createBuilder(thirdTree);
+            yield output.build();
+            let templateOutput = output.readText('template.js');
+            assert.strictEqual(rewriterCallCount, 2);
+            assert.ok(templateOutput.match(/my-changed-element/));
+            assert.strictEqual(rewriterCallCount, 2);
+          } finally {
+            yield output.dispose();
+          }
         } finally {
-          yield output.dispose();
-          firstTree.unregisterPlugins();
-        }
-
-        // The state didn't change. the output should be cached
-        // and the rewriter shouldn't be invoked.
-        let secondTree = new TemplateCompiler(input.path(), htmlbarsOptions);
-        try {
-          let output = createBuilder(secondTree);
-          yield output.build();
-          assert.deepStrictEqual(output.changes()['template.js'], 'create');
-          // the "new" file is read from cache.
-          let templateOutput = output.readText('template.js');
-          assert.ok(!templateOutput.match(/div/));
-          assert.ok(templateOutput.match(/my-custom-element/));
-          assert.strictEqual(rewriterCallCount, 1);
-        } finally {
-          yield output.dispose();
-          secondTree.unregisterPlugins();
-        }
-
-        // The state changes. the cache key updates and the template
-        // should be recompiled.
-        input.write({
-          'template.tagname': 'MyChangedElement',
-        });
-
-        let thirdTree = new TemplateCompiler(input.path(), htmlbarsOptions);
-        try {
-          let output = createBuilder(thirdTree);
-          yield output.build();
-          let templateOutput = output.readText('template.js');
-          assert.strictEqual(rewriterCallCount, 2);
-          assert.ok(templateOutput.match(/my-changed-element/));
-          assert.strictEqual(rewriterCallCount, 2);
-        } finally {
-          yield output.dispose();
-          thirdTree.unregisterPlugins();
+          clearTreeCache(firstTree);
+          clearTreeCache(secondTree);
+          clearTreeCache(thirdTree);
         }
       })
     );
