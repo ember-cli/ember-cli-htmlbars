@@ -84,12 +84,8 @@ describe('TemplateCompiler', function () {
 
     let tree = new TemplateCompiler(input.path(), htmlbarsOptions);
 
-    try {
-      output = createBuilder(tree);
-      await output.build();
-    } finally {
-      tree.unregisterPlugins();
-    }
+    output = createBuilder(tree);
+    await output.build();
 
     let expected = `export default Ember.HTMLBars.template(${htmlbarsPrecompile(source, {
       moduleName: 'template.hbs',
@@ -125,12 +121,8 @@ describe('TemplateCompiler', function () {
 
     let tree = new TemplateCompiler(input.path(), htmlbarsOptions);
 
-    try {
-      output = createBuilder(tree);
-      await output.build();
-    } finally {
-      tree.unregisterPlugins();
-    }
+    output = createBuilder(tree);
+    await output.build();
 
     assert.ok(wasProduction);
   });
