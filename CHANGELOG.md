@@ -1,5 +1,14 @@
 # Changelog
 
+## v5.6.1 (2021-02-26)
+
+#### :bug: Bug Fix
+* [#663](https://github.com/ember-cli/ember-cli-htmlbars/pull/663) Ember Ember 3.27+ can determine global for template compilation ([@rwjblue](https://github.com/rwjblue))
+
+#### Committers: 1
+- Robert Jackson ([@rwjblue](https://github.com/rwjblue))
+
+
 ## v5.6.0 (2021-02-26)
 
 #### :rocket: Enhancement
