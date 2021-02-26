@@ -1,5 +1,17 @@
 # Changelog
 
+## v5.6.0 (2021-02-26)
+
+#### :rocket: Enhancement
+* [#661](https://github.com/ember-cli/ember-cli-htmlbars/pull/661) Remove usage of registerPlugin / unregisterPlugin ([@rwjblue](https://github.com/rwjblue))
+
+#### :bug: Bug Fix
+* [#662](https://github.com/ember-cli/ember-cli-htmlbars/pull/662) Avoid building the template compiler cache key repeatedly ([@rwjblue](https://github.com/rwjblue))
+
+#### Committers: 1
+- Robert Jackson ([@rwjblue](https://github.com/rwjblue))
+
+
 ## v5.5.0 (2021-02-26)
 
 #### :rocket: Enhancement
