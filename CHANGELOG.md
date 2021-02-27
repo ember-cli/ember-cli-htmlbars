@@ -1,5 +1,14 @@
 # Changelog
 
+## v5.6.2 (2021-02-27)
+
+#### :bug: Bug Fix
+* [#665](https://github.com/ember-cli/ember-cli-htmlbars/pull/665) Ensure AST plugins have the same ordering as < ember-cli-htmlbars@5.5.0. ([@rwjblue](https://github.com/rwjblue))
+
+#### Committers: 1
+- Robert Jackson ([@rwjblue](https://github.com/rwjblue))
+
+
 ## v5.6.1 (2021-02-26)
 
 #### :bug: Bug Fix
