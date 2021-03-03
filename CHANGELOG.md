@@ -1,3 +1,13 @@
+## v4.5.0 (2021-03-03)
+
+#### :rocket: Enhancement
+* [#673](https://github.com/ember-cli/ember-cli-htmlbars/pull/673) Backport template compiler improvements from 5.x ([@rwjblue](https://github.com/rwjblue))
+* [#661](https://github.com/ember-cli/ember-cli-htmlbars/pull/661) Remove usage of registerPlugin / unregisterPlugin ([@rwjblue](https://github.com/rwjblue))
+* [#660](https://github.com/ember-cli/ember-cli-htmlbars/pull/660) Replace `purgeModule` cache busting with `vm` based sandboxing ([@rwjblue](https://github.com/rwjblue))
+
+#### Committers: 1
+- Robert Jackson ([@rwjblue](https://github.com/rwjblue))
+
 ## v4.4.1 (2021-02-05)
 
 #### :rocket: Enhancement
