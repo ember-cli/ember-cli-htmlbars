@@ -131,6 +131,8 @@ describe('Colocation - Broccoli + Babel Integration', function () {
       'app-name-here': {
         components: {
           'foo.js': stripIndent`
+            import Component from '@glimmer/component';
+            export default class FooComponent extends Component {}
             import { hbs } from 'ember-cli-htmlbars';
 
             const __COLOCATED_TEMPLATE__ = hbs("{{yield}}", {
@@ -140,9 +142,6 @@ describe('Colocation - Broccoli + Babel Integration', function () {
                 "srcName": "app-name-here/components/foo.hbs"
               }
             });
-
-            import Component from '@glimmer/component';
-            export default class FooComponent extends Component {}
 
             Ember._setComponentTemplate(__COLOCATED_TEMPLATE__, FooComponent);
           `,
@@ -179,6 +178,8 @@ describe('Colocation - Broccoli + Babel Integration', function () {
       'app-name-here': {
         components: {
           'foo.js': stripIndent`
+            import Component from '@glimmer/component';
+            export default class FooComponent extends Component {}
             import { hbs } from 'ember-cli-htmlbars';
 
             const __COLOCATED_TEMPLATE__ = hbs("{{yield}}", {
@@ -188,9 +189,6 @@ describe('Colocation - Broccoli + Babel Integration', function () {
                 "srcName": "app-name-here/components/foo.hbs"
               }
             });
-
-            import Component from '@glimmer/component';
-            export default class FooComponent extends Component {}
 
             Ember._setComponentTemplate(__COLOCATED_TEMPLATE__, FooComponent);
           `,
@@ -274,6 +272,8 @@ describe('Colocation - Broccoli + Babel Integration', function () {
         'addon-name-here': {
           components: {
             'foo.js': stripIndent`
+            import Component from '@glimmer/component';
+            export default class FooComponent extends Component {}
             import { hbs } from 'ember-cli-htmlbars';
 
             const __COLOCATED_TEMPLATE__ = hbs("{{yield}}", {
@@ -283,9 +283,6 @@ describe('Colocation - Broccoli + Babel Integration', function () {
                 "srcName": "@scope-name/addon-name-here/components/foo.hbs"
               }
             });
-
-            import Component from '@glimmer/component';
-            export default class FooComponent extends Component {}
 
             Ember._setComponentTemplate(__COLOCATED_TEMPLATE__, FooComponent);
           `,
