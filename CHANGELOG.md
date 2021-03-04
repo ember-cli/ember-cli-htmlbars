@@ -1,5 +1,14 @@
 # Changelog
 
+## v5.6.3 (2021-03-04)
+
+#### :bug: Bug Fix
+* [#675](https://github.com/ember-cli/ember-cli-htmlbars/pull/675) Remove development only `optionalDependencies` (`release-it` and `release-it-lerna-changelog`). ([@alexlafroscia](https://github.com/alexlafroscia))
+
+#### Committers: 1
+- Alex LaFroscia ([@alexlafroscia](https://github.com/alexlafroscia))
+
+
 ## v5.6.2 (2021-02-27)
 
 #### :bug: Bug Fix
