@@ -20,7 +20,7 @@ jobs:
       with:
         node-version: 12.x
     - name: install dependencies
-      run: yarn install
+      run: yarn install --frozen-lockfile
     - name: lint:js
       run: yarn lint:js
     - name: lint:hbs
@@ -41,7 +41,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - name: install dependencies
-      run: yarn install
+      run: yarn install --ignore-engines --frozen-lockfile
     - name: node tests
       run: yarn test:node
     - name: ember test
