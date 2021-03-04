@@ -91,9 +91,7 @@
     "mocha": "^8.3.0",
     "module-name-inliner": "link:./tests/dummy/lib/module-name-inliner",
     "prettier": "^2.2.1",
-    "qunit-dom": "^1.6.0"
-  },
-  "optionalDependencies": {
+    "qunit-dom": "^1.6.0",
     "release-it": "^14.2.1",
     "release-it-lerna-changelog": "^3.1.0"
   },
