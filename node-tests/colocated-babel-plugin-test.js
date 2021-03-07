@@ -5,6 +5,7 @@ const babel = require('@babel/core');
 const { stripIndent } = require('common-tags');
 const ColocatedBabelPlugin = require('../lib/colocated-babel-plugin');
 const DecoratorsPlugin = [require.resolve('@babel/plugin-proposal-decorators'), { legacy: true }];
+const TypeScriptPlugin = [require.resolve('@babel/plugin-transform-typescript')];
 const ClassPropertiesPlugin = [
   require.resolve('@babel/plugin-proposal-class-properties'),
   { loose: true },
@@ -62,6 +63,31 @@ describe('ColocatedBabelPlugin', function () {
         })), _class);
         export { MyComponent as default };
         ;
+
+        Ember._setComponentTemplate(__COLOCATED_TEMPLATE__, MyComponent);
+      `
+    );
+  });
+
+  it('can be used with TypeScript merged declarations', function () {
+    let { code } = babel.transformSync(
+      stripIndent`
+        import Component from 'somewhere';
+        const __COLOCATED_TEMPLATE__ = 'ok';
+        type MyArgs = { required: string; optional?: number };
+
+        export default interface MyComponent extends MyArgs {}
+        export default class MyComponent extends Component {}
+      `,
+      { plugins: [ColocatedBabelPlugin, TypeScriptPlugin] }
+    );
+
+    assert.strictEqual(
+      code,
+      stripIndent`
+        import Component from 'somewhere';
+        const __COLOCATED_TEMPLATE__ = 'ok';
+        export default class MyComponent extends Component {}
 
         Ember._setComponentTemplate(__COLOCATED_TEMPLATE__, MyComponent);
       `
