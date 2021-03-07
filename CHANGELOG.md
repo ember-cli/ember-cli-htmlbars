@@ -1,5 +1,16 @@
 # Changelog
 
+## v5.6.4 (2021-03-07)
+
+#### :bug: Bug Fix
+* [#678](https://github.com/ember-cli/ember-cli-htmlbars/pull/678) Make `setTimeout`/`clearTimeout` available to the template compiler sandbox ([@rwjblue](https://github.com/rwjblue))
+* [#677](https://github.com/ember-cli/ember-cli-htmlbars/pull/677) Support TypeScript merging of export default declarations in template colocation ([@dfreeman](https://github.com/dfreeman))
+
+#### Committers: 2
+- Dan Freeman ([@dfreeman](https://github.com/dfreeman))
+- Robert Jackson ([@rwjblue](https://github.com/rwjblue))
+
+
 ## v5.6.3 (2021-03-04)
 
 #### :bug: Bug Fix
