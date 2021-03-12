@@ -1,5 +1,14 @@
 # Changelog
 
+## v5.6.5 (2021-03-12)
+
+#### :bug: Bug Fix
+* [#680](https://github.com/ember-cli/ember-cli-htmlbars/pull/680) Update inline template compilation plugin to avoid errors on rebuilds ([@rwjblue](https://github.com/rwjblue))
+
+#### Committers: 2
+- Robert Jackson ([@rwjblue](https://github.com/rwjblue))
+
+
 ## v5.6.4 (2021-03-07)
 
 #### :bug: Bug Fix
