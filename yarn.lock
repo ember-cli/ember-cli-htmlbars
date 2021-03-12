@@ -2190,10 +2190,10 @@ babel-plugin-htmlbars-inline-precompile@^1.0.0:
   resolved "https://registry.yarnpkg.com/babel-plugin-htmlbars-inline-precompile/-/babel-plugin-htmlbars-inline-precompile-1.0.0.tgz#a9d2f6eaad8a3f3d361602de593a8cbef8179c22"
   integrity sha512-4jvKEHR1bAX03hBDZ94IXsYCj3bwk9vYsn6ux6JZNL2U5pvzCWjqyrGahfsGNrhERyxw8IqcirOi9Q6WCo3dkQ==
 
-babel-plugin-htmlbars-inline-precompile@^4.4.1:
-  version "4.4.1"
-  resolved "https://registry.yarnpkg.com/babel-plugin-htmlbars-inline-precompile/-/babel-plugin-htmlbars-inline-precompile-4.4.1.tgz#2ec5282cdc92bd5b5ad918a8ddc4cd0a261b5187"
-  integrity sha512-OCdeSw08LkMhRWE4n35BZX/lt2bKdDHUfZlqjSd0sJN0zkm0KG6JyWMlqnq8h52pNiKkgYvq/gUqONkM0JqcmQ==
+babel-plugin-htmlbars-inline-precompile@^4.4.5:
+  version "4.4.5"
+  resolved "https://registry.yarnpkg.com/babel-plugin-htmlbars-inline-precompile/-/babel-plugin-htmlbars-inline-precompile-4.4.5.tgz#ca0fc6ea49fe13b0a91ff995ee381d33d421a4ef"
+  integrity sha512-7qnZTDm9uUQppOmEWjAyIPTQ54akEdd9PCIfbTJ8HNgUdekeKC+24uwd+M1ZTjUItby1iLy9maQOK3Wv9RjWJA==
   dependencies:
     babel-plugin-ember-modules-api-polyfill "^3.4.0"
 
@@ -7865,7 +7865,8 @@ mocha@^8.3.0:
     yargs-unparser "2.0.0"
 
 "module-name-inliner@link:./tests/dummy/lib/module-name-inliner":
-  version "0.1.0"
+  version "0.0.0"
+  uid ""
 
 morgan@^1.10.0:
   version "1.10.0"
