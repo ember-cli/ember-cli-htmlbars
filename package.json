@@ -33,7 +33,7 @@
   },
   "dependencies": {
     "@ember/edition-utils": "^1.2.0",
-    "babel-plugin-htmlbars-inline-precompile": "^4.4.1",
+    "babel-plugin-htmlbars-inline-precompile": "^4.4.5",
     "broccoli-debug": "^0.6.5",
     "broccoli-persistent-filter": "^3.1.2",
     "broccoli-plugin": "^4.0.3",
@@ -76,7 +76,7 @@
     "ember-maybe-import-regenerator": "^0.1.6",
     "ember-qunit": "^4.6.0",
     "ember-resolver": "^8.0.0",
-    "ember-source": "~3.25.0",
+    "ember-source": "~3.27.0-alpha.2",
     "ember-source-channel-url": "^3.0.0",
     "ember-template-lint": "^2.9.1",
     "ember-try": "^1.4.0",
@@ -119,5 +119,8 @@
       "release": true,
       "tokenRef": "GITHUB_AUTH"
     }
+  },
+  "ember": {
+    "edition": "octane"
   }
 }
