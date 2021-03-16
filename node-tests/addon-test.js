@@ -34,6 +34,7 @@ describe('ember-cli-htmlbars addon', function () {
       project,
       parent: project,
       ui: this.ui,
+      _requiresModuleApiPolyfill: true,
     });
 
     project.addons.push(this.addon);
