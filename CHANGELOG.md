@@ -1,5 +1,18 @@
 # Changelog
 
+## v5.7.0 (2021-03-18)
+
+#### :rocket: Enhancement
+* [#683](https://github.com/ember-cli/ember-cli-htmlbars/pull/683) Disable the modules API polyfill on Ember 3.27+ ([@pzuraq](https://github.com/pzuraq))
+
+#### :house: Internal
+* [#684](https://github.com/ember-cli/ember-cli-htmlbars/pull/684) Update babel-plugin-htmlbars-inline-precompile to 4.4.6. ([@rwjblue](https://github.com/rwjblue))
+
+#### Committers: 2
+- Chris Garrett ([@pzuraq](https://github.com/pzuraq))
+- Robert Jackson ([@rwjblue](https://github.com/rwjblue))
+
+
 ## v5.6.5 (2021-03-12)
 
 #### :bug: Bug Fix
