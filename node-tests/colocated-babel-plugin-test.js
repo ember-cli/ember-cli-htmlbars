@@ -22,161 +22,350 @@ const RuntimePlugin = [
 describe('ColocatedBabelPlugin', function () {
   this.slow(500);
 
-  it('can be used with decorators', function () {
-    let { code } = babel.transformSync(
-      stripIndent`
-        import Component from '@glimmer/component';
-        const __COLOCATED_TEMPLATE__ = 'ok';
+  describe('requiresModuleApiPolyfill: true', function () {
+    const ColocatedBabelPluginOptions = [ColocatedBabelPlugin, { requiresModuleApiPolyfill: true }];
 
-        export default class MyComponent extends Component {
-          @tracked data = null;
-        };
-      `,
-      { plugins: [RuntimePlugin, ColocatedBabelPlugin, DecoratorsPlugin, ClassPropertiesPlugin] }
-    );
+    it('can be used with decorators', function () {
+      let { code } = babel.transformSync(
+        stripIndent`
+          import Component from '@glimmer/component';
+          const __COLOCATED_TEMPLATE__ = 'ok';
 
-    assert.strictEqual(
-      code,
-      stripIndent`
-        import _initializerDefineProperty from "@babel/runtime/helpers/esm/initializerDefineProperty";
-        import _applyDecoratedDescriptor from "@babel/runtime/helpers/esm/applyDecoratedDescriptor";
-        import _initializerWarningHelper from "@babel/runtime/helpers/esm/initializerWarningHelper";
+          export default class MyComponent extends Component {
+            @tracked data = null;
+          };
+        `,
+        {
+          plugins: [
+            RuntimePlugin,
+            ColocatedBabelPluginOptions,
+            DecoratorsPlugin,
+            ClassPropertiesPlugin,
+          ],
+        }
+      );
 
-        var _class, _descriptor, _temp;
+      assert.strictEqual(
+        code,
+        stripIndent`
+          import _initializerDefineProperty from "@babel/runtime/helpers/esm/initializerDefineProperty";
+          import _applyDecoratedDescriptor from "@babel/runtime/helpers/esm/applyDecoratedDescriptor";
+          import _initializerWarningHelper from "@babel/runtime/helpers/esm/initializerWarningHelper";
 
-        import Component from '@glimmer/component';
-        const __COLOCATED_TEMPLATE__ = 'ok';
-        let MyComponent = (_class = (_temp = class MyComponent extends Component {
-          constructor(...args) {
-            super(...args);
+          var _class, _descriptor, _temp;
 
-            _initializerDefineProperty(this, "data", _descriptor, this);
-          }
+          import Component from '@glimmer/component';
+          const __COLOCATED_TEMPLATE__ = 'ok';
+          let MyComponent = (_class = (_temp = class MyComponent extends Component {
+            constructor(...args) {
+              super(...args);
 
-        }, _temp), (_descriptor = _applyDecoratedDescriptor(_class.prototype, "data", [tracked], {
-          configurable: true,
-          enumerable: true,
-          writable: true,
-          initializer: function () {
-            return null;
-          }
-        })), _class);
-        export { MyComponent as default };
-        ;
+              _initializerDefineProperty(this, "data", _descriptor, this);
+            }
 
-        Ember._setComponentTemplate(__COLOCATED_TEMPLATE__, MyComponent);
-      `
-    );
+          }, _temp), (_descriptor = _applyDecoratedDescriptor(_class.prototype, "data", [tracked], {
+            configurable: true,
+            enumerable: true,
+            writable: true,
+            initializer: function () {
+              return null;
+            }
+          })), _class);
+          export { MyComponent as default };
+          ;
+
+          Ember._setComponentTemplate(__COLOCATED_TEMPLATE__, MyComponent);
+        `
+      );
+    });
+
+    it('can be used with TypeScript merged declarations', function () {
+      let { code } = babel.transformSync(
+        stripIndent`
+          import Component from 'somewhere';
+          const __COLOCATED_TEMPLATE__ = 'ok';
+          type MyArgs = { required: string; optional?: number };
+
+          export default interface MyComponent extends MyArgs {}
+          export default class MyComponent extends Component {}
+        `,
+        { plugins: [ColocatedBabelPluginOptions, TypeScriptPlugin] }
+      );
+
+      assert.strictEqual(
+        code,
+        stripIndent`
+          import Component from 'somewhere';
+          const __COLOCATED_TEMPLATE__ = 'ok';
+          export default class MyComponent extends Component {}
+
+          Ember._setComponentTemplate(__COLOCATED_TEMPLATE__, MyComponent);
+        `
+      );
+    });
+
+    it('sets the template for non-class default exports', function () {
+      let { code } = babel.transformSync(
+        stripIndent`
+          import MyComponent from 'other-module';
+          const __COLOCATED_TEMPLATE__ = 'ok';
+          export default MyComponent;
+        `,
+        { plugins: [ColocatedBabelPluginOptions] }
+      );
+
+      assert.strictEqual(
+        code,
+        stripIndent`
+          import MyComponent from 'other-module';
+          const __COLOCATED_TEMPLATE__ = 'ok';
+          export default Ember._setComponentTemplate(__COLOCATED_TEMPLATE__, MyComponent);
+        `
+      );
+    });
+
+    it('sets the template for named class default exports', function () {
+      let { code } = babel.transformSync(
+        stripIndent`
+          import Component from 'somewhere';
+          const __COLOCATED_TEMPLATE__ = 'ok';
+          export default class MyComponent extends Component {}
+        `,
+        { plugins: [ColocatedBabelPluginOptions] }
+      );
+
+      assert.strictEqual(
+        code,
+        stripIndent`
+          import Component from 'somewhere';
+          const __COLOCATED_TEMPLATE__ = 'ok';
+          export default class MyComponent extends Component {}
+
+          Ember._setComponentTemplate(__COLOCATED_TEMPLATE__, MyComponent);
+        `
+      );
+    });
+
+    it('sets the template for anonymous class default exports', function () {
+      let { code } = babel.transformSync(
+        stripIndent`
+          import Component from 'somewhere';
+          const __COLOCATED_TEMPLATE__ = 'ok';
+          export default class extends Component {}
+        `,
+        { plugins: [ColocatedBabelPluginOptions] }
+      );
+
+      assert.strictEqual(
+        code,
+        stripIndent`
+          import Component from 'somewhere';
+          const __COLOCATED_TEMPLATE__ = 'ok';
+          export default Ember._setComponentTemplate(__COLOCATED_TEMPLATE__, class extends Component {});
+        `
+      );
+    });
+
+    it('sets the template for identifier `as default` exports', function () {
+      let { code } = babel.transformSync(
+        stripIndent`
+          import Component from 'somewhere';
+          const __COLOCATED_TEMPLATE__ = 'ok';
+          const MyComponent = class extends Component {};
+          export { MyComponent as default };
+        `,
+        { plugins: [ColocatedBabelPluginOptions] }
+      );
+
+      assert.strictEqual(
+        code,
+        stripIndent`
+          import Component from 'somewhere';
+          const __COLOCATED_TEMPLATE__ = 'ok';
+          const MyComponent = class extends Component {};
+          export { MyComponent as default };
+
+          Ember._setComponentTemplate(__COLOCATED_TEMPLATE__, MyComponent);
+        `
+      );
+    });
   });
 
-  it('can be used with TypeScript merged declarations', function () {
-    let { code } = babel.transformSync(
-      stripIndent`
-        import Component from 'somewhere';
-        const __COLOCATED_TEMPLATE__ = 'ok';
-        type MyArgs = { required: string; optional?: number };
+  describe('requiresModuleApiPolyfill: false', function () {
+    const ColocatedBabelPluginOptions = [
+      ColocatedBabelPlugin,
+      { requiresModuleApiPolyfill: false },
+    ];
 
-        export default interface MyComponent extends MyArgs {}
-        export default class MyComponent extends Component {}
-      `,
-      { plugins: [ColocatedBabelPlugin, TypeScriptPlugin] }
-    );
+    it('can be used with decorators', function () {
+      let { code } = babel.transformSync(
+        stripIndent`
+          import Component from '@glimmer/component';
+          const __COLOCATED_TEMPLATE__ = 'ok';
 
-    assert.strictEqual(
-      code,
-      stripIndent`
-        import Component from 'somewhere';
-        const __COLOCATED_TEMPLATE__ = 'ok';
-        export default class MyComponent extends Component {}
+          export default class MyComponent extends Component {
+            @tracked data = null;
+          };
+        `,
+        {
+          plugins: [
+            RuntimePlugin,
+            ColocatedBabelPluginOptions,
+            DecoratorsPlugin,
+            ClassPropertiesPlugin,
+          ],
+        }
+      );
 
-        Ember._setComponentTemplate(__COLOCATED_TEMPLATE__, MyComponent);
-      `
-    );
-  });
+      assert.strictEqual(
+        code,
+        stripIndent`
+          import _initializerDefineProperty from "@babel/runtime/helpers/esm/initializerDefineProperty";
+          import _applyDecoratedDescriptor from "@babel/runtime/helpers/esm/applyDecoratedDescriptor";
+          import _initializerWarningHelper from "@babel/runtime/helpers/esm/initializerWarningHelper";
 
-  it('sets the template for non-class default exports', function () {
-    let { code } = babel.transformSync(
-      stripIndent`
-        import MyComponent from 'other-module';
-        const __COLOCATED_TEMPLATE__ = 'ok';
-        export default MyComponent;
-      `,
-      { plugins: [ColocatedBabelPlugin] }
-    );
+          var _class, _descriptor, _temp;
 
-    assert.strictEqual(
-      code,
-      stripIndent`
-        import MyComponent from 'other-module';
-        const __COLOCATED_TEMPLATE__ = 'ok';
-        export default Ember._setComponentTemplate(__COLOCATED_TEMPLATE__, MyComponent);
-      `
-    );
-  });
+          import { setComponentTemplate as _setComponentTemplate } from "@ember/component";
+          import Component from '@glimmer/component';
+          const __COLOCATED_TEMPLATE__ = 'ok';
+          let MyComponent = (_class = (_temp = class MyComponent extends Component {
+            constructor(...args) {
+              super(...args);
 
-  it('sets the template for named class default exports', function () {
-    let { code } = babel.transformSync(
-      stripIndent`
-        import Component from 'somewhere';
-        const __COLOCATED_TEMPLATE__ = 'ok';
-        export default class MyComponent extends Component {}
-      `,
-      { plugins: [ColocatedBabelPlugin] }
-    );
+              _initializerDefineProperty(this, "data", _descriptor, this);
+            }
 
-    assert.strictEqual(
-      code,
-      stripIndent`
-        import Component from 'somewhere';
-        const __COLOCATED_TEMPLATE__ = 'ok';
-        export default class MyComponent extends Component {}
+          }, _temp), (_descriptor = _applyDecoratedDescriptor(_class.prototype, "data", [tracked], {
+            configurable: true,
+            enumerable: true,
+            writable: true,
+            initializer: function () {
+              return null;
+            }
+          })), _class);
+          export { MyComponent as default };
+          ;
 
-        Ember._setComponentTemplate(__COLOCATED_TEMPLATE__, MyComponent);
-      `
-    );
-  });
+          _setComponentTemplate(__COLOCATED_TEMPLATE__, MyComponent);
+        `
+      );
+    });
 
-  it('sets the template for anonymous class default exports', function () {
-    let { code } = babel.transformSync(
-      stripIndent`
-        import Component from 'somewhere';
-        const __COLOCATED_TEMPLATE__ = 'ok';
-        export default class extends Component {}
-      `,
-      { plugins: [ColocatedBabelPlugin] }
-    );
+    it('can be used with TypeScript merged declarations', function () {
+      let { code } = babel.transformSync(
+        stripIndent`
+          import Component from 'somewhere';
+          const __COLOCATED_TEMPLATE__ = 'ok';
+          type MyArgs = { required: string; optional?: number };
 
-    assert.strictEqual(
-      code,
-      stripIndent`
-        import Component from 'somewhere';
-        const __COLOCATED_TEMPLATE__ = 'ok';
-        export default Ember._setComponentTemplate(__COLOCATED_TEMPLATE__, class extends Component {});
-      `
-    );
-  });
+          export default interface MyComponent extends MyArgs {}
+          export default class MyComponent extends Component {}
+        `,
+        { plugins: [ColocatedBabelPluginOptions, TypeScriptPlugin] }
+      );
 
-  it('sets the template for identifier `as default` exports', function () {
-    let { code } = babel.transformSync(
-      stripIndent`
-        import Component from 'somewhere';
-        const __COLOCATED_TEMPLATE__ = 'ok';
-        const MyComponent = class extends Component {};
-        export { MyComponent as default };
-      `,
-      { plugins: [ColocatedBabelPlugin] }
-    );
+      assert.strictEqual(
+        code,
+        stripIndent`
+          import { setComponentTemplate as _setComponentTemplate } from "@ember/component";
+          import Component from 'somewhere';
+          const __COLOCATED_TEMPLATE__ = 'ok';
+          export default class MyComponent extends Component {}
 
-    assert.strictEqual(
-      code,
-      stripIndent`
-        import Component from 'somewhere';
-        const __COLOCATED_TEMPLATE__ = 'ok';
-        const MyComponent = class extends Component {};
-        export { MyComponent as default };
+          _setComponentTemplate(__COLOCATED_TEMPLATE__, MyComponent);
+        `
+      );
+    });
 
-        Ember._setComponentTemplate(__COLOCATED_TEMPLATE__, MyComponent);
-      `
-    );
+    it('sets the template for non-class default exports', function () {
+      let { code } = babel.transformSync(
+        stripIndent`
+          import MyComponent from 'other-module';
+          const __COLOCATED_TEMPLATE__ = 'ok';
+          export default MyComponent;
+        `,
+        { plugins: [ColocatedBabelPluginOptions] }
+      );
+
+      assert.strictEqual(
+        code,
+        stripIndent`
+          import { setComponentTemplate as _setComponentTemplate } from "@ember/component";
+          import MyComponent from 'other-module';
+          const __COLOCATED_TEMPLATE__ = 'ok';
+          export default _setComponentTemplate(__COLOCATED_TEMPLATE__, MyComponent);
+        `
+      );
+    });
+
+    it('sets the template for named class default exports', function () {
+      let { code } = babel.transformSync(
+        stripIndent`
+          import Component from 'somewhere';
+          const __COLOCATED_TEMPLATE__ = 'ok';
+          export default class MyComponent extends Component {}
+        `,
+        { plugins: [ColocatedBabelPluginOptions] }
+      );
+
+      assert.strictEqual(
+        code,
+        stripIndent`
+          import { setComponentTemplate as _setComponentTemplate } from "@ember/component";
+          import Component from 'somewhere';
+          const __COLOCATED_TEMPLATE__ = 'ok';
+          export default class MyComponent extends Component {}
+
+          _setComponentTemplate(__COLOCATED_TEMPLATE__, MyComponent);
+        `
+      );
+    });
+
+    it('sets the template for anonymous class default exports', function () {
+      let { code } = babel.transformSync(
+        stripIndent`
+          import Component from 'somewhere';
+          const __COLOCATED_TEMPLATE__ = 'ok';
+          export default class extends Component {}
+        `,
+        { plugins: [ColocatedBabelPluginOptions] }
+      );
+
+      assert.strictEqual(
+        code,
+        stripIndent`
+          import { setComponentTemplate as _setComponentTemplate } from "@ember/component";
+          import Component from 'somewhere';
+          const __COLOCATED_TEMPLATE__ = 'ok';
+          export default _setComponentTemplate(__COLOCATED_TEMPLATE__, class extends Component {});
+        `
+      );
+    });
+
+    it('sets the template for identifier `as default` exports', function () {
+      let { code } = babel.transformSync(
+        stripIndent`
+          import Component from 'somewhere';
+          const __COLOCATED_TEMPLATE__ = 'ok';
+          const MyComponent = class extends Component {};
+          export { MyComponent as default };
+        `,
+        { plugins: [ColocatedBabelPluginOptions] }
+      );
+
+      assert.strictEqual(
+        code,
+        stripIndent`
+          import { setComponentTemplate as _setComponentTemplate } from "@ember/component";
+          import Component from 'somewhere';
+          const __COLOCATED_TEMPLATE__ = 'ok';
+          const MyComponent = class extends Component {};
+          export { MyComponent as default };
+
+          _setComponentTemplate(__COLOCATED_TEMPLATE__, MyComponent);
+        `
+      );
+    });
   });
 });
