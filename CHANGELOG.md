@@ -1,5 +1,14 @@
 # Changelog
 
+## v5.7.1 (2021-03-18)
+
+#### :bug: Bug Fix
+* [#685](https://github.com/ember-cli/ember-cli-htmlbars/pull/685) Ensure global is present for Node 10 + globalThis polyfill ([@rwjblue](https://github.com/rwjblue))
+
+#### Committers: 1
+- Robert Jackson ([@rwjblue](https://github.com/rwjblue))
+
+
 ## v5.7.0 (2021-03-18)
 
 #### :rocket: Enhancement
