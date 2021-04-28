@@ -1,0 +1,27 @@
+version: 2
+updates:
+- package-ecosystem: npm
+  directory: "/"
+  schedule:
+    interval: monthly
+    time: "03:00"
+  open-pull-requests-limit: 10
+  versioning-strategy: increase
+  ignore:
+  - dependency-name: ember-cli
+    versions:
+    - 3.25.0
+    - 3.25.1
+  - dependency-name: ember-source
+    versions:
+    - 3.24.0
+    - 3.24.1
+  - dependency-name: eslint-config-prettier
+    versions:
+    - 7.1.0
+  - dependency-name: eslint-plugin-ember
+    versions:
+    - 10.1.1
+  - dependency-name: release-it-lerna-changelog
+    versions:
+    - 3.1.0
