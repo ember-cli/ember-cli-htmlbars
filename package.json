@@ -61,7 +61,7 @@
     "babel-plugin-debug-macros": "^0.3.3",
     "broccoli-merge-trees": "^4.2.0",
     "broccoli-test-helper": "^2.0.0",
-    "chai": "^4.2.0",
+    "chai": "^4.3.4",
     "co": "^4.6.0",
     "console-ui": "^3.1.2",
     "core-object": "^3.1.5",
