@@ -88,7 +88,7 @@
     "eslint-plugin-prettier": "^3.4.0",
     "fixturify": "^2.1.1",
     "loader.js": "^4.7.0",
-    "mocha": "^8.3.2",
+    "mocha": "^8.4.0",
     "module-name-inliner": "link:./tests/dummy/lib/module-name-inliner",
     "prettier": "^2.2.1",
     "qunit-dom": "^1.6.0",
