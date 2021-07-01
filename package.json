@@ -47,7 +47,7 @@
     "semver": "^7.3.4",
     "silent-error": "^1.1.1",
     "strip-bom": "^4.0.0",
-    "walk-sync": "^2.2.0"
+    "walk-sync": "^3.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",
