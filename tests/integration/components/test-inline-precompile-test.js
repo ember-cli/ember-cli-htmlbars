@@ -5,8 +5,6 @@ import hbsOne from 'htmlbars-inline-precompile';
 import hbsTwo from 'ember-cli-htmlbars-inline-precompile';
 import { hbs as hbsThree } from 'ember-cli-htmlbars';
 import { precompileTemplate } from '@ember/template-compilation';
-import { hbs } from 'ember-template-imports';
-import { gte } from 'ember-compatibility-helpers';
 
 module('tests/integration/components/test-inline-precompile', function (hooks) {
   setupRenderingTest(hooks);
@@ -34,24 +32,6 @@ module('tests/integration/components/test-inline-precompile', function (hooks) {
 
     assert.equal(this.element.textContent.trim(), 'Wheeeee');
   });
-
-  if (gte('3.25.0')) {
-    test('template literal proposal works', async function (assert) {
-      // eslint-disable-next-line no-undef
-      const Bar = [GLIMMER_TEMPLATE('world')];
-
-      const Foo = hbs`Hello`;
-
-      await render(
-        precompileTemplate(`<Foo/>, <Bar/>!`, {
-          strictMode: true,
-          scope: { Foo, Bar },
-        })
-      );
-
-      assert.equal(this.element.textContent.trim(), 'Hello, world!');
-    });
-  }
 
   test('inline templates have "legacy" AST plugins ran', async function (assert) {
     await render(hbsThree('{{module-name-reverser}}', { moduleName: 'hello-template.hbs' }));
