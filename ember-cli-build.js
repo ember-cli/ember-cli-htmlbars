@@ -40,23 +40,6 @@ module.exports = function (defaults) {
         ],
       ],
     },
-
-    'ember-cli-htmlbars': {
-      // This is an option intended to be used only be `ember-template-imports`.
-      // DO NOT USE THIS
-      _customInlineModules: {
-        'ember-template-imports': {
-          export: 'hbs',
-          useTemplateLiteralProposalSemantics: 1,
-        },
-
-        'TEMPLATE-TAG-MODULE': {
-          export: 'GLIMMER_TEMPLATE',
-          debugName: '<template>',
-          useTemplateTagProposalSemantics: 1,
-        },
-      },
-    },
   });
 
   /*
