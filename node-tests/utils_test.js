@@ -159,7 +159,7 @@ describe('utils', function () {
       assert.strictEqual(utils.isInlinePrecompileBabelPluginRegistered(plugins), true);
     });
 
-    it.only('detects when the parallelizable version of the plugin has been installed', function () {
+    it('detects when the parallelizable version of the plugin has been installed', function () {
       let plugins = [parallelizablePlugin];
 
       assert.strictEqual(utils.isInlinePrecompileBabelPluginRegistered(plugins), true);
