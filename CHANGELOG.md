@@ -1,5 +1,27 @@
 # Changelog
 
+
+## v6.0.0 (2021-10-14)
+
+#### :boom: Breaking Change
+* [#724](https://github.com/ember-cli/ember-cli-htmlbars/pull/724) Use simplified babel plugin on ember 3.27+ and drop unsupported node versions ([@ef4](https://github.com/ef4))
+
+#### :rocket: Enhancement
+* [#733](https://github.com/ember-cli/ember-cli-htmlbars/pull/733) Avoid repeated encoding in getTemplateCompiler ([@rwjblue](https://github.com/rwjblue))
+* [#724](https://github.com/ember-cli/ember-cli-htmlbars/pull/724) Use simplified babel plugin on ember 3.27+ and drop unsupported node versions ([@ef4](https://github.com/ef4))
+
+#### :bug: Bug Fix
+* [#732](https://github.com/ember-cli/ember-cli-htmlbars/pull/732) add `this._super` call to included hook plugin doc ([@fivetanley](https://github.com/fivetanley))
+
+#### :house: Internal
+* [#736](https://github.com/ember-cli/ember-cli-htmlbars/pull/736) Updating pr 723 ([@ef4](https://github.com/ef4))
+
+#### Committers: 3
+- Edward Faulkner ([@ef4](https://github.com/ef4))
+- Robert Jackson ([@rwjblue](https://github.com/rwjblue))
+- Stanley Stuart ([@fivetanley](https://github.com/fivetanley))
+
+
 ## v5.7.1 (2021-03-18)
 
 #### :bug: Bug Fix
