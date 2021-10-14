@@ -33,12 +33,6 @@ module('tests/integration/components/test-inline-precompile', function (hooks) {
     assert.equal(this.element.textContent.trim(), 'Wheeeee');
   });
 
-  test('inline templates have "legacy" AST plugins ran', async function (assert) {
-    await render(hbsThree('{{module-name-reverser}}', { moduleName: 'hello-template.hbs' }));
-
-    assert.equal(this.element.textContent.trim(), 'sbh.etalpmet-olleh');
-  });
-
   test('inline templates have AST plugins ran', async function (assert) {
     await render(hbsThree('{{module-name-inliner}}', { moduleName: 'hello-template.hbs' }));
 

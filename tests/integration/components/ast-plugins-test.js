@@ -6,15 +6,6 @@ import { hbs } from 'ember-cli-htmlbars';
 module('tests/integration/components/ast-plugins-test', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('stand alone templates have "legacy" AST plugins ran', async function (assert) {
-    await render(hbs`{{x-module-name-reversed-component}}`);
-
-    assert.equal(
-      this.element.textContent.trim(),
-      'sbh.tnenopmoc-desrever-eman-eludom-x/stnenopmoc/setalpmet/ymmud'
-    );
-  });
-
   test('stand alone templates have AST plugins ran', async function (assert) {
     await render(hbs`{{x-module-name-inlined-component}}`);
 
