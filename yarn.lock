@@ -1028,16 +1028,6 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
-"@ef4/babel-plugin-htmlbars-inline-precompile@^6.0.0-alpha.3":
-  version "6.0.0-alpha.3"
-  resolved "https://registry.yarnpkg.com/@ef4/babel-plugin-htmlbars-inline-precompile/-/babel-plugin-htmlbars-inline-precompile-6.0.0-alpha.3.tgz#9a1301f16bd0c4943ec36812b88434b86d188d74"
-  integrity sha512-PosYrbpYyEszLXKOAKbMbPOL7K/F9weut/VDAPWxjWJV/3i7wNx3E1bNVCAa24hb3IUKvj8dR8K0o+fJwJxaUA==
-  dependencies:
-    babel-import-util "^0.2.0"
-    line-column "^1.0.2"
-    magic-string "^0.25.7"
-    string.prototype.matchall "^4.0.5"
-
 "@ember-data/rfc395-data@^0.0.4":
   version "0.0.4"
   resolved "https://registry.yarnpkg.com/@ember-data/rfc395-data/-/rfc395-data-0.0.4.tgz#ecb86efdf5d7733a76ff14ea651a1b0ed1f8a843"
@@ -2071,6 +2061,16 @@ babel-plugin-ember-modules-api-polyfill@^3.5.0:
   integrity sha512-pJajN/DkQUnStw0Az8c6khVcMQHgzqWr61lLNtVeu0g61LRW0k9jyK7vaedrHDWGe/Qe8sxG5wpiyW9NsMqFzA==
   dependencies:
     ember-rfc176-data "^0.3.17"
+
+babel-plugin-ember-template-compilation@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/babel-plugin-ember-template-compilation/-/babel-plugin-ember-template-compilation-1.0.0.tgz#984bc2ceb0bb864e878e25a9ca5c2a6153c96881"
+  integrity sha512-SvDQ+DbimZEq7XZztxiCKPNO3/HEwAOKBdJ9r4qtMpgmSuuhzO1elkixJTrnwnkLv1titAYAXNqLVD1fkE4Vgg==
+  dependencies:
+    babel-import-util "^0.2.0"
+    line-column "^1.0.2"
+    magic-string "^0.25.7"
+    string.prototype.matchall "^4.0.5"
 
 babel-plugin-filter-imports@^4.0.0:
   version "4.0.0"
