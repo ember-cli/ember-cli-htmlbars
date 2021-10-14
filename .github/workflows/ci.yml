@@ -84,7 +84,6 @@ jobs:
          - ember-classic
          - ember-default-with-jquery
          - embroider-safe
-         - embroider-optimized
          - with-ember-cli-htmlbars-inline-precompile
 
     steps:
