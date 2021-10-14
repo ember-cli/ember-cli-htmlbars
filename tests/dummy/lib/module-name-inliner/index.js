@@ -10,7 +10,6 @@ module.exports = {
   setupPreprocessorRegistry(type, registry) {
     // can only add the plugin with this style on newer Ember versions
     registry.add('htmlbars-ast-plugin', this.buildPlugin());
-    registry.add('htmlbars-ast-plugin', this.buildLegacyPlugin());
   },
 
   buildPlugin() {
@@ -41,44 +40,6 @@ module.exports = {
             },
           },
         };
-      },
-    };
-  },
-
-  // this type of plugin has worked since at least Ember 2.4+
-  buildLegacyPlugin() {
-    return {
-      name: 'module-name-inliner',
-      baseDir() {
-        return __dirname;
-      },
-      parallelBabel: {
-        requireFile: __filename,
-        buildUsing: 'buildLegacyPlugin',
-        params: {},
-      },
-
-      plugin: class LegacyPlugin {
-        constructor(options) {
-          this.options = options;
-        }
-
-        transform(ast) {
-          let { meta } = this.options;
-          let b = this.syntax.builders;
-
-          this.syntax.traverse(ast, {
-            // replacing the mustache with text, like this
-            // {{module-name-reverser}} -> `some-module-name`
-            MustacheStatement(node) {
-              if (node.path.original === 'module-name-reverser') {
-                return b.text(meta.moduleName.split('').reverse().join(''));
-              }
-            },
-          });
-
-          return ast;
-        }
       },
     };
   },

@@ -52,18 +52,18 @@ describe('ColocatedBabelPlugin', function () {
           import _applyDecoratedDescriptor from "@babel/runtime/helpers/esm/applyDecoratedDescriptor";
           import _initializerWarningHelper from "@babel/runtime/helpers/esm/initializerWarningHelper";
 
-          var _class, _descriptor, _temp;
+          var _class, _descriptor;
 
           import Component from '@glimmer/component';
           const __COLOCATED_TEMPLATE__ = 'ok';
-          let MyComponent = (_class = (_temp = class MyComponent extends Component {
+          let MyComponent = (_class = class MyComponent extends Component {
             constructor(...args) {
               super(...args);
 
               _initializerDefineProperty(this, "data", _descriptor, this);
             }
 
-          }, _temp), (_descriptor = _applyDecoratedDescriptor(_class.prototype, "data", [tracked], {
+          }, (_descriptor = _applyDecoratedDescriptor(_class.prototype, "data", [tracked], {
             configurable: true,
             enumerable: true,
             writable: true,
@@ -224,19 +224,19 @@ describe('ColocatedBabelPlugin', function () {
           import _applyDecoratedDescriptor from "@babel/runtime/helpers/esm/applyDecoratedDescriptor";
           import _initializerWarningHelper from "@babel/runtime/helpers/esm/initializerWarningHelper";
 
-          var _class, _descriptor, _temp;
+          var _class, _descriptor;
 
           import { setComponentTemplate as _setComponentTemplate } from "@ember/component";
           import Component from '@glimmer/component';
           const __COLOCATED_TEMPLATE__ = 'ok';
-          let MyComponent = (_class = (_temp = class MyComponent extends Component {
+          let MyComponent = (_class = class MyComponent extends Component {
             constructor(...args) {
               super(...args);
 
               _initializerDefineProperty(this, "data", _descriptor, this);
             }
 
-          }, _temp), (_descriptor = _applyDecoratedDescriptor(_class.prototype, "data", [tracked], {
+          }, (_descriptor = _applyDecoratedDescriptor(_class.prototype, "data", [tracked], {
             configurable: true,
             enumerable: true,
             writable: true,
