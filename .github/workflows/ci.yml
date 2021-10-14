@@ -33,7 +33,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu, windows]
-        node-version: [10.x, 12.x, 13.x, 14.x]
+        node-version: [12.x, 14.x]
 
     steps:
     - uses: actions/checkout@v1
@@ -75,21 +75,23 @@ jobs:
     strategy:
       matrix:
         ember-try-scenario:
+         - with-ember-cli-htmlbars-inline-precompile
          - ember-lts-3.8
-         - ember-lts-3.12
-         - ember-lts-3.16
+         - ember-lts-3.20
+         - ember-lts-3.24
          - ember-release
-         - ember-octane
          - ember-beta
          - ember-canary
+         - ember-classic
          - ember-default-with-jquery
-         - with-ember-cli-htmlbars-inline-precompile
+         - embroider-safe
+         - embroider-optimized
 
     steps:
     - uses: actions/checkout@v1
     - uses: actions/setup-node@v1
       with:
-        node-version: 10.x
+        node-version: 12.x
     - name: install dependencies
       run: yarn install
     - name: test
