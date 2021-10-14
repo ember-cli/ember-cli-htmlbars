@@ -86,6 +86,8 @@ module.exports = {
       name: 'some-transform',
       plugin: SomeTransform
     });
+    
+    this._super.included.apply(this, arguments);
   }
 };
 ```
