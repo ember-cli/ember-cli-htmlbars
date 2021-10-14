@@ -76,13 +76,15 @@ jobs:
       matrix:
         ember-try-scenario:
          - ember-lts-3.8
-         - ember-lts-3.12
-         - ember-lts-3.16
+         - ember-lts-3.20
+         - ember-lts-3.24
          - ember-release
-         - ember-octane
          - ember-beta
          - ember-canary
+         - ember-classic
          - ember-default-with-jquery
+         - embroider-safe
+         - embroider-optimized
          - with-ember-cli-htmlbars-inline-precompile
 
     steps:
