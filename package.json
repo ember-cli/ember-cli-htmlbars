@@ -42,7 +42,7 @@
     "fs-tree-diff": "^2.0.1",
     "hash-for-dep": "^1.5.1",
     "heimdalljs-logger": "^0.1.10",
-    "json-stable-stringify": "^1.0.1",
+    "safe-stable-stringify": "^2.2.0",
     "semver": "^7.3.4",
     "silent-error": "^1.1.1",
     "strip-bom": "^4.0.0",
