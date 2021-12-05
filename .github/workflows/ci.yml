@@ -78,10 +78,8 @@ jobs:
          - ember-lts-3.8
          - ember-lts-3.12
          - ember-lts-3.16
-         - ember-release
+         - ember-lts-3.28
          - ember-octane
-         - ember-beta
-         - ember-canary
          - ember-default-with-jquery
          - with-ember-cli-htmlbars-inline-precompile
 

@@ -36,10 +36,23 @@ module.exports = function () {
           },
         },
         {
+          name: 'ember-lts-3.28',
+          npm: {
+            devDependencies: {
+              'ember-source': '~3.28.0',
+            },
+          },
+        },
+        {
           name: 'ember-release',
           npm: {
             devDependencies: {
+              'ember-auto-import': '^2.2.3',
               'ember-source': urls[0],
+              webpack: '^5.52.1',
+            },
+            ember: {
+              edition: 'octane',
             },
           },
         },
@@ -47,7 +60,12 @@ module.exports = function () {
           name: 'ember-beta',
           npm: {
             devDependencies: {
+              'ember-auto-import': '^2.2.3',
               'ember-source': urls[1],
+              webpack: '^5.52.1',
+            },
+            ember: {
+              edition: 'octane',
             },
           },
         },
@@ -55,7 +73,12 @@ module.exports = function () {
           name: 'ember-canary',
           npm: {
             devDependencies: {
+              'ember-auto-import': '^2.2.3',
               'ember-source': urls[2],
+              webpack: '^5.52.1',
+            },
+            ember: {
+              edition: 'octane',
             },
           },
         },
