@@ -95,7 +95,7 @@ module.exports = {
 ### Options for registering a plugin
 
 * `name` - String. The name of the AST transform for debugging purposes.
-* `plugin` - A function of type [`ASTPluginBuilder`](https://github.com/glimmerjs/glimmer-vm/blob/master/packages/%40glimmer/syntax/lib/parser/tokenizer-event-handlers.ts#L329-L341).
+* `plugin` - A function of type [`ASTPluginBuilder`](https://github.com/glimmerjs/glimmer-vm/blob/v0.83.1/packages/@glimmer/syntax/lib/parser/tokenizer-event-handlers.ts#L314-L320).
 * `dependencyInvalidation` - Boolean. A flag that indicates the AST Plugin may, on a per-template basis, depend on other files that affect its output.
 * `cacheKey` - function that returns any JSON-compatible value - The value returned is used to invalidate the persistent cache across restarts, usually in the case of a dependency or configuration change.
 * `baseDir` - `() => string`. A function that returns the directory on disk of the npm module for the plugin. If provided, a basic cache invalidation is performed if any of the dependencies change (e.g. due to a npm install/upgrade).
