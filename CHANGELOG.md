@@ -1,6 +1,15 @@
 # Changelog
 
 
+## v6.0.1 (2021-12-05)
+
+#### :bug: Bug Fix
+* [#739](https://github.com/ember-cli/ember-cli-htmlbars/pull/739) Allow console messages (v6.x, master) ([@mixonic](https://github.com/mixonic))
+
+#### Committers: 1
+- Matthew Beale ([@mixonic](https://github.com/mixonic))
+
+
 ## v6.0.0 (2021-10-14)
 
 #### :boom: Breaking Change
