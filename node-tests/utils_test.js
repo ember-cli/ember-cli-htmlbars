@@ -166,6 +166,36 @@ describe('utils', function () {
     });
   });
 
+  describe('isInlinePrecompileBabelPluginRegistered', function () {
+    it('is false when no plugins exist', function () {
+      let plugins = [];
+
+      assert.strictEqual(utils.isInlinePrecompileBabelPluginRegistered(plugins), false);
+    });
+
+    it('detects when the htmlbars-inline-precompile plugin exists', function () {
+      let plugins = [
+        utils.setup({}, { requiresModuleApiPolyfill: true, templateCompilerPath: '.' }),
+      ];
+
+      assert.strictEqual(utils.isInlinePrecompileBabelPluginRegistered(plugins), true);
+    });
+
+    it('detects when the ember-template-compilation plugin exists', function () {
+      let plugins = [
+        utils.setup({}, { requiresModuleApiPolyfill: false, templateCompilerPath: '.' }),
+      ];
+
+      assert.strictEqual(utils.isInlinePrecompileBabelPluginRegistered(plugins), true);
+    });
+
+    it('detects when the parallelized plugin exists', function () {
+      let plugins = [utils.buildParalleizedBabelPlugin({}, {}, '', false, true)];
+
+      assert.strictEqual(utils.isInlinePrecompileBabelPluginRegistered(plugins), true);
+    });
+  });
+
   describe('isColocatedBabelPluginRegistered', function () {
     it('is false when no plugins exist', function () {
       let plugins = [];
