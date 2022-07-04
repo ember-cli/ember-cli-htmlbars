@@ -1,6 +1,25 @@
 # Changelog
 
 
+
+## v6.1.0 (2022-07-04)
+
+#### :rocket: Enhancement
+* [#749](https://github.com/ember-cli/ember-cli-htmlbars/pull/749) Drive all template compilation from babel ([@ef4](https://github.com/ef4))
+
+#### :bug: Bug Fix
+* [#747](https://github.com/ember-cli/ember-cli-htmlbars/pull/747) Avoid registering `babel-plugin-ember-template-compilation` repeatedly ([@dfreeman](https://github.com/dfreeman))
+* [#741](https://github.com/ember-cli/ember-cli-htmlbars/pull/741) Fix incorrect ember-source version check ([@simonihmig](https://github.com/simonihmig))
+
+#### :memo: Documentation
+* [#743](https://github.com/ember-cli/ember-cli-htmlbars/pull/743) Fix lin to ASTPluginBuilder type ([@mehulkar](https://github.com/mehulkar))
+
+#### Committers: 3
+- Edward Faulkner ([@ef4](https://github.com/ef4))
+- Dan Freeman ([@dfreeman](https://github.com/dfreeman))
+- Mehul Kar ([@mehulkar](https://github.com/mehulkar))
+- Simon Ihmig ([@simonihmig](https://github.com/simonihmig))
+
 ## v6.0.1 (2021-12-05)
 
 #### :bug: Bug Fix
