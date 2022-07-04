@@ -87,8 +87,11 @@ describe('ember-cli-htmlbars addon', function () {
         yield output.build();
 
         expect(output.read()).to.deep.equal({
-          'hello.js':
-            'export default Ember.HTMLBars.template({"id":"pb4oG9l/","block":"[[[10,0],[12],[1,\\"Hello, World!\\"],[13]],[],false,[]]","moduleName":"hello.hbs","isStrictMode":false});',
+          'hello.js': [
+            `import { hbs } from 'ember-cli-htmlbars';`,
+            `export default hbs('<div>Hello, World!</div>', { moduleName: 'hello.hbs' });`,
+            '',
+          ].join('\n'),
         });
       })
     );
