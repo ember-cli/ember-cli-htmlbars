@@ -2,6 +2,15 @@
 
 
 
+
+## v6.1.1 (2022-09-08)
+
+#### :bug: Bug Fix
+* [#755](https://github.com/ember-cli/ember-cli-htmlbars/pull/755) Fix template compilation in addons on ember-cli < 3.13. This was a regression in 6.1.0. ([@mansona](https://github.com/mansona))
+
+#### Committers: 1
+- Chris Manson ([@mansona](https://github.com/mansona))
+
 ## v6.1.0 (2022-07-04)
 
 #### :rocket: Enhancement
