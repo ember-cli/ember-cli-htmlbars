@@ -79,6 +79,7 @@
     "ember-resolver": "^8.0.2",
     "ember-source": "~3.28.0",
     "ember-source-channel-url": "^3.0.0",
+    "ember-styleguide": "^5.0.0",
     "ember-template-lint": "^3.6.0",
     "ember-try": "^1.4.0",
     "eslint": "^7.32.0",
@@ -108,6 +109,9 @@
   "ember-addon": {
     "main": "lib/ember-addon-main.js",
     "configPath": "tests/dummy/config"
+  },
+  "resolutions": {
+    "ember-cli-htmlbars": "link:."
   },
   "release-it": {
     "plugins": {

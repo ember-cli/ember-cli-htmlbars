@@ -31,6 +31,7 @@ jobs:
     runs-on: ${{ matrix.os }}-latest
 
     strategy:
+      fail-fast: false
       matrix:
         os: [ubuntu, windows]
         node-version: [12.x, 14.x]
@@ -73,9 +74,12 @@ jobs:
     needs: [test, lint]
 
     strategy:
+      fail-fast: false
       matrix:
         ember-try-scenario:
          - ember-lts-3.8
+         - ember-lts-3.12
+         - ember-lts-3.16
          - ember-lts-3.20
          - ember-lts-3.24
          - ember-lts-3.28
