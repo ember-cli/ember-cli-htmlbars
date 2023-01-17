@@ -153,7 +153,10 @@ describe('utils', function () {
 
     it('detects when the ember-template-compilation plugin exists', function () {
       let plugins = [
-        utils.setup({}, { requiresModuleApiPolyfill: false, templateCompilerPath: '.' }),
+        utils.setup(
+          { plugins: [] },
+          { requiresModuleApiPolyfill: false, templateCompilerPath: '.' }
+        ),
       ];
 
       assert.strictEqual(utils.isInlinePrecompileBabelPluginRegistered(plugins), true);
