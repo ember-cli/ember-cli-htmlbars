@@ -3,6 +3,16 @@
 
 
 
+
+## v6.2.0 (2023-01-17)
+
+#### :rocket: Enhancement
+* [#762](https://github.com/ember-cli/ember-cli-htmlbars/pull/762) Upgrade to `babel-plugin-ember-template-compilation` v2 ([@dfreeman](https://github.com/dfreeman))
+
+#### Committers: 1
+- Dan Freeman ([@dfreeman](https://github.com/dfreeman))
+
+
 ## v6.1.1 (2022-09-08)
 
 #### :bug: Bug Fix
