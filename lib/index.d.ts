@@ -1,16 +1,24 @@
-// Using the same "brand" as the types for `htmlbars-inline-precompile` for
-// backwards compatibility. The actual value of the brand doesn't matter; it is
-// only important that it (a) is distinct and (b) interoperates with existing
-// uses of the `hbs` export from `htmlbars-inline-precompile` [1].
-//
-// [1]: https://github.com/DefinitelyTyped/DefinitelyTyped/blob/24a21e0b8ec7eccdec781d7513bfa5947f1c6e20/types/ember/index.d.ts#L540:L542
-//
-// Note that we *intentionally* do not export this; the details are irrelevant
-// to consumers. The point is simply to have a *distinct* type that is therefore
-// not substitutable for just any other type.
-interface TemplateFactory {
-  __htmlbars_inline_precompile_template_factory: any;
+// Shut off automatically-export-everything-mode. We only want to export the
+// things we explicitly *say* to export.
+export {};
+
+// Allows us to create a branded/opaque type which can *only* be constructed
+// without an unsafe cast by calling `hbs()`.
+declare const Data: unique symbol;
+
+/**
+  The result of calling `hbs()`: an internal type for Ember to use with other
+  framework-level APIs (public and private) like `setComponentTemplate()`.
+
+  This type is *not* user-constructible; it is only legal to get it from `hbs`.
+ */
+declare class TemplateFactory {
+  private [Data]: 'template-factory';
 }
+
+// Only export the type side of the class, so that callers are not misled into
+// thinking that they can instantiate, subclass, etc.
+export type { TemplateFactory };
 
 export interface PrecompileOptions {
   moduleName?: string;
