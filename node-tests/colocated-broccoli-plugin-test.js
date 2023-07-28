@@ -186,6 +186,62 @@ describe('ColocatedTemplateCompiler', function () {
     );
   });
 
+  it('works for re-exported component with a template', async function () {
+    input.write({
+      'app-name-here': {
+        'router.js': '// stuff here',
+        components: {
+          'foo.hbs': `{{yield}}`,
+          'foo.js': `export { default } from 'some-place';`,
+        },
+        templates: {
+          'application.hbs': `{{outlet}}`,
+        },
+      },
+    });
+
+    let tree = new ColocatedTemplateCompiler(input.path());
+
+    output = createBuilder(tree);
+    await output.build();
+
+    assert.deepStrictEqual(output.read(), {
+      'app-name-here': {
+        'router.js': '// stuff here',
+        components: {
+          'foo.js': stripIndent`
+            import { hbs } from 'ember-cli-htmlbars';
+            const __COLOCATED_TEMPLATE__ = hbs("{{yield}}", {"contents":"{{yield}}","moduleName":"app-name-here/components/foo.hbs","parseOptions":{"srcName":"app-name-here/components/foo.hbs"}});
+            import __Component from 'some-place';
+
+            export default class extends __Component {}
+          `,
+        },
+        templates: {
+          'application.hbs': '{{outlet}}',
+        },
+      },
+    });
+
+    await output.build();
+
+    assert.deepStrictEqual(output.changes(), {}, 'NOOP update has no changes');
+
+    input.write({
+      'app-name-here': {
+        'router.js': '// other stuff here',
+      },
+    });
+
+    await output.build();
+
+    assert.deepStrictEqual(
+      output.changes(),
+      { 'app-name-here/router.js': 'change' },
+      'has only related changes'
+    );
+  });
+
   it('works for typescript component class with template', async function () {
     input.write({
       'app-name-here': {
