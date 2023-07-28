@@ -186,6 +186,58 @@ describe('ColocatedTemplateCompiler', function () {
     );
   });
 
+  it('emits an error for re-exported components with a different template', async function () {
+    input.write({
+      'app-name-here': {
+        'router.js': '// stuff here',
+        components: {
+          'foo.hbs': `{{yield}}`,
+          'foo.js': `export { default } from 'some-place';`,
+        },
+        templates: {
+          'application.hbs': `{{outlet}}`,
+        },
+      },
+    });
+
+    let tree = new ColocatedTemplateCompiler(input.path());
+
+    output = createBuilder(tree);
+    await output.build();
+
+    assert.deepStrictEqual(output.read(), {
+      'app-name-here': {
+        'router.js': '// stuff here',
+        components: {
+          'foo.js': stripIndent`
+            export { default } from 'some-place';\nthrow new Error(\"\`app-name-here/components/foo.js\` contains an \`export { default }\` re-export, but it has a co-located template. You must explicitly extend the component to assign it a different template.\");
+          `,
+        },
+        templates: {
+          'application.hbs': '{{outlet}}',
+        },
+      },
+    });
+
+    await output.build();
+
+    assert.deepStrictEqual(output.changes(), {}, 'NOOP update has no changes');
+
+    input.write({
+      'app-name-here': {
+        'router.js': '// other stuff here',
+      },
+    });
+
+    await output.build();
+
+    assert.deepStrictEqual(
+      output.changes(),
+      { 'app-name-here/router.js': 'change' },
+      'has only related changes'
+    );
+  });
+
   it('works for typescript component class with template', async function () {
     input.write({
       'app-name-here': {
@@ -500,7 +552,7 @@ describe('ColocatedTemplateCompiler', function () {
       'app-name-here': {
         components: {
           'foo.js': stripIndent`
-            export function whatever() {}\nthrow new Error("\`app-name-here/components/foo.hbs\` does not contain a \`default export\`. Did you forget to export the component class?");
+            export function whatever() {}\nthrow new Error("\`app-name-here/components/foo.js\` does not contain a \`default export\`. Did you forget to export the component class?");
           `,
         },
       },
