@@ -4,6 +4,20 @@
 
 
 
+
+## v6.3.0 (2023-08-08)
+
+#### :rocket: Enhancement
+* [#773](https://github.com/ember-cli/ember-cli-htmlbars/pull/773) Adjust error message for re-exported class when it has a co-located template ([@robinborst95](https://github.com/robinborst95))
+
+#### :bug: Bug Fix
+* [#764](https://github.com/ember-cli/ember-cli-htmlbars/pull/764) Export non-user-constructible `TemplateFactory` type ([@chriskrycho](https://github.com/chriskrycho))
+
+#### Committers: 2
+- Chris Krycho ([@chriskrycho](https://github.com/chriskrycho))
+- Robin Borst  ([@robinborst95](https://github.com/robinborst95))
+
+
 ## v6.2.0 (2023-01-17)
 
 #### :rocket: Enhancement
