@@ -407,7 +407,7 @@ describe('Colocation - Broccoli + Babel Integration (modules API: true)', functi
       'app-name-here': {
         components: {
           'foo.js': stripIndent`
-            export function whatever() {}\nthrow new Error("\`app-name-here/components/foo.hbs\` does not contain a \`default export\`. Did you forget to export the component class?");
+            export function whatever() {}\nthrow new Error("\`app-name-here/components/foo.js\` does not contain a \`default export\`. Did you forget to export the component class?");
           `,
         },
       },
@@ -797,7 +797,7 @@ describe('Colocation - Broccoli + Babel Integration (modules API: false)', funct
       'app-name-here': {
         components: {
           'foo.js': stripIndent`
-            export function whatever() {}\nthrow new Error("\`app-name-here/components/foo.hbs\` does not contain a \`default export\`. Did you forget to export the component class?");
+            export function whatever() {}\nthrow new Error("\`app-name-here/components/foo.js\` does not contain a \`default export\`. Did you forget to export the component class?");
           `,
         },
       },
