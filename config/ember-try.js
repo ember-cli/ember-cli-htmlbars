@@ -12,7 +12,11 @@ module.exports = async function () {
         npm: {
           devDependencies: {
             'ember-source': '~3.8.0',
+            'ember-styleguide': '^5.0.0',
             'ember-cli': '~3.8.0',
+          },
+          ember: {
+            edition: 'classic',
           },
         },
       },
@@ -21,7 +25,11 @@ module.exports = async function () {
         npm: {
           devDependencies: {
             'ember-source': '~3.12.0',
+            'ember-styleguide': '^5.0.0',
             'ember-cli': '~3.12.0',
+          },
+          ember: {
+            edition: 'classic',
           },
         },
       },
