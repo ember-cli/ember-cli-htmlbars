@@ -43,6 +43,7 @@
     "hash-for-dep": "^1.5.1",
     "heimdalljs-logger": "^0.1.10",
     "js-string-escape": "^1.0.1",
+    "magic-string": "^0.30.5",
     "semver": "^7.3.4",
     "silent-error": "^1.1.1",
     "walk-sync": "^2.2.0"

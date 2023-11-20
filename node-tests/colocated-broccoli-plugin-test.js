@@ -5,6 +5,31 @@ const ColocatedTemplateCompiler = require('../lib/colocated-broccoli-plugin');
 const { createTempDir, createBuilder } = require('broccoli-test-helper');
 const { stripIndent } = require('common-tags');
 
+function stripSourceMaps(input) {
+  let output = {};
+  for (let key in input) {
+    if (key === 'components') {
+      output[key] = {};
+      for (let component in input[key]) {
+        if (typeof input[key][component] === 'string') {
+          output[key][component] = input[key][component].replace(
+            /(\/\/# sourceMappingURL=data:application\/json;charset=utf-8;base64,).+(\n|$)/,
+            '$1{{SOURCEMAP}}'
+          );
+        } else {
+          output[key][component] = input[key][component];
+        }
+      }
+    } else if (typeof input[key] === 'object') {
+      output[key] = stripSourceMaps(input[key]);
+    } else {
+      output[key] = input[key];
+    }
+  }
+
+  return output;
+}
+
 describe('ColocatedTemplateCompiler', function () {
   this.timeout(10000);
 
@@ -40,17 +65,18 @@ describe('ColocatedTemplateCompiler', function () {
     output = createBuilder(tree);
     await output.build();
 
-    assert.deepStrictEqual(output.read(), {
+    assert.deepStrictEqual(stripSourceMaps(output.read()), {
       'app-name-here': {
         'router.js': '// stuff here',
         components: {
-          'foo.js':
-            stripIndent`
+          'foo.js': stripIndent`
             import { hbs } from 'ember-cli-htmlbars';
             const __COLOCATED_TEMPLATE__ = hbs("{{yield}}", {"contents":"{{yield}}","moduleName":"app-name-here/components/foo.hbs","parseOptions":{"srcName":"app-name-here/components/foo.hbs"}});
             import templateOnly from '@ember/component/template-only';
 
-            export default templateOnly();` + '\n',
+            export default templateOnly();
+
+            //# sourceMappingURL=data:application/json;charset=utf-8;base64,{{SOURCEMAP}}`,
         },
         templates: {
           'application.hbs': '{{outlet}}',
@@ -100,7 +126,7 @@ describe('ColocatedTemplateCompiler', function () {
     output = createBuilder(tree);
     await output.build();
 
-    assert.deepStrictEqual(output.read(), {
+    assert.deepStrictEqual(stripSourceMaps(output.read()), {
       'app-name-here': {
         'router.js': '// stuff here',
         components: {
@@ -110,6 +136,7 @@ describe('ColocatedTemplateCompiler', function () {
             import Component from '@glimmer/component';
 
             export default class FooComponent extends Component {}
+            //# sourceMappingURL=data:application/json;charset=utf-8;base64,{{SOURCEMAP}}
           `,
         },
         templates: {
@@ -155,7 +182,7 @@ describe('ColocatedTemplateCompiler', function () {
     output = createBuilder(tree);
     await output.build();
 
-    assert.deepStrictEqual(output.read(), {
+    assert.deepStrictEqual(stripSourceMaps(output.read()), {
       'app-name-here': {
         'router.js': '// stuff here',
         components: {
@@ -260,7 +287,7 @@ describe('ColocatedTemplateCompiler', function () {
     output = createBuilder(tree);
     await output.build();
 
-    assert.deepStrictEqual(output.read(), {
+    assert.deepStrictEqual(stripSourceMaps(output.read()), {
       'app-name-here': {
         components: {
           'foo.ts': stripIndent`
@@ -269,6 +296,7 @@ describe('ColocatedTemplateCompiler', function () {
             import Component from '@glimmer/component';
 
             export default class FooComponent extends Component {}
+            //# sourceMappingURL=data:application/json;charset=utf-8;base64,{{SOURCEMAP}}
           `,
         },
         templates: {
@@ -303,7 +331,7 @@ describe('ColocatedTemplateCompiler', function () {
     output = createBuilder(tree);
     await output.build();
 
-    assert.deepStrictEqual(output.read(), {
+    assert.deepStrictEqual(stripSourceMaps(output.read()), {
       'app-name-here': {
         components: {
           'foo.coffee': stripIndent`
@@ -343,17 +371,18 @@ describe('ColocatedTemplateCompiler', function () {
     output = createBuilder(tree);
     await output.build();
 
-    assert.deepStrictEqual(output.read(), {
+    assert.deepStrictEqual(stripSourceMaps(output.read()), {
       '@scope-name': {
         'addon-name-here': {
           components: {
-            'foo.js':
-              stripIndent`
+            'foo.js': stripIndent`
             import { hbs } from 'ember-cli-htmlbars';
             const __COLOCATED_TEMPLATE__ = hbs("{{yield}}", {"contents":"{{yield}}","moduleName":"@scope-name/addon-name-here/components/foo.hbs","parseOptions":{"srcName":"@scope-name/addon-name-here/components/foo.hbs"}});
             import templateOnly from '@ember/component/template-only';
 
-            export default templateOnly();` + '\n',
+            export default templateOnly();
+
+            //# sourceMappingURL=data:application/json;charset=utf-8;base64,{{SOURCEMAP}}`,
           },
           templates: {
             'application.hbs': '{{outlet}}',
@@ -391,7 +420,7 @@ describe('ColocatedTemplateCompiler', function () {
     output = createBuilder(tree);
     await output.build();
 
-    assert.deepStrictEqual(output.read(), {
+    assert.deepStrictEqual(stripSourceMaps(output.read()), {
       '@scope-name': {
         'addon-name-here': {
           components: {
@@ -401,6 +430,7 @@ describe('ColocatedTemplateCompiler', function () {
             import Component from '@glimmer/component';
 
             export default class FooComponent extends Component {}
+            //# sourceMappingURL=data:application/json;charset=utf-8;base64,{{SOURCEMAP}}
           `,
           },
           templates: {
@@ -439,7 +469,7 @@ describe('ColocatedTemplateCompiler', function () {
     output = createBuilder(tree);
     await output.build();
 
-    assert.deepStrictEqual(output.read(), input.read());
+    assert.deepStrictEqual(stripSourceMaps(output.read()), input.read());
 
     await output.build();
 
@@ -462,7 +492,7 @@ describe('ColocatedTemplateCompiler', function () {
     output = createBuilder(tree);
     await output.build();
 
-    assert.deepStrictEqual(output.read(), input.read());
+    assert.deepStrictEqual(stripSourceMaps(output.read()), input.read());
 
     await output.build();
 
@@ -477,7 +507,7 @@ describe('ColocatedTemplateCompiler', function () {
     output = createBuilder(tree);
     await output.build();
 
-    assert.deepStrictEqual(output.read(), {});
+    assert.deepStrictEqual(stripSourceMaps(output.read()), {});
 
     await output.build();
 
@@ -508,7 +538,7 @@ describe('ColocatedTemplateCompiler', function () {
     output = createBuilder(tree);
     await output.build();
 
-    assert.deepStrictEqual(output.read(), {
+    assert.deepStrictEqual(stripSourceMaps(output.read()), {
       'app-name-here': {
         components: {
           'foo.js': stripIndent`
@@ -548,7 +578,7 @@ describe('ColocatedTemplateCompiler', function () {
     output = createBuilder(tree);
     await output.build();
 
-    assert.deepStrictEqual(output.read(), {
+    assert.deepStrictEqual(stripSourceMaps(output.read()), {
       'app-name-here': {
         components: {
           'foo.js': stripIndent`
@@ -585,18 +615,19 @@ describe('ColocatedTemplateCompiler', function () {
       await output.build();
 
       assert.deepStrictEqual(
-        output.read(),
+        stripSourceMaps(output.read()),
         {
           'app-name-here': {
             'router.js': '// stuff here',
             components: {
-              'foo.js':
-                stripIndent`
+              'foo.js': stripIndent`
             import { hbs } from 'ember-cli-htmlbars';
             const __COLOCATED_TEMPLATE__ = hbs("{{yield}}", {"contents":"{{yield}}","moduleName":"app-name-here/components/foo.hbs","parseOptions":{"srcName":"app-name-here/components/foo.hbs"}});
             import templateOnly from '@ember/component/template-only';
 
-            export default templateOnly();` + '\n',
+            export default templateOnly();
+
+            //# sourceMappingURL=data:application/json;charset=utf-8;base64,{{SOURCEMAP}}`,
             },
             templates: {
               'application.hbs': '{{outlet}}',
@@ -631,7 +662,7 @@ describe('ColocatedTemplateCompiler', function () {
       );
 
       assert.deepStrictEqual(
-        output.read(),
+        stripSourceMaps(output.read()),
         {
           'app-name-here': {
             'router.js': '// stuff here',
@@ -642,6 +673,7 @@ describe('ColocatedTemplateCompiler', function () {
               import Component from '@glimmer/component';
 
               export default class FooComponent extends Component {}
+              //# sourceMappingURL=data:application/json;charset=utf-8;base64,{{SOURCEMAP}}
             `,
             },
             templates: {
@@ -676,7 +708,7 @@ describe('ColocatedTemplateCompiler', function () {
       await output.build();
 
       assert.deepStrictEqual(
-        output.read(),
+        stripSourceMaps(output.read()),
         {
           'app-name-here': {
             'router.js': '// stuff here',
@@ -716,7 +748,7 @@ describe('ColocatedTemplateCompiler', function () {
       );
 
       assert.deepStrictEqual(
-        output.read(),
+        stripSourceMaps(output.read()),
         {
           'app-name-here': {
             'router.js': '// stuff here',
@@ -727,6 +759,7 @@ describe('ColocatedTemplateCompiler', function () {
               import Component from '@glimmer/component';
 
               export default class FooComponent extends Component {}
+              //# sourceMappingURL=data:application/json;charset=utf-8;base64,{{SOURCEMAP}}
             `,
             },
             templates: {
@@ -761,7 +794,7 @@ describe('ColocatedTemplateCompiler', function () {
       await output.build();
 
       assert.deepStrictEqual(
-        output.read(),
+        stripSourceMaps(output.read()),
         {
           'app-name-here': {
             'router.js': '// stuff here',
@@ -801,7 +834,7 @@ describe('ColocatedTemplateCompiler', function () {
       );
 
       assert.deepStrictEqual(
-        output.read(),
+        stripSourceMaps(output.read()),
         {
           'app-name-here': {
             'router.js': '// stuff here',
@@ -834,18 +867,19 @@ describe('ColocatedTemplateCompiler', function () {
       await output.build();
 
       assert.deepStrictEqual(
-        output.read(),
+        stripSourceMaps(output.read()),
         {
           'app-name-here': {
             'router.js': '// stuff here',
             components: {
-              'foo.js':
-                stripIndent`
+              'foo.js': stripIndent`
                   import { hbs } from 'ember-cli-htmlbars';
                   const __COLOCATED_TEMPLATE__ = hbs("{{yield}}", {"contents":"{{yield}}","moduleName":"app-name-here/components/foo.hbs","parseOptions":{"srcName":"app-name-here/components/foo.hbs"}});
                   import templateOnly from '@ember/component/template-only';
 
-                  export default templateOnly();` + '\n',
+                  export default templateOnly();
+
+                  //# sourceMappingURL=data:application/json;charset=utf-8;base64,{{SOURCEMAP}}`,
             },
             templates: {
               'application.hbs': '{{outlet}}',
@@ -895,18 +929,20 @@ describe('ColocatedTemplateCompiler', function () {
       await output.build();
 
       assert.deepStrictEqual(
-        output.read(),
+        stripSourceMaps(output.read()),
         {
           'app-name-here': {
             'router.js': '// stuff here',
             components: {
-              'foo.js':
-                stripIndent`
+              'foo.js': stripIndent`
                   import { hbs } from 'ember-cli-htmlbars';
                   const __COLOCATED_TEMPLATE__ = hbs("{{yield}}", {"contents":"{{yield}}","moduleName":"app-name-here/components/foo.hbs","parseOptions":{"srcName":"app-name-here/components/foo.hbs"}});
                   import templateOnly from '@ember/component/template-only';
 
-                  export default templateOnly();` + '\n',
+                  export default templateOnly();
+
+                  //# sourceMappingURL=data:application/json;charset=utf-8;base64,{{SOURCEMAP}}
+                `,
             },
             templates: {
               'application.hbs': '{{outlet}}',
@@ -937,18 +973,19 @@ describe('ColocatedTemplateCompiler', function () {
       );
 
       assert.deepStrictEqual(
-        output.read(),
+        stripSourceMaps(output.read()),
         {
           'app-name-here': {
             'router.js': '// stuff here',
             components: {
-              'foo.js':
-                stripIndent`
+              'foo.js': stripIndent`
                   import { hbs } from 'ember-cli-htmlbars';
                   const __COLOCATED_TEMPLATE__ = hbs("whoops!", {"contents":"whoops!","moduleName":"app-name-here/components/foo.hbs","parseOptions":{"srcName":"app-name-here/components/foo.hbs"}});
                   import templateOnly from '@ember/component/template-only';
 
-                  export default templateOnly();` + '\n',
+                  export default templateOnly();
+
+                  //# sourceMappingURL=data:application/json;charset=utf-8;base64,{{SOURCEMAP}}`,
             },
             templates: {
               'application.hbs': '{{outlet}}',
@@ -983,7 +1020,7 @@ describe('ColocatedTemplateCompiler', function () {
       await output.build();
 
       assert.deepStrictEqual(
-        output.read(),
+        stripSourceMaps(output.read()),
         {
           'app-name-here': {
             'router.js': '// stuff here',
@@ -994,6 +1031,7 @@ describe('ColocatedTemplateCompiler', function () {
                 import Component from '@glimmer/component';
 
                 export default class FooComponent extends Component {}
+                //# sourceMappingURL=data:application/json;charset=utf-8;base64,{{SOURCEMAP}}
               `,
             },
             templates: {
@@ -1025,7 +1063,7 @@ describe('ColocatedTemplateCompiler', function () {
       );
 
       assert.deepStrictEqual(
-        output.read(),
+        stripSourceMaps(output.read()),
         {
           'app-name-here': {
             'router.js': '// stuff here',
@@ -1036,6 +1074,7 @@ describe('ColocatedTemplateCompiler', function () {
               import Component from '@glimmer/component';
 
               export default class FooComponent extends Component {}
+              //# sourceMappingURL=data:application/json;charset=utf-8;base64,{{SOURCEMAP}}
             `,
             },
             templates: {
@@ -1071,7 +1110,7 @@ describe('ColocatedTemplateCompiler', function () {
       await output.build();
 
       assert.deepStrictEqual(
-        output.read(),
+        stripSourceMaps(output.read()),
         {
           'app-name-here': {
             'router.js': '// stuff here',
@@ -1082,6 +1121,7 @@ describe('ColocatedTemplateCompiler', function () {
                 import Component from '@glimmer/component';
 
                 export default class FooComponent extends Component {}
+                //# sourceMappingURL=data:application/json;charset=utf-8;base64,{{SOURCEMAP}}
               `,
             },
             templates: {
@@ -1111,7 +1151,7 @@ describe('ColocatedTemplateCompiler', function () {
       await output.build();
 
       assert.deepStrictEqual(
-        output.read(),
+        stripSourceMaps(output.read()),
         {
           'app-name-here': {
             'router.js': '// stuff here',
@@ -1122,6 +1162,7 @@ describe('ColocatedTemplateCompiler', function () {
               import Component from '@glimmer/component';
 
               export default class FooBarComponent extends Component {}
+              //# sourceMappingURL=data:application/json;charset=utf-8;base64,{{SOURCEMAP}}
             `,
             },
             templates: {
@@ -1163,7 +1204,7 @@ describe('ColocatedTemplateCompiler', function () {
       await output.build();
 
       assert.deepStrictEqual(
-        output.read(),
+        stripSourceMaps(output.read()),
         {
           'app-name-here': {
             'router.js': '// stuff here',
@@ -1174,6 +1215,7 @@ describe('ColocatedTemplateCompiler', function () {
                 import Component from '@glimmer/component';
 
                 export default class FooComponent extends Component {}
+                //# sourceMappingURL=data:application/json;charset=utf-8;base64,{{SOURCEMAP}}
               `,
             },
             templates: {
@@ -1205,18 +1247,19 @@ describe('ColocatedTemplateCompiler', function () {
       );
 
       assert.deepStrictEqual(
-        output.read(),
+        stripSourceMaps(output.read()),
         {
           'app-name-here': {
             'router.js': '// stuff here',
             components: {
-              'foo.js':
-                stripIndent`
+              'foo.js': stripIndent`
                   import { hbs } from 'ember-cli-htmlbars';
                   const __COLOCATED_TEMPLATE__ = hbs("{{yield}}", {"contents":"{{yield}}","moduleName":"app-name-here/components/foo.hbs","parseOptions":{"srcName":"app-name-here/components/foo.hbs"}});
                   import templateOnly from '@ember/component/template-only';
 
-                  export default templateOnly();` + '\n',
+                  export default templateOnly();
+
+                  //# sourceMappingURL=data:application/json;charset=utf-8;base64,{{SOURCEMAP}}`,
             },
             templates: {
               'application.hbs': '{{outlet}}',
