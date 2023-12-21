@@ -1,9 +1,8 @@
 'use strict';
 
-const assert = require('assert');
 const babel = require('@babel/core');
-const { stripIndent } = require('common-tags');
 const ColocatedBabelPlugin = require('../lib/colocated-babel-plugin');
+const { expect } = require('./assertions');
 const DecoratorsPlugin = [
   require.resolve('@babel/plugin-proposal-decorators'),
   { legacy: true },
@@ -35,7 +34,7 @@ describe('ColocatedBabelPlugin', function () {
 
     it('can be used with decorators', function () {
       let { code } = babel.transformSync(
-        stripIndent`
+        `
           import Component from '@glimmer/component';
           const __COLOCATED_TEMPLATE__ = 'ok';
 
@@ -53,9 +52,8 @@ describe('ColocatedBabelPlugin', function () {
         },
       );
 
-      assert.strictEqual(
-        code,
-        stripIndent`
+      expect(code).toEqualCode(
+        `
           import _initializerDefineProperty from "@babel/runtime/helpers/esm/initializerDefineProperty";
           import _applyDecoratedDescriptor from "@babel/runtime/helpers/esm/applyDecoratedDescriptor";
           import _initializerWarningHelper from "@babel/runtime/helpers/esm/initializerWarningHelper";
@@ -89,7 +87,7 @@ describe('ColocatedBabelPlugin', function () {
 
     it('can be used with TypeScript merged declarations', function () {
       let { code } = babel.transformSync(
-        stripIndent`
+        `
           import Component from 'somewhere';
           const __COLOCATED_TEMPLATE__ = 'ok';
           type MyArgs = { required: string; optional?: number };
@@ -100,9 +98,8 @@ describe('ColocatedBabelPlugin', function () {
         { plugins: [ColocatedBabelPluginOptions, TypeScriptPlugin] },
       );
 
-      assert.strictEqual(
-        code,
-        stripIndent`
+      expect(code).toEqualCode(
+        `
           import Component from 'somewhere';
           const __COLOCATED_TEMPLATE__ = 'ok';
           export default class MyComponent extends Component {}
@@ -114,7 +111,7 @@ describe('ColocatedBabelPlugin', function () {
 
     it('sets the template for non-class default exports', function () {
       let { code } = babel.transformSync(
-        stripIndent`
+        `
           import MyComponent from 'other-module';
           const __COLOCATED_TEMPLATE__ = 'ok';
           export default MyComponent;
@@ -122,9 +119,8 @@ describe('ColocatedBabelPlugin', function () {
         { plugins: [ColocatedBabelPluginOptions] },
       );
 
-      assert.strictEqual(
-        code,
-        stripIndent`
+      expect(code).toEqualCode(
+        `
           import MyComponent from 'other-module';
           const __COLOCATED_TEMPLATE__ = 'ok';
           export default Ember._setComponentTemplate(__COLOCATED_TEMPLATE__, MyComponent);
@@ -134,7 +130,7 @@ describe('ColocatedBabelPlugin', function () {
 
     it('sets the template for named class default exports', function () {
       let { code } = babel.transformSync(
-        stripIndent`
+        `
           import Component from 'somewhere';
           const __COLOCATED_TEMPLATE__ = 'ok';
           export default class MyComponent extends Component {}
@@ -142,9 +138,8 @@ describe('ColocatedBabelPlugin', function () {
         { plugins: [ColocatedBabelPluginOptions] },
       );
 
-      assert.strictEqual(
-        code,
-        stripIndent`
+      expect(code).toEqualCode(
+        `
           import Component from 'somewhere';
           const __COLOCATED_TEMPLATE__ = 'ok';
           export default class MyComponent extends Component {}
@@ -156,7 +151,7 @@ describe('ColocatedBabelPlugin', function () {
 
     it('sets the template for anonymous class default exports', function () {
       let { code } = babel.transformSync(
-        stripIndent`
+        `
           import Component from 'somewhere';
           const __COLOCATED_TEMPLATE__ = 'ok';
           export default class extends Component {}
@@ -164,9 +159,8 @@ describe('ColocatedBabelPlugin', function () {
         { plugins: [ColocatedBabelPluginOptions] },
       );
 
-      assert.strictEqual(
-        code,
-        stripIndent`
+      expect(code).toEqualCode(
+        `
           import Component from 'somewhere';
           const __COLOCATED_TEMPLATE__ = 'ok';
           export default Ember._setComponentTemplate(__COLOCATED_TEMPLATE__, class extends Component {});
@@ -176,7 +170,7 @@ describe('ColocatedBabelPlugin', function () {
 
     it('sets the template for identifier `as default` exports', function () {
       let { code } = babel.transformSync(
-        stripIndent`
+        `
           import Component from 'somewhere';
           const __COLOCATED_TEMPLATE__ = 'ok';
           const MyComponent = class extends Component {};
@@ -185,9 +179,8 @@ describe('ColocatedBabelPlugin', function () {
         { plugins: [ColocatedBabelPluginOptions] },
       );
 
-      assert.strictEqual(
-        code,
-        stripIndent`
+      expect(code).toEqualCode(
+        `
           import Component from 'somewhere';
           const __COLOCATED_TEMPLATE__ = 'ok';
           const MyComponent = class extends Component {};
@@ -207,7 +200,7 @@ describe('ColocatedBabelPlugin', function () {
 
     it('can be used with decorators', function () {
       let { code } = babel.transformSync(
-        stripIndent`
+        `
           import Component from '@glimmer/component';
           const __COLOCATED_TEMPLATE__ = 'ok';
 
@@ -225,9 +218,8 @@ describe('ColocatedBabelPlugin', function () {
         },
       );
 
-      assert.strictEqual(
-        code,
-        stripIndent`
+      expect(code).toEqualCode(
+        `
           import _initializerDefineProperty from "@babel/runtime/helpers/esm/initializerDefineProperty";
           import _applyDecoratedDescriptor from "@babel/runtime/helpers/esm/applyDecoratedDescriptor";
           import _initializerWarningHelper from "@babel/runtime/helpers/esm/initializerWarningHelper";
@@ -262,7 +254,7 @@ describe('ColocatedBabelPlugin', function () {
 
     it('can be used with TypeScript merged declarations', function () {
       let { code } = babel.transformSync(
-        stripIndent`
+        `
           import Component from 'somewhere';
           const __COLOCATED_TEMPLATE__ = 'ok';
           type MyArgs = { required: string; optional?: number };
@@ -273,9 +265,8 @@ describe('ColocatedBabelPlugin', function () {
         { plugins: [ColocatedBabelPluginOptions, TypeScriptPlugin] },
       );
 
-      assert.strictEqual(
-        code,
-        stripIndent`
+      expect(code).toEqualCode(
+        `
           import { setComponentTemplate as _setComponentTemplate } from "@ember/component";
           import Component from 'somewhere';
           const __COLOCATED_TEMPLATE__ = 'ok';
@@ -288,7 +279,7 @@ describe('ColocatedBabelPlugin', function () {
 
     it('sets the template for non-class default exports', function () {
       let { code } = babel.transformSync(
-        stripIndent`
+        `
           import MyComponent from 'other-module';
           const __COLOCATED_TEMPLATE__ = 'ok';
           export default MyComponent;
@@ -296,9 +287,8 @@ describe('ColocatedBabelPlugin', function () {
         { plugins: [ColocatedBabelPluginOptions] },
       );
 
-      assert.strictEqual(
-        code,
-        stripIndent`
+      expect(code).toEqualCode(
+        `
           import { setComponentTemplate as _setComponentTemplate } from "@ember/component";
           import MyComponent from 'other-module';
           const __COLOCATED_TEMPLATE__ = 'ok';
@@ -309,7 +299,7 @@ describe('ColocatedBabelPlugin', function () {
 
     it('sets the template for named class default exports', function () {
       let { code } = babel.transformSync(
-        stripIndent`
+        `
           import Component from 'somewhere';
           const __COLOCATED_TEMPLATE__ = 'ok';
           export default class MyComponent extends Component {}
@@ -317,9 +307,8 @@ describe('ColocatedBabelPlugin', function () {
         { plugins: [ColocatedBabelPluginOptions] },
       );
 
-      assert.strictEqual(
-        code,
-        stripIndent`
+      expect(code).toEqualCode(
+        `
           import { setComponentTemplate as _setComponentTemplate } from "@ember/component";
           import Component from 'somewhere';
           const __COLOCATED_TEMPLATE__ = 'ok';
@@ -332,7 +321,7 @@ describe('ColocatedBabelPlugin', function () {
 
     it('sets the template for anonymous class default exports', function () {
       let { code } = babel.transformSync(
-        stripIndent`
+        `
           import Component from 'somewhere';
           const __COLOCATED_TEMPLATE__ = 'ok';
           export default class extends Component {}
@@ -340,9 +329,8 @@ describe('ColocatedBabelPlugin', function () {
         { plugins: [ColocatedBabelPluginOptions] },
       );
 
-      assert.strictEqual(
-        code,
-        stripIndent`
+      expect(code).toEqualCode(
+        `
           import { setComponentTemplate as _setComponentTemplate } from "@ember/component";
           import Component from 'somewhere';
           const __COLOCATED_TEMPLATE__ = 'ok';
@@ -353,7 +341,7 @@ describe('ColocatedBabelPlugin', function () {
 
     it('sets the template for identifier `as default` exports', function () {
       let { code } = babel.transformSync(
-        stripIndent`
+        `
           import Component from 'somewhere';
           const __COLOCATED_TEMPLATE__ = 'ok';
           const MyComponent = class extends Component {};
@@ -362,9 +350,8 @@ describe('ColocatedBabelPlugin', function () {
         { plugins: [ColocatedBabelPluginOptions] },
       );
 
-      assert.strictEqual(
-        code,
-        stripIndent`
+      expect(code).toEqualCode(
+        `
           import { setComponentTemplate as _setComponentTemplate } from "@ember/component";
           import Component from 'somewhere';
           const __COLOCATED_TEMPLATE__ = 'ok';

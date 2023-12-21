@@ -2,6 +2,7 @@
 
 const utils = require('../lib/utils');
 const assert = require('assert');
+const { expect } = require('./assertions');
 
 describe('utils', function () {
   describe('setupPlugins', function () {
@@ -10,7 +11,7 @@ describe('utils', function () {
 
       let actual = utils.setupPlugins(pluginWrappers);
 
-      assert.deepStrictEqual(actual, {
+      expect(actual).toDeepEqualCode({
         plugins: [],
         pluginNames: [],
         cacheKeys: [],
@@ -43,7 +44,7 @@ describe('utils', function () {
 
       let actual = utils.setupPlugins(pluginWrappers);
 
-      assert.deepStrictEqual(actual, {
+      expect(actual).toDeepEqualCode({
         plugins: pluginWrappers.map((w) => w.plugin),
         pluginNames: ['first', 'second'],
         cacheKeys: ['something', 'something else'],
@@ -75,7 +76,7 @@ describe('utils', function () {
 
       let actual = utils.setupPlugins(pluginWrappers);
 
-      assert.deepStrictEqual(actual, {
+      expect(actual).toDeepEqualCode({
         plugins: pluginWrappers.map((w) => w.plugin),
         pluginNames: ['first', 'second'],
         cacheKeys: ['something', 'something else'],

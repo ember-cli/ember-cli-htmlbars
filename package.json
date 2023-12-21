@@ -23,6 +23,7 @@
   ],
   "scripts": {
     "build": "ember build",
+    "lint": "concurrently \"npm:lint:*(!fix)\" --names \"lint:\"",
     "lint:css": "stylelint \"**/*.css\"",
     "lint:css:fix": "concurrently \"npm:lint:css -- --fix\"",
     "lint:hbs": "ember-template-lint .",
@@ -30,8 +31,7 @@
     "start": "ember serve",
     "test": "concurrently \"npm:lint\" \"npm:test:*\" --names \"lint,test:\"",
     "test:ember": "ember test",
-    "test:node": "mocha node-tests/*.js",
-    "test:node:debug": "mocha debug node-tests/*.js"
+    "test:node": "mocha node-tests/*.js"
   },
   "dependencies": {
     "@babel/core": "^7.23.6",
@@ -65,7 +65,7 @@
     "broccoli-test-helper": "^2.0.0",
     "chai": "^4.3.4",
     "co": "^4.6.0",
-    "common-tags": "^1.8.0",
+    "code-equality-assertions": "^0.9.0",
     "concurrently": "^8.2.2",
     "console-ui": "^3.1.2",
     "core-object": "^3.1.5",

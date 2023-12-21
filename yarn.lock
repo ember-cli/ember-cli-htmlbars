@@ -28,7 +28,7 @@
   resolved "https://registry.yarnpkg.com/@babel/compat-data/-/compat-data-7.23.5.tgz#ffb878728bb6bdcb6f4510aa51b1be9afb8cfd98"
   integrity sha512-uU27kfDRlhfKl+w1U6vp16IuvSLtjAxdArVXPa9BvLkrr7CYIsxH5adpHObeAGY/41+syctUWOZ140a2Rvkgjw==
 
-"@babel/core@^7.12.0", "@babel/core@^7.16.10", "@babel/core@^7.16.7", "@babel/core@^7.23.6", "@babel/core@^7.3.4":
+"@babel/core@^7.12.0", "@babel/core@^7.16.10", "@babel/core@^7.16.7", "@babel/core@^7.19.6", "@babel/core@^7.23.6", "@babel/core@^7.3.4":
   version "7.23.6"
   resolved "https://registry.yarnpkg.com/@babel/core/-/core-7.23.6.tgz#8be77cd77c55baadcc1eae1c33df90ab6d2151d4"
   integrity sha512-FxpRyGjrMJXh7X3wGLGhNDCRiwpWEF74sKjTLDJSG5Kyvow3QZaG0Adbqzi9ZrVjTWpsX+2cxWXD71NMg93kdw==
@@ -3859,6 +3859,15 @@ coa@^2.0.2:
     chalk "^2.4.1"
     q "^1.1.2"
 
+code-equality-assertions@^0.9.0:
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/code-equality-assertions/-/code-equality-assertions-0.9.0.tgz#ffec528a32def0b134a6ae569dc705ed4018eaf8"
+  integrity sha512-8t2+ZiCU9TIr/78TyVSEFii9khSic293zVCfndsG7bOymAsdDFmN1GSwjRdyQxz7+tHE+biUvt08Qlx4Xvfuxw==
+  dependencies:
+    "@babel/core" "^7.19.6"
+    diff "^5.1.0"
+    prettier "^2.7.1"
+
 collection-visit@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/collection-visit/-/collection-visit-1.0.0.tgz#4bc0373c164bc3291b4d368c829cf1a80a59dca0"
@@ -3937,11 +3946,6 @@ commander@^8.3.0:
   version "8.3.0"
   resolved "https://registry.yarnpkg.com/commander/-/commander-8.3.0.tgz#4837ea1b2da67b9c616a67afbb0fafee567bca66"
   integrity sha512-OkTL9umf+He2DZkUq8f8J9of7yL6RJKI24dVITBmNfZBmri9zYZQrKkuXiKhyfPSu8tUhnVBB1iKXevvnlR4Ww==
-
-common-tags@^1.8.0:
-  version "1.8.2"
-  resolved "https://registry.yarnpkg.com/common-tags/-/common-tags-1.8.2.tgz#94ebb3c076d26032745fd54face7f688ef5ac9c6"
-  integrity sha512-gk/Z852D2Wtb//0I+kRFNKKE9dIIVirjoqPoA1wJU+XePVXZfGeBpk45+A1rKO4Q43prqWBNY/MiIeRLbPWUaA==
 
 commondir@^1.0.1:
   version "1.0.1"
@@ -10260,7 +10264,7 @@ prettier-linter-helpers@^1.0.0:
   dependencies:
     fast-diff "^1.1.2"
 
-prettier@^2.5.1:
+prettier@^2.5.1, prettier@^2.7.1:
   version "2.8.8"
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.8.8.tgz#e8c5d7e98a4305ffe3de2e1fc4aca1a71c28b1da"
   integrity sha512-tdN8qQGvNjw4CHbY+XXk0JgCXn9QiF21a55rBe5LJAU+kDyC4WQn4+awm2Xfk2lQMk5fKup9XgzTZtGkjBdP9Q==
