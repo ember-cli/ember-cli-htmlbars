@@ -5,8 +5,13 @@ const ColocatedTemplateCompiler = require('../lib/colocated-broccoli-plugin');
 const ColocatedBabelPlugin = require.resolve('../lib/colocated-babel-plugin');
 const BroccoliPersistentFilter = require('broccoli-persistent-filter');
 const babel = require('@babel/core');
-const TypescriptTransform = require.resolve('@babel/plugin-transform-typescript');
-const { createTempDir, createBuilder: _createBuilder } = require('broccoli-test-helper');
+const TypescriptTransform = require.resolve(
+  '@babel/plugin-transform-typescript',
+);
+const {
+  createTempDir,
+  createBuilder: _createBuilder,
+} = require('broccoli-test-helper');
 const { stripIndent } = require('common-tags');
 
 // this is silly, we should use broccoli-babel-transpiler but it has **very** bad behaviors
@@ -26,7 +31,9 @@ class BabelTranspiler extends BroccoliPersistentFilter {
   }
 
   processString(string) {
-    let { code } = babel.transformSync(string, { plugins: this.options.plugins });
+    let { code } = babel.transformSync(string, {
+      plugins: this.options.plugins,
+    });
 
     return code;
   }
@@ -57,7 +64,10 @@ describe('Colocation - Broccoli + Babel Integration (modules API: true)', functi
     });
 
     let babelTree = new BabelTranspiler(colocatedTree, {
-      plugins: [...plugins, [ColocatedBabelPlugin, { requiresModuleApiPolyfill: true }]],
+      plugins: [
+        ...plugins,
+        [ColocatedBabelPlugin, { requiresModuleApiPolyfill: true }],
+      ],
     });
 
     output = _createBuilder(babelTree);
@@ -442,7 +452,10 @@ describe('Colocation - Broccoli + Babel Integration (modules API: false)', funct
     });
 
     let babelTree = new BabelTranspiler(colocatedTree, {
-      plugins: [...plugins, [ColocatedBabelPlugin, { requiresModuleApiPolyfill: false }]],
+      plugins: [
+        ...plugins,
+        [ColocatedBabelPlugin, { requiresModuleApiPolyfill: false }],
+      ],
     });
 
     output = _createBuilder(babelTree);

@@ -35,7 +35,9 @@ describe('TemplateCompiler', function () {
     let source = input.readText('template.hbs');
     let expected = [
       `import { hbs } from 'ember-cli-htmlbars';`,
-      `export default hbs('${jsStringEscape(source)}', { moduleName: 'template.hbs' });`,
+      `export default hbs('${jsStringEscape(
+        source,
+      )}', { moduleName: 'template.hbs' });`,
       '',
     ].join('\n');
     assert.strictEqual(output.readText('template.js'), expected);

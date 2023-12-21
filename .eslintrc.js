@@ -1,12 +1,22 @@
 module.exports = {
   root: true,
-  parser: 'babel-eslint',
+  parser: '@babel/eslint-parser',
   parserOptions: {
-    ecmaVersion: 2018,
+    ecmaVersion: 'latest',
     sourceType: 'module',
+    requireConfigFile: false,
+    babelOptions: {
+      plugins: [
+        ['@babel/plugin-proposal-decorators', { decoratorsBeforeExport: true }],
+      ],
+    },
   },
   plugins: ['ember', 'prettier'],
-  extends: ['eslint:recommended', 'plugin:ember/recommended', 'plugin:prettier/recommended'],
+  extends: [
+    'eslint:recommended',
+    'plugin:ember/recommended',
+    'plugin:prettier/recommended',
+  ],
   env: {
     browser: true,
   },
@@ -21,6 +31,7 @@ module.exports = {
       files: [
         './.eslintrc.js',
         './.prettierrc.js',
+        './.stylelintrc.js',
         './.template-lintrc.js',
         'colocated-broccoli-plugin.js',
         './ember-cli-build.js',
@@ -39,10 +50,7 @@ module.exports = {
         browser: false,
         node: true,
       },
-      plugins: ['node'],
-      rules: Object.assign({}, require('eslint-plugin-node').configs.recommended.rules, {
-        // add your custom rules and overrides for node files here
-      }),
+      extends: ['plugin:n/recommended'],
     },
 
     // node files
@@ -57,13 +65,11 @@ module.exports = {
         node: true,
         mocha: true,
       },
-      plugins: ['node', 'mocha'],
-      rules: Object.assign({}, require('eslint-plugin-node').configs.recommended.rules, {
-        // add your custom rules and overrides for node files here
-      }),
+      plugins: ['mocha'],
+      extends: ['plugin:n/recommended'],
     },
     {
-      // Test files:
+      // test files
       files: ['tests/**/*-test.{js,ts}'],
       extends: ['plugin:qunit/recommended'],
     },

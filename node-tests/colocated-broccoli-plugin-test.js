@@ -73,7 +73,7 @@ describe('ColocatedTemplateCompiler', function () {
     assert.deepStrictEqual(
       output.changes(),
       { 'app-name-here/router.js': 'change' },
-      'has only related changes'
+      'has only related changes',
     );
   });
 
@@ -133,7 +133,7 @@ describe('ColocatedTemplateCompiler', function () {
     assert.deepStrictEqual(
       output.changes(),
       { 'app-name-here/router.js': 'change' },
-      'has only related changes'
+      'has only related changes',
     );
   });
 
@@ -182,7 +182,7 @@ describe('ColocatedTemplateCompiler', function () {
     assert.deepStrictEqual(
       output.changes(),
       { 'app-name-here/router.js': 'change' },
-      'has only related changes'
+      'has only related changes',
     );
   });
 
@@ -234,7 +234,7 @@ describe('ColocatedTemplateCompiler', function () {
     assert.deepStrictEqual(
       output.changes(),
       { 'app-name-here/router.js': 'change' },
-      'has only related changes'
+      'has only related changes',
     );
   });
 
@@ -603,12 +603,16 @@ describe('ColocatedTemplateCompiler', function () {
             },
           },
         },
-        'initial content is correct'
+        'initial content is correct',
       );
 
       await output.build();
 
-      assert.deepStrictEqual(output.changes(), {}, 'NOOP update has no changes');
+      assert.deepStrictEqual(
+        output.changes(),
+        {},
+        'NOOP update has no changes',
+      );
 
       input.write({
         'app-name-here': {
@@ -627,7 +631,7 @@ describe('ColocatedTemplateCompiler', function () {
       assert.deepStrictEqual(
         output.changes(),
         { 'app-name-here/components/foo.js': 'change' },
-        'has only related changes'
+        'has only related changes',
       );
 
       assert.deepStrictEqual(
@@ -649,7 +653,7 @@ describe('ColocatedTemplateCompiler', function () {
             },
           },
         },
-        'content is correct after updating'
+        'content is correct after updating',
       );
     });
 
@@ -692,12 +696,16 @@ describe('ColocatedTemplateCompiler', function () {
             },
           },
         },
-        'initial content is correct'
+        'initial content is correct',
       );
 
       await output.build();
 
-      assert.deepStrictEqual(output.changes(), {}, 'NOOP update has no changes');
+      assert.deepStrictEqual(
+        output.changes(),
+        {},
+        'NOOP update has no changes',
+      );
 
       input.write({
         'app-name-here': {
@@ -712,7 +720,7 @@ describe('ColocatedTemplateCompiler', function () {
       assert.deepStrictEqual(
         output.changes(),
         { 'app-name-here/components/foo.js': 'change' },
-        'has only related changes'
+        'has only related changes',
       );
 
       assert.deepStrictEqual(
@@ -734,7 +742,7 @@ describe('ColocatedTemplateCompiler', function () {
             },
           },
         },
-        'content is correct after updating'
+        'content is correct after updating',
       );
     });
 
@@ -777,12 +785,16 @@ describe('ColocatedTemplateCompiler', function () {
             },
           },
         },
-        'initial content is correct'
+        'initial content is correct',
       );
 
       await output.build();
 
-      assert.deepStrictEqual(output.changes(), {}, 'NOOP update has no changes');
+      assert.deepStrictEqual(
+        output.changes(),
+        {},
+        'NOOP update has no changes',
+      );
 
       input.write({
         'app-name-here': {
@@ -797,7 +809,7 @@ describe('ColocatedTemplateCompiler', function () {
       assert.deepStrictEqual(
         output.changes(),
         { 'app-name-here/components/foo.js': 'unlink' },
-        'has only related changes'
+        'has only related changes',
       );
 
       assert.deepStrictEqual(
@@ -811,7 +823,7 @@ describe('ColocatedTemplateCompiler', function () {
             },
           },
         },
-        'content is correct after updating'
+        'content is correct after updating',
       );
     });
 
@@ -852,12 +864,16 @@ describe('ColocatedTemplateCompiler', function () {
             },
           },
         },
-        'initial content is correct'
+        'initial content is correct',
       );
 
       await output.build();
 
-      assert.deepStrictEqual(output.changes(), {}, 'NOOP update has no changes');
+      assert.deepStrictEqual(
+        output.changes(),
+        {},
+        'NOOP update has no changes',
+      );
 
       input.write({
         'app-name-here': {
@@ -872,7 +888,7 @@ describe('ColocatedTemplateCompiler', function () {
       assert.deepStrictEqual(
         output.changes(),
         { 'app-name-here/components/foo.js': 'unlink' },
-        'has only related changes'
+        'has only related changes',
       );
     });
 
@@ -913,12 +929,16 @@ describe('ColocatedTemplateCompiler', function () {
             },
           },
         },
-        'initial content is correct'
+        'initial content is correct',
       );
 
       await output.build();
 
-      assert.deepStrictEqual(output.changes(), {}, 'NOOP update has no changes');
+      assert.deepStrictEqual(
+        output.changes(),
+        {},
+        'NOOP update has no changes',
+      );
 
       input.write({
         'app-name-here': {
@@ -933,7 +953,7 @@ describe('ColocatedTemplateCompiler', function () {
       assert.deepStrictEqual(
         output.changes(),
         { 'app-name-here/components/foo.js': 'change' },
-        'has only related changes'
+        'has only related changes',
       );
 
       assert.deepStrictEqual(
@@ -955,7 +975,7 @@ describe('ColocatedTemplateCompiler', function () {
             },
           },
         },
-        'updated content is correct'
+        'updated content is correct',
       );
     });
 
@@ -1001,12 +1021,16 @@ describe('ColocatedTemplateCompiler', function () {
             },
           },
         },
-        'initial content is correct'
+        'initial content is correct',
       );
 
       await output.build();
 
-      assert.deepStrictEqual(output.changes(), {}, 'NOOP update has no changes');
+      assert.deepStrictEqual(
+        output.changes(),
+        {},
+        'NOOP update has no changes',
+      );
 
       input.write({
         'app-name-here': {
@@ -1021,7 +1045,7 @@ describe('ColocatedTemplateCompiler', function () {
       assert.deepStrictEqual(
         output.changes(),
         { 'app-name-here/components/foo.js': 'change' },
-        'has only related changes'
+        'has only related changes',
       );
 
       assert.deepStrictEqual(
@@ -1043,7 +1067,7 @@ describe('ColocatedTemplateCompiler', function () {
             },
           },
         },
-        'content is correct after updating'
+        'content is correct after updating',
       );
     });
 
@@ -1089,12 +1113,16 @@ describe('ColocatedTemplateCompiler', function () {
             },
           },
         },
-        'initial content is correct'
+        'initial content is correct',
       );
 
       await output.build();
 
-      assert.deepStrictEqual(output.changes(), {}, 'NOOP update has no changes');
+      assert.deepStrictEqual(
+        output.changes(),
+        {},
+        'NOOP update has no changes',
+      );
 
       input.write({
         'app-name-here': {
@@ -1129,13 +1157,13 @@ describe('ColocatedTemplateCompiler', function () {
             },
           },
         },
-        'content is correct after updating'
+        'content is correct after updating',
       );
 
       assert.deepStrictEqual(
         output.changes(),
         { 'app-name-here/components/foo.js': 'change' },
-        'has only related changes'
+        'has only related changes',
       );
     });
 
@@ -1181,12 +1209,16 @@ describe('ColocatedTemplateCompiler', function () {
             },
           },
         },
-        'initial content is correct'
+        'initial content is correct',
       );
 
       await output.build();
 
-      assert.deepStrictEqual(output.changes(), {}, 'NOOP update has no changes');
+      assert.deepStrictEqual(
+        output.changes(),
+        {},
+        'NOOP update has no changes',
+      );
 
       input.write({
         'app-name-here': {
@@ -1201,7 +1233,7 @@ describe('ColocatedTemplateCompiler', function () {
       assert.deepStrictEqual(
         output.changes(),
         { 'app-name-here/components/foo.js': 'change' },
-        'has only related changes'
+        'has only related changes',
       );
 
       assert.deepStrictEqual(
@@ -1223,7 +1255,7 @@ describe('ColocatedTemplateCompiler', function () {
             },
           },
         },
-        'content is correct after updating'
+        'content is correct after updating',
       );
     });
   });
