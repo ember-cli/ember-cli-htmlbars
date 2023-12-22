@@ -11,7 +11,7 @@ const TypeScriptPlugin = [
   require.resolve('@babel/plugin-transform-typescript'),
 ];
 const ClassPropertiesPlugin = [
-  require.resolve('@babel/plugin-proposal-class-properties'),
+  require.resolve('@babel/plugin-transform-class-properties'),
   { loose: true },
 ];
 const RuntimePlugin = [
