@@ -1,13 +1,17 @@
 'use strict';
 
-const assert = require('assert');
 const ColocatedTemplateCompiler = require('../lib/colocated-broccoli-plugin');
 const ColocatedBabelPlugin = require.resolve('../lib/colocated-babel-plugin');
 const BroccoliPersistentFilter = require('broccoli-persistent-filter');
 const babel = require('@babel/core');
-const TypescriptTransform = require.resolve('@babel/plugin-transform-typescript');
-const { createTempDir, createBuilder: _createBuilder } = require('broccoli-test-helper');
-const { stripIndent } = require('common-tags');
+const TypescriptTransform = require.resolve(
+  '@babel/plugin-transform-typescript',
+);
+const {
+  createTempDir,
+  createBuilder: _createBuilder,
+} = require('broccoli-test-helper');
+const { expect } = require('./assertions');
 
 // this is silly, we should use broccoli-babel-transpiler but it has **very** bad behaviors
 // when used inside a process that does not end with `process.exit` (e.g. this test suite)
@@ -26,7 +30,9 @@ class BabelTranspiler extends BroccoliPersistentFilter {
   }
 
   processString(string) {
-    let { code } = babel.transformSync(string, { plugins: this.options.plugins });
+    let { code } = babel.transformSync(string, {
+      plugins: this.options.plugins,
+    });
 
     return code;
   }
@@ -57,7 +63,10 @@ describe('Colocation - Broccoli + Babel Integration (modules API: true)', functi
     });
 
     let babelTree = new BabelTranspiler(colocatedTree, {
-      plugins: [...plugins, [ColocatedBabelPlugin, { requiresModuleApiPolyfill: true }]],
+      plugins: [
+        ...plugins,
+        [ColocatedBabelPlugin, { requiresModuleApiPolyfill: true }],
+      ],
     });
 
     output = _createBuilder(babelTree);
@@ -81,10 +90,10 @@ describe('Colocation - Broccoli + Babel Integration (modules API: true)', functi
 
     await output.build();
 
-    assert.deepStrictEqual(output.read(), {
+    expect(output.read()).toDeepEqualCode({
       'app-name-here': {
         components: {
-          'foo.js': stripIndent`
+          'foo.js': `
             import { hbs } from 'ember-cli-htmlbars';
 
             const __COLOCATED_TEMPLATE__ = hbs("{{yield}}", {
@@ -111,7 +120,7 @@ describe('Colocation - Broccoli + Babel Integration (modules API: true)', functi
       'app-name-here': {
         components: {
           'foo.hbs': `{{yield}}`,
-          'foo.js': stripIndent`
+          'foo.js': `
             import Component from '@glimmer/component';
 
             export default class FooComponent extends Component {}
@@ -127,10 +136,10 @@ describe('Colocation - Broccoli + Babel Integration (modules API: true)', functi
 
     await output.build();
 
-    assert.deepStrictEqual(output.read(), {
+    expect(output.read()).toDeepEqualCode({
       'app-name-here': {
         components: {
-          'foo.js': stripIndent`
+          'foo.js': `
             import { hbs } from 'ember-cli-htmlbars';
 
             const __COLOCATED_TEMPLATE__ = hbs("{{yield}}", {
@@ -159,7 +168,7 @@ describe('Colocation - Broccoli + Babel Integration (modules API: true)', functi
       'app-name-here': {
         components: {
           'foo.hbs': `{{yield}}`,
-          'foo.ts': stripIndent`
+          'foo.ts': `
             import Component from '@glimmer/component';
 
             export default class FooComponent extends Component {}
@@ -175,10 +184,10 @@ describe('Colocation - Broccoli + Babel Integration (modules API: true)', functi
 
     await output.build();
 
-    assert.deepStrictEqual(output.read(), {
+    expect(output.read()).toDeepEqualCode({
       'app-name-here': {
         components: {
-          'foo.js': stripIndent`
+          'foo.js': `
             import { hbs } from 'ember-cli-htmlbars';
 
             const __COLOCATED_TEMPLATE__ = hbs("{{yield}}", {
@@ -220,11 +229,11 @@ describe('Colocation - Broccoli + Babel Integration (modules API: true)', functi
 
     await output.build();
 
-    assert.deepStrictEqual(output.read(), {
+    expect(output.read()).toDeepEqualCode({
       '@scope-name': {
         'addon-name-here': {
           components: {
-            'foo.js': stripIndent`
+            'foo.js': `
               import { hbs } from 'ember-cli-htmlbars';
 
               const __COLOCATED_TEMPLATE__ = hbs("{{yield}}", {
@@ -253,7 +262,7 @@ describe('Colocation - Broccoli + Babel Integration (modules API: true)', functi
         'addon-name-here': {
           components: {
             'foo.hbs': `{{yield}}`,
-            'foo.js': stripIndent`
+            'foo.js': `
             import Component from '@glimmer/component';
             export default class FooComponent extends Component {}
           `,
@@ -269,11 +278,11 @@ describe('Colocation - Broccoli + Babel Integration (modules API: true)', functi
 
     await output.build();
 
-    assert.deepStrictEqual(output.read(), {
+    expect(output.read()).toDeepEqualCode({
       '@scope-name': {
         'addon-name-here': {
           components: {
-            'foo.js': stripIndent`
+            'foo.js': `
             import { hbs } from 'ember-cli-htmlbars';
 
             const __COLOCATED_TEMPLATE__ = hbs("{{yield}}", {
@@ -302,7 +311,7 @@ describe('Colocation - Broccoli + Babel Integration (modules API: true)', functi
     input.write({
       'app-name-here': {
         components: {
-          'foo.js': stripIndent`
+          'foo.js': `
             import Component from '@glimmer/component';
             export default class FooComponent extends Component {}
           `,
@@ -320,7 +329,7 @@ describe('Colocation - Broccoli + Babel Integration (modules API: true)', functi
 
     await output.build();
 
-    assert.deepStrictEqual(output.read(), input.read());
+    expect(output.read()).toDeepEqualCode(input.read());
   });
 
   it('does nothing for "pod" location templates', async function () {
@@ -337,7 +346,7 @@ describe('Colocation - Broccoli + Babel Integration (modules API: true)', functi
     createBuilder();
     await output.build();
 
-    assert.deepStrictEqual(output.read(), input.read());
+    expect(output.read()).toDeepEqualCode(input.read());
   });
 
   it('it works if there are no input files', async function () {
@@ -346,14 +355,14 @@ describe('Colocation - Broccoli + Babel Integration (modules API: true)', functi
     createBuilder();
     await output.build();
 
-    assert.deepStrictEqual(output.read(), {});
+    expect(output.read()).toDeepEqualCode({});
   });
 
   it('it works if input is manually using setComponentTemplate - no colocated template exists', async function () {
     input.write({
       'app-name-here': {
         components: {
-          'foo.js': stripIndent`
+          'foo.js': `
             import Component from '@glimmer/component';
             import { setComponentTemplate } from '@ember/component';
             import hbs from 'ember-cli-htmlbars-inline-precompile';
@@ -370,10 +379,10 @@ describe('Colocation - Broccoli + Babel Integration (modules API: true)', functi
     createBuilder();
     await output.build();
 
-    assert.deepStrictEqual(output.read(), {
+    expect(output.read()).toDeepEqualCode({
       'app-name-here': {
         components: {
-          'foo.js': stripIndent`
+          'foo.js': `
             import Component from '@glimmer/component';
             import { setComponentTemplate } from '@ember/component';
             import hbs from 'ember-cli-htmlbars-inline-precompile';
@@ -393,7 +402,7 @@ describe('Colocation - Broccoli + Babel Integration (modules API: true)', functi
       'app-name-here': {
         components: {
           'foo.hbs': `{{yield}}`,
-          'foo.js': stripIndent`
+          'foo.js': `
             export function whatever() {}
           `,
         },
@@ -403,10 +412,10 @@ describe('Colocation - Broccoli + Babel Integration (modules API: true)', functi
     createBuilder();
     await output.build();
 
-    assert.deepStrictEqual(output.read(), {
+    expect(output.read()).toDeepEqualCode({
       'app-name-here': {
         components: {
-          'foo.js': stripIndent`
+          'foo.js': `
             export function whatever() {}\nthrow new Error("\`app-name-here/components/foo.js\` does not contain a \`default export\`. Did you forget to export the component class?");
           `,
         },
@@ -442,7 +451,10 @@ describe('Colocation - Broccoli + Babel Integration (modules API: false)', funct
     });
 
     let babelTree = new BabelTranspiler(colocatedTree, {
-      plugins: [...plugins, [ColocatedBabelPlugin, { requiresModuleApiPolyfill: false }]],
+      plugins: [
+        ...plugins,
+        [ColocatedBabelPlugin, { requiresModuleApiPolyfill: false }],
+      ],
     });
 
     output = _createBuilder(babelTree);
@@ -466,10 +478,10 @@ describe('Colocation - Broccoli + Babel Integration (modules API: false)', funct
 
     await output.build();
 
-    assert.deepStrictEqual(output.read(), {
+    expect(output.read()).toDeepEqualCode({
       'app-name-here': {
         components: {
-          'foo.js': stripIndent`
+          'foo.js': `
             import { setComponentTemplate as _setComponentTemplate } from "@ember/component";
             import { hbs } from 'ember-cli-htmlbars';
 
@@ -497,7 +509,7 @@ describe('Colocation - Broccoli + Babel Integration (modules API: false)', funct
       'app-name-here': {
         components: {
           'foo.hbs': `{{yield}}`,
-          'foo.js': stripIndent`
+          'foo.js': `
             import Component from '@glimmer/component';
 
             export default class FooComponent extends Component {}
@@ -513,10 +525,10 @@ describe('Colocation - Broccoli + Babel Integration (modules API: false)', funct
 
     await output.build();
 
-    assert.deepStrictEqual(output.read(), {
+    expect(output.read()).toDeepEqualCode({
       'app-name-here': {
         components: {
-          'foo.js': stripIndent`
+          'foo.js': `
             import { setComponentTemplate as _setComponentTemplate } from "@ember/component";
             import { hbs } from 'ember-cli-htmlbars';
 
@@ -546,7 +558,7 @@ describe('Colocation - Broccoli + Babel Integration (modules API: false)', funct
       'app-name-here': {
         components: {
           'foo.hbs': `{{yield}}`,
-          'foo.ts': stripIndent`
+          'foo.ts': `
             import Component from '@glimmer/component';
 
             export default class FooComponent extends Component {}
@@ -562,10 +574,10 @@ describe('Colocation - Broccoli + Babel Integration (modules API: false)', funct
 
     await output.build();
 
-    assert.deepStrictEqual(output.read(), {
+    expect(output.read()).toDeepEqualCode({
       'app-name-here': {
         components: {
-          'foo.js': stripIndent`
+          'foo.js': `
             import { setComponentTemplate as _setComponentTemplate } from "@ember/component";
             import { hbs } from 'ember-cli-htmlbars';
 
@@ -608,11 +620,11 @@ describe('Colocation - Broccoli + Babel Integration (modules API: false)', funct
 
     await output.build();
 
-    assert.deepStrictEqual(output.read(), {
+    expect(output.read()).toDeepEqualCode({
       '@scope-name': {
         'addon-name-here': {
           components: {
-            'foo.js': stripIndent`
+            'foo.js': `
               import { setComponentTemplate as _setComponentTemplate } from "@ember/component";
               import { hbs } from 'ember-cli-htmlbars';
 
@@ -642,7 +654,7 @@ describe('Colocation - Broccoli + Babel Integration (modules API: false)', funct
         'addon-name-here': {
           components: {
             'foo.hbs': `{{yield}}`,
-            'foo.js': stripIndent`
+            'foo.js': `
             import Component from '@glimmer/component';
             export default class FooComponent extends Component {}
           `,
@@ -658,11 +670,11 @@ describe('Colocation - Broccoli + Babel Integration (modules API: false)', funct
 
     await output.build();
 
-    assert.deepStrictEqual(output.read(), {
+    expect(output.read()).toDeepEqualCode({
       '@scope-name': {
         'addon-name-here': {
           components: {
-            'foo.js': stripIndent`
+            'foo.js': `
             import { setComponentTemplate as _setComponentTemplate } from "@ember/component";
             import { hbs } from 'ember-cli-htmlbars';
 
@@ -692,7 +704,7 @@ describe('Colocation - Broccoli + Babel Integration (modules API: false)', funct
     input.write({
       'app-name-here': {
         components: {
-          'foo.js': stripIndent`
+          'foo.js': `
             import Component from '@glimmer/component';
             export default class FooComponent extends Component {}
           `,
@@ -710,7 +722,7 @@ describe('Colocation - Broccoli + Babel Integration (modules API: false)', funct
 
     await output.build();
 
-    assert.deepStrictEqual(output.read(), input.read());
+    expect(output.read()).toDeepEqualCode(input.read());
   });
 
   it('does nothing for "pod" location templates', async function () {
@@ -727,7 +739,7 @@ describe('Colocation - Broccoli + Babel Integration (modules API: false)', funct
     createBuilder();
     await output.build();
 
-    assert.deepStrictEqual(output.read(), input.read());
+    expect(output.read()).toDeepEqualCode(input.read());
   });
 
   it('it works if there are no input files', async function () {
@@ -736,14 +748,14 @@ describe('Colocation - Broccoli + Babel Integration (modules API: false)', funct
     createBuilder();
     await output.build();
 
-    assert.deepStrictEqual(output.read(), {});
+    expect(output.read()).toDeepEqualCode({});
   });
 
   it('it works if input is manually using setComponentTemplate - no colocated template exists', async function () {
     input.write({
       'app-name-here': {
         components: {
-          'foo.js': stripIndent`
+          'foo.js': `
             import Component from '@glimmer/component';
             import { setComponentTemplate } from '@ember/component';
             import hbs from 'ember-cli-htmlbars-inline-precompile';
@@ -760,10 +772,10 @@ describe('Colocation - Broccoli + Babel Integration (modules API: false)', funct
     createBuilder();
     await output.build();
 
-    assert.deepStrictEqual(output.read(), {
+    expect(output.read()).toDeepEqualCode({
       'app-name-here': {
         components: {
-          'foo.js': stripIndent`
+          'foo.js': `
             import Component from '@glimmer/component';
             import { setComponentTemplate } from '@ember/component';
             import hbs from 'ember-cli-htmlbars-inline-precompile';
@@ -783,7 +795,7 @@ describe('Colocation - Broccoli + Babel Integration (modules API: false)', funct
       'app-name-here': {
         components: {
           'foo.hbs': `{{yield}}`,
-          'foo.js': stripIndent`
+          'foo.js': `
             export function whatever() {}
           `,
         },
@@ -793,10 +805,10 @@ describe('Colocation - Broccoli + Babel Integration (modules API: false)', funct
     createBuilder();
     await output.build();
 
-    assert.deepStrictEqual(output.read(), {
+    expect(output.read()).toDeepEqualCode({
       'app-name-here': {
         components: {
-          'foo.js': stripIndent`
+          'foo.js': `
             export function whatever() {}\nthrow new Error("\`app-name-here/components/foo.js\` does not contain a \`default export\`. Did you forget to export the component class?");
           `,
         },

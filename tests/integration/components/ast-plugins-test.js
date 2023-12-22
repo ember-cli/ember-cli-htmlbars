@@ -9,9 +9,9 @@ module('tests/integration/components/ast-plugins-test', function (hooks) {
   test('stand alone templates have AST plugins ran', async function (assert) {
     await render(hbs`{{x-module-name-inlined-component}}`);
 
-    assert.equal(
+    assert.strictEqual(
       this.element.textContent.trim(),
-      'dummy/templates/components/x-module-name-inlined-component.hbs'
+      'dummy/templates/components/x-module-name-inlined-component.hbs',
     );
   });
 });

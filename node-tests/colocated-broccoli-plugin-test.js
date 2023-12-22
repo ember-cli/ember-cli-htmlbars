@@ -1,9 +1,8 @@
 'use strict';
 
-const assert = require('assert');
 const ColocatedTemplateCompiler = require('../lib/colocated-broccoli-plugin');
 const { createTempDir, createBuilder } = require('broccoli-test-helper');
-const { stripIndent } = require('common-tags');
+const { expect } = require('./assertions');
 
 describe('ColocatedTemplateCompiler', function () {
   this.timeout(10000);
@@ -40,12 +39,12 @@ describe('ColocatedTemplateCompiler', function () {
     output = createBuilder(tree);
     await output.build();
 
-    assert.deepStrictEqual(output.read(), {
+    expect(output.read()).toDeepEqualCode({
       'app-name-here': {
         'router.js': '// stuff here',
         components: {
           'foo.js':
-            stripIndent`
+            `
             import { hbs } from 'ember-cli-htmlbars';
             const __COLOCATED_TEMPLATE__ = hbs("{{yield}}", {"contents":"{{yield}}","moduleName":"app-name-here/components/foo.hbs","parseOptions":{"srcName":"app-name-here/components/foo.hbs"}});
             import templateOnly from '@ember/component/template-only';
@@ -60,7 +59,7 @@ describe('ColocatedTemplateCompiler', function () {
 
     await output.build();
 
-    assert.deepStrictEqual(output.changes(), {}, 'NOOP update has no changes');
+    expect(output.changes()).toDeepEqualCode({}, 'NOOP update has no changes');
 
     input.write({
       'app-name-here': {
@@ -70,10 +69,9 @@ describe('ColocatedTemplateCompiler', function () {
 
     await output.build();
 
-    assert.deepStrictEqual(
-      output.changes(),
+    expect(output.changes()).toDeepEqualCode(
       { 'app-name-here/router.js': 'change' },
-      'has only related changes'
+      'has only related changes',
     );
   });
 
@@ -83,7 +81,7 @@ describe('ColocatedTemplateCompiler', function () {
         'router.js': '// stuff here',
         components: {
           'foo.hbs': `{{yield}}`,
-          'foo.js': stripIndent`
+          'foo.js': `
             import Component from '@glimmer/component';
 
             export default class FooComponent extends Component {}
@@ -100,11 +98,11 @@ describe('ColocatedTemplateCompiler', function () {
     output = createBuilder(tree);
     await output.build();
 
-    assert.deepStrictEqual(output.read(), {
+    expect(output.read()).toDeepEqualCode({
       'app-name-here': {
         'router.js': '// stuff here',
         components: {
-          'foo.js': stripIndent`
+          'foo.js': `
             import { hbs } from 'ember-cli-htmlbars';
             const __COLOCATED_TEMPLATE__ = hbs("{{yield}}", {"contents":"{{yield}}","moduleName":"app-name-here/components/foo.hbs","parseOptions":{"srcName":"app-name-here/components/foo.hbs"}});
             import Component from '@glimmer/component';
@@ -120,7 +118,7 @@ describe('ColocatedTemplateCompiler', function () {
 
     await output.build();
 
-    assert.deepStrictEqual(output.changes(), {}, 'NOOP update has no changes');
+    expect(output.changes()).toDeepEqualCode({}, 'NOOP update has no changes');
 
     input.write({
       'app-name-here': {
@@ -130,10 +128,9 @@ describe('ColocatedTemplateCompiler', function () {
 
     await output.build();
 
-    assert.deepStrictEqual(
-      output.changes(),
+    expect(output.changes()).toDeepEqualCode(
       { 'app-name-here/router.js': 'change' },
-      'has only related changes'
+      'has only related changes',
     );
   });
 
@@ -155,7 +152,7 @@ describe('ColocatedTemplateCompiler', function () {
     output = createBuilder(tree);
     await output.build();
 
-    assert.deepStrictEqual(output.read(), {
+    expect(output.read()).toDeepEqualCode({
       'app-name-here': {
         'router.js': '// stuff here',
         components: {
@@ -169,7 +166,7 @@ describe('ColocatedTemplateCompiler', function () {
 
     await output.build();
 
-    assert.deepStrictEqual(output.changes(), {}, 'NOOP update has no changes');
+    expect(output.changes()).toDeepEqualCode({}, 'NOOP update has no changes');
 
     input.write({
       'app-name-here': {
@@ -179,10 +176,9 @@ describe('ColocatedTemplateCompiler', function () {
 
     await output.build();
 
-    assert.deepStrictEqual(
-      output.changes(),
+    expect(output.changes()).toDeepEqualCode(
       { 'app-name-here/router.js': 'change' },
-      'has only related changes'
+      'has only related changes',
     );
   });
 
@@ -205,12 +201,12 @@ describe('ColocatedTemplateCompiler', function () {
     output = createBuilder(tree);
     await output.build();
 
-    assert.deepStrictEqual(output.read(), {
+    expect(output.read()).toDeepEqualCode({
       'app-name-here': {
         'router.js': '// stuff here',
         components: {
-          'foo.js': stripIndent`
-            export { default } from 'some-place';\nthrow new Error(\"\`app-name-here/components/foo.js\` contains an \`export { default }\` re-export, but it has a co-located template. You must explicitly extend the component to assign it a different template.\");
+          'foo.js': `
+            export { default } from 'some-place';\nthrow new Error("\`app-name-here/components/foo.js\` contains an \`export { default }\` re-export, but it has a co-located template. You must explicitly extend the component to assign it a different template.");
           `,
         },
         templates: {
@@ -221,7 +217,7 @@ describe('ColocatedTemplateCompiler', function () {
 
     await output.build();
 
-    assert.deepStrictEqual(output.changes(), {}, 'NOOP update has no changes');
+    expect(output.changes()).toDeepEqualCode({}, 'NOOP update has no changes');
 
     input.write({
       'app-name-here': {
@@ -231,10 +227,9 @@ describe('ColocatedTemplateCompiler', function () {
 
     await output.build();
 
-    assert.deepStrictEqual(
-      output.changes(),
+    expect(output.changes()).toDeepEqualCode(
       { 'app-name-here/router.js': 'change' },
-      'has only related changes'
+      'has only related changes',
     );
   });
 
@@ -243,7 +238,7 @@ describe('ColocatedTemplateCompiler', function () {
       'app-name-here': {
         components: {
           'foo.hbs': `{{yield}}`,
-          'foo.ts': stripIndent`
+          'foo.ts': `
             import Component from '@glimmer/component';
 
             export default class FooComponent extends Component {}
@@ -260,10 +255,10 @@ describe('ColocatedTemplateCompiler', function () {
     output = createBuilder(tree);
     await output.build();
 
-    assert.deepStrictEqual(output.read(), {
+    expect(output.read()).toDeepEqualCode({
       'app-name-here': {
         components: {
-          'foo.ts': stripIndent`
+          'foo.ts': `
             import { hbs } from 'ember-cli-htmlbars';
             const __COLOCATED_TEMPLATE__ = hbs("{{yield}}", {"contents":"{{yield}}","moduleName":"app-name-here/components/foo.hbs","parseOptions":{"srcName":"app-name-here/components/foo.hbs"}});
             import Component from '@glimmer/component';
@@ -279,7 +274,7 @@ describe('ColocatedTemplateCompiler', function () {
 
     await output.build();
 
-    assert.deepStrictEqual(output.changes(), {}, 'NOOP update has no changes');
+    expect(output.changes()).toDeepEqualCode({}, 'NOOP update has no changes');
   });
 
   it('works for coffeescript component class with template', async function () {
@@ -287,7 +282,7 @@ describe('ColocatedTemplateCompiler', function () {
       'app-name-here': {
         components: {
           'foo.hbs': `{{yield}}`,
-          'foo.coffee': stripIndent`
+          'foo.coffee': `
             import Component from '@ember/component'
             export default class extends Component
           `,
@@ -303,10 +298,10 @@ describe('ColocatedTemplateCompiler', function () {
     output = createBuilder(tree);
     await output.build();
 
-    assert.deepStrictEqual(output.read(), {
+    expect(output.read()).toDeepEqualCode({
       'app-name-here': {
         components: {
-          'foo.coffee': stripIndent`
+          'foo.coffee': `
             import { hbs } from 'ember-cli-htmlbars'
             __COLOCATED_TEMPLATE__ = hbs("{{yield}}", {"contents":"{{yield}}","moduleName":"app-name-here/components/foo.hbs","parseOptions":{"srcName":"app-name-here/components/foo.hbs"}})
             import Component from '@ember/component'
@@ -321,7 +316,7 @@ describe('ColocatedTemplateCompiler', function () {
 
     await output.build();
 
-    assert.deepStrictEqual(output.changes(), {}, 'NOOP update has no changes');
+    expect(output.changes()).toDeepEqualCode({}, 'NOOP update has no changes');
   });
 
   it('works for scoped addon using template only component', async function () {
@@ -343,12 +338,12 @@ describe('ColocatedTemplateCompiler', function () {
     output = createBuilder(tree);
     await output.build();
 
-    assert.deepStrictEqual(output.read(), {
+    expect(output.read()).toDeepEqualCode({
       '@scope-name': {
         'addon-name-here': {
           components: {
             'foo.js':
-              stripIndent`
+              `
             import { hbs } from 'ember-cli-htmlbars';
             const __COLOCATED_TEMPLATE__ = hbs("{{yield}}", {"contents":"{{yield}}","moduleName":"@scope-name/addon-name-here/components/foo.hbs","parseOptions":{"srcName":"@scope-name/addon-name-here/components/foo.hbs"}});
             import templateOnly from '@ember/component/template-only';
@@ -364,7 +359,7 @@ describe('ColocatedTemplateCompiler', function () {
 
     await output.build();
 
-    assert.deepStrictEqual(output.changes(), {}, 'NOOP update has no changes');
+    expect(output.changes()).toDeepEqualCode({}, 'NOOP update has no changes');
   });
 
   it('works for scoped addon using component with template and class', async function () {
@@ -373,7 +368,7 @@ describe('ColocatedTemplateCompiler', function () {
         'addon-name-here': {
           components: {
             'foo.hbs': `{{yield}}`,
-            'foo.js': stripIndent`
+            'foo.js': `
             import Component from '@glimmer/component';
 
             export default class FooComponent extends Component {}
@@ -391,11 +386,11 @@ describe('ColocatedTemplateCompiler', function () {
     output = createBuilder(tree);
     await output.build();
 
-    assert.deepStrictEqual(output.read(), {
+    expect(output.read()).toDeepEqualCode({
       '@scope-name': {
         'addon-name-here': {
           components: {
-            'foo.js': stripIndent`
+            'foo.js': `
             import { hbs } from 'ember-cli-htmlbars';
             const __COLOCATED_TEMPLATE__ = hbs("{{yield}}", {"contents":"{{yield}}","moduleName":"@scope-name/addon-name-here/components/foo.hbs","parseOptions":{"srcName":"@scope-name/addon-name-here/components/foo.hbs"}});
             import Component from '@glimmer/component';
@@ -412,14 +407,14 @@ describe('ColocatedTemplateCompiler', function () {
 
     await output.build();
 
-    assert.deepStrictEqual(output.changes(), {}, 'NOOP update has no changes');
+    expect(output.changes()).toDeepEqualCode({}, 'NOOP update has no changes');
   });
 
   it('does nothing for "classic" location components', async function () {
     input.write({
       'app-name-here': {
         components: {
-          'foo.js': stripIndent`
+          'foo.js': `
             import Component from '@glimmer/component';
 
             export default class FooComponent extends Component {}
@@ -439,11 +434,11 @@ describe('ColocatedTemplateCompiler', function () {
     output = createBuilder(tree);
     await output.build();
 
-    assert.deepStrictEqual(output.read(), input.read());
+    expect(output.read()).toDeepEqualCode(input.read());
 
     await output.build();
 
-    assert.deepStrictEqual(output.changes(), {}, 'NOOP update has no changes');
+    expect(output.changes()).toDeepEqualCode({}, 'NOOP update has no changes');
   });
 
   it('does nothing for "pod" location templates', async function () {
@@ -462,11 +457,11 @@ describe('ColocatedTemplateCompiler', function () {
     output = createBuilder(tree);
     await output.build();
 
-    assert.deepStrictEqual(output.read(), input.read());
+    expect(output.read()).toDeepEqualCode(input.read());
 
     await output.build();
 
-    assert.deepStrictEqual(output.changes(), {}, 'NOOP update has no changes');
+    expect(output.changes()).toDeepEqualCode({}, 'NOOP update has no changes');
   });
 
   it('it works if there are no input files', async function () {
@@ -477,18 +472,18 @@ describe('ColocatedTemplateCompiler', function () {
     output = createBuilder(tree);
     await output.build();
 
-    assert.deepStrictEqual(output.read(), {});
+    expect(output.read()).toDeepEqualCode({});
 
     await output.build();
 
-    assert.deepStrictEqual(output.changes(), {}, 'NOOP update has no changes');
+    expect(output.changes()).toDeepEqualCode({}, 'NOOP update has no changes');
   });
 
   it('it works if input is manually using setComponentTemplate - no colocated template exists', async function () {
     input.write({
       'app-name-here': {
         components: {
-          'foo.js': stripIndent`
+          'foo.js': `
             import Component from '@glimmer/component';
             import { setComponentTemplate } from '@ember/component';
             import hbs from 'ember-cli-htmlbars-inline-precompile';
@@ -508,10 +503,10 @@ describe('ColocatedTemplateCompiler', function () {
     output = createBuilder(tree);
     await output.build();
 
-    assert.deepStrictEqual(output.read(), {
+    expect(output.read()).toDeepEqualCode({
       'app-name-here': {
         components: {
-          'foo.js': stripIndent`
+          'foo.js': `
             import Component from '@glimmer/component';
             import { setComponentTemplate } from '@ember/component';
             import hbs from 'ember-cli-htmlbars-inline-precompile';
@@ -528,7 +523,7 @@ describe('ColocatedTemplateCompiler', function () {
 
     await output.build();
 
-    assert.deepStrictEqual(output.changes(), {}, 'NOOP update has no changes');
+    expect(output.changes()).toDeepEqualCode({}, 'NOOP update has no changes');
   });
 
   it('emits an error when a default export is not present in a component JS file', async function () {
@@ -536,7 +531,7 @@ describe('ColocatedTemplateCompiler', function () {
       'app-name-here': {
         components: {
           'foo.hbs': `{{yield}}`,
-          'foo.js': stripIndent`
+          'foo.js': `
             export function whatever() {}
           `,
         },
@@ -548,10 +543,10 @@ describe('ColocatedTemplateCompiler', function () {
     output = createBuilder(tree);
     await output.build();
 
-    assert.deepStrictEqual(output.read(), {
+    expect(output.read()).toDeepEqualCode({
       'app-name-here': {
         components: {
-          'foo.js': stripIndent`
+          'foo.js': `
             export function whatever() {}\nthrow new Error("\`app-name-here/components/foo.js\` does not contain a \`default export\`. Did you forget to export the component class?");
           `,
         },
@@ -560,7 +555,7 @@ describe('ColocatedTemplateCompiler', function () {
 
     await output.build();
 
-    assert.deepStrictEqual(output.changes(), {}, 'NOOP update has no changes');
+    expect(output.changes()).toDeepEqualCode({}, 'NOOP update has no changes');
   });
 
   it('does not break class decorator usage');
@@ -584,14 +579,13 @@ describe('ColocatedTemplateCompiler', function () {
       output = createBuilder(tree);
       await output.build();
 
-      assert.deepStrictEqual(
-        output.read(),
+      expect(output.read()).toDeepEqualCode(
         {
           'app-name-here': {
             'router.js': '// stuff here',
             components: {
               'foo.js':
-                stripIndent`
+                `
             import { hbs } from 'ember-cli-htmlbars';
             const __COLOCATED_TEMPLATE__ = hbs("{{yield}}", {"contents":"{{yield}}","moduleName":"app-name-here/components/foo.hbs","parseOptions":{"srcName":"app-name-here/components/foo.hbs"}});
             import templateOnly from '@ember/component/template-only';
@@ -603,17 +597,20 @@ describe('ColocatedTemplateCompiler', function () {
             },
           },
         },
-        'initial content is correct'
+        'initial content is correct',
       );
 
       await output.build();
 
-      assert.deepStrictEqual(output.changes(), {}, 'NOOP update has no changes');
+      expect(output.changes()).toDeepEqualCode(
+        {},
+        'NOOP update has no changes',
+      );
 
       input.write({
         'app-name-here': {
           components: {
-            'foo.js': stripIndent`
+            'foo.js': `
               import Component from '@glimmer/component';
 
               export default class FooComponent extends Component {}
@@ -624,19 +621,17 @@ describe('ColocatedTemplateCompiler', function () {
 
       await output.build();
 
-      assert.deepStrictEqual(
-        output.changes(),
+      expect(output.changes()).toDeepEqualCode(
         { 'app-name-here/components/foo.js': 'change' },
-        'has only related changes'
+        'has only related changes',
       );
 
-      assert.deepStrictEqual(
-        output.read(),
+      expect(output.read()).toDeepEqualCode(
         {
           'app-name-here': {
             'router.js': '// stuff here',
             components: {
-              'foo.js': stripIndent`
+              'foo.js': `
               import { hbs } from 'ember-cli-htmlbars';
               const __COLOCATED_TEMPLATE__ = hbs("{{yield}}", {"contents":"{{yield}}","moduleName":"app-name-here/components/foo.hbs","parseOptions":{"srcName":"app-name-here/components/foo.hbs"}});
               import Component from '@glimmer/component';
@@ -649,7 +644,7 @@ describe('ColocatedTemplateCompiler', function () {
             },
           },
         },
-        'content is correct after updating'
+        'content is correct after updating',
       );
     });
 
@@ -658,7 +653,7 @@ describe('ColocatedTemplateCompiler', function () {
         'app-name-here': {
           'router.js': '// stuff here',
           components: {
-            'foo.js': stripIndent`
+            'foo.js': `
               import Component from '@glimmer/component';
 
               export default class FooComponent extends Component {}
@@ -675,13 +670,12 @@ describe('ColocatedTemplateCompiler', function () {
       output = createBuilder(tree);
       await output.build();
 
-      assert.deepStrictEqual(
-        output.read(),
+      expect(output.read()).toDeepEqualCode(
         {
           'app-name-here': {
             'router.js': '// stuff here',
             components: {
-              'foo.js': stripIndent`
+              'foo.js': `
                 import Component from '@glimmer/component';
 
                 export default class FooComponent extends Component {}
@@ -692,12 +686,15 @@ describe('ColocatedTemplateCompiler', function () {
             },
           },
         },
-        'initial content is correct'
+        'initial content is correct',
       );
 
       await output.build();
 
-      assert.deepStrictEqual(output.changes(), {}, 'NOOP update has no changes');
+      expect(output.changes()).toDeepEqualCode(
+        {},
+        'NOOP update has no changes',
+      );
 
       input.write({
         'app-name-here': {
@@ -709,19 +706,17 @@ describe('ColocatedTemplateCompiler', function () {
 
       await output.build();
 
-      assert.deepStrictEqual(
-        output.changes(),
+      expect(output.changes()).toDeepEqualCode(
         { 'app-name-here/components/foo.js': 'change' },
-        'has only related changes'
+        'has only related changes',
       );
 
-      assert.deepStrictEqual(
-        output.read(),
+      expect(output.read()).toDeepEqualCode(
         {
           'app-name-here': {
             'router.js': '// stuff here',
             components: {
-              'foo.js': stripIndent`
+              'foo.js': `
               import { hbs } from 'ember-cli-htmlbars';
               const __COLOCATED_TEMPLATE__ = hbs("{{yield}}", {"contents":"{{yield}}","moduleName":"app-name-here/components/foo.hbs","parseOptions":{"srcName":"app-name-here/components/foo.hbs"}});
               import Component from '@glimmer/component';
@@ -734,7 +729,7 @@ describe('ColocatedTemplateCompiler', function () {
             },
           },
         },
-        'content is correct after updating'
+        'content is correct after updating',
       );
     });
 
@@ -743,7 +738,7 @@ describe('ColocatedTemplateCompiler', function () {
         'app-name-here': {
           'router.js': '// stuff here',
           components: {
-            'foo.js': stripIndent`
+            'foo.js': `
               import Component from '@glimmer/component';
 
               export default class FooComponent extends Component {}
@@ -760,13 +755,12 @@ describe('ColocatedTemplateCompiler', function () {
       output = createBuilder(tree);
       await output.build();
 
-      assert.deepStrictEqual(
-        output.read(),
+      expect(output.read()).toDeepEqualCode(
         {
           'app-name-here': {
             'router.js': '// stuff here',
             components: {
-              'foo.js': stripIndent`
+              'foo.js': `
                 import Component from '@glimmer/component';
 
                 export default class FooComponent extends Component {}
@@ -777,12 +771,15 @@ describe('ColocatedTemplateCompiler', function () {
             },
           },
         },
-        'initial content is correct'
+        'initial content is correct',
       );
 
       await output.build();
 
-      assert.deepStrictEqual(output.changes(), {}, 'NOOP update has no changes');
+      expect(output.changes()).toDeepEqualCode(
+        {},
+        'NOOP update has no changes',
+      );
 
       input.write({
         'app-name-here': {
@@ -794,14 +791,12 @@ describe('ColocatedTemplateCompiler', function () {
 
       await output.build();
 
-      assert.deepStrictEqual(
-        output.changes(),
+      expect(output.changes()).toDeepEqualCode(
         { 'app-name-here/components/foo.js': 'unlink' },
-        'has only related changes'
+        'has only related changes',
       );
 
-      assert.deepStrictEqual(
-        output.read(),
+      expect(output.read()).toDeepEqualCode(
         {
           'app-name-here': {
             'router.js': '// stuff here',
@@ -811,7 +806,7 @@ describe('ColocatedTemplateCompiler', function () {
             },
           },
         },
-        'content is correct after updating'
+        'content is correct after updating',
       );
     });
 
@@ -833,14 +828,13 @@ describe('ColocatedTemplateCompiler', function () {
       output = createBuilder(tree);
       await output.build();
 
-      assert.deepStrictEqual(
-        output.read(),
+      expect(output.read()).toDeepEqualCode(
         {
           'app-name-here': {
             'router.js': '// stuff here',
             components: {
               'foo.js':
-                stripIndent`
+                `
                   import { hbs } from 'ember-cli-htmlbars';
                   const __COLOCATED_TEMPLATE__ = hbs("{{yield}}", {"contents":"{{yield}}","moduleName":"app-name-here/components/foo.hbs","parseOptions":{"srcName":"app-name-here/components/foo.hbs"}});
                   import templateOnly from '@ember/component/template-only';
@@ -852,12 +846,15 @@ describe('ColocatedTemplateCompiler', function () {
             },
           },
         },
-        'initial content is correct'
+        'initial content is correct',
       );
 
       await output.build();
 
-      assert.deepStrictEqual(output.changes(), {}, 'NOOP update has no changes');
+      expect(output.changes()).toDeepEqualCode(
+        {},
+        'NOOP update has no changes',
+      );
 
       input.write({
         'app-name-here': {
@@ -869,10 +866,9 @@ describe('ColocatedTemplateCompiler', function () {
 
       await output.build();
 
-      assert.deepStrictEqual(
-        output.changes(),
+      expect(output.changes()).toDeepEqualCode(
         { 'app-name-here/components/foo.js': 'unlink' },
-        'has only related changes'
+        'has only related changes',
       );
     });
 
@@ -894,14 +890,13 @@ describe('ColocatedTemplateCompiler', function () {
       output = createBuilder(tree);
       await output.build();
 
-      assert.deepStrictEqual(
-        output.read(),
+      expect(output.read()).toDeepEqualCode(
         {
           'app-name-here': {
             'router.js': '// stuff here',
             components: {
               'foo.js':
-                stripIndent`
+                `
                   import { hbs } from 'ember-cli-htmlbars';
                   const __COLOCATED_TEMPLATE__ = hbs("{{yield}}", {"contents":"{{yield}}","moduleName":"app-name-here/components/foo.hbs","parseOptions":{"srcName":"app-name-here/components/foo.hbs"}});
                   import templateOnly from '@ember/component/template-only';
@@ -913,12 +908,15 @@ describe('ColocatedTemplateCompiler', function () {
             },
           },
         },
-        'initial content is correct'
+        'initial content is correct',
       );
 
       await output.build();
 
-      assert.deepStrictEqual(output.changes(), {}, 'NOOP update has no changes');
+      expect(output.changes()).toDeepEqualCode(
+        {},
+        'NOOP update has no changes',
+      );
 
       input.write({
         'app-name-here': {
@@ -930,20 +928,18 @@ describe('ColocatedTemplateCompiler', function () {
 
       await output.build();
 
-      assert.deepStrictEqual(
-        output.changes(),
+      expect(output.changes()).toDeepEqualCode(
         { 'app-name-here/components/foo.js': 'change' },
-        'has only related changes'
+        'has only related changes',
       );
 
-      assert.deepStrictEqual(
-        output.read(),
+      expect(output.read()).toDeepEqualCode(
         {
           'app-name-here': {
             'router.js': '// stuff here',
             components: {
               'foo.js':
-                stripIndent`
+                `
                   import { hbs } from 'ember-cli-htmlbars';
                   const __COLOCATED_TEMPLATE__ = hbs("whoops!", {"contents":"whoops!","moduleName":"app-name-here/components/foo.hbs","parseOptions":{"srcName":"app-name-here/components/foo.hbs"}});
                   import templateOnly from '@ember/component/template-only';
@@ -955,7 +951,7 @@ describe('ColocatedTemplateCompiler', function () {
             },
           },
         },
-        'updated content is correct'
+        'updated content is correct',
       );
     });
 
@@ -964,7 +960,7 @@ describe('ColocatedTemplateCompiler', function () {
         'app-name-here': {
           'router.js': '// stuff here',
           components: {
-            'foo.js': stripIndent`
+            'foo.js': `
               import Component from '@glimmer/component';
 
               export default class FooComponent extends Component {}
@@ -982,13 +978,12 @@ describe('ColocatedTemplateCompiler', function () {
       output = createBuilder(tree);
       await output.build();
 
-      assert.deepStrictEqual(
-        output.read(),
+      expect(output.read()).toDeepEqualCode(
         {
           'app-name-here': {
             'router.js': '// stuff here',
             components: {
-              'foo.js': stripIndent`
+              'foo.js': `
                 import { hbs } from 'ember-cli-htmlbars';
                 const __COLOCATED_TEMPLATE__ = hbs("{{yield}}", {"contents":"{{yield}}","moduleName":"app-name-here/components/foo.hbs","parseOptions":{"srcName":"app-name-here/components/foo.hbs"}});
                 import Component from '@glimmer/component';
@@ -1001,12 +996,15 @@ describe('ColocatedTemplateCompiler', function () {
             },
           },
         },
-        'initial content is correct'
+        'initial content is correct',
       );
 
       await output.build();
 
-      assert.deepStrictEqual(output.changes(), {}, 'NOOP update has no changes');
+      expect(output.changes()).toDeepEqualCode(
+        {},
+        'NOOP update has no changes',
+      );
 
       input.write({
         'app-name-here': {
@@ -1018,19 +1016,17 @@ describe('ColocatedTemplateCompiler', function () {
 
       await output.build();
 
-      assert.deepStrictEqual(
-        output.changes(),
+      expect(output.changes()).toDeepEqualCode(
         { 'app-name-here/components/foo.js': 'change' },
-        'has only related changes'
+        'has only related changes',
       );
 
-      assert.deepStrictEqual(
-        output.read(),
+      expect(output.read()).toDeepEqualCode(
         {
           'app-name-here': {
             'router.js': '// stuff here',
             components: {
-              'foo.js': stripIndent`
+              'foo.js': `
               import { hbs } from 'ember-cli-htmlbars';
               const __COLOCATED_TEMPLATE__ = hbs("whoops!", {"contents":"whoops!","moduleName":"app-name-here/components/foo.hbs","parseOptions":{"srcName":"app-name-here/components/foo.hbs"}});
               import Component from '@glimmer/component';
@@ -1043,7 +1039,7 @@ describe('ColocatedTemplateCompiler', function () {
             },
           },
         },
-        'content is correct after updating'
+        'content is correct after updating',
       );
     });
 
@@ -1052,7 +1048,7 @@ describe('ColocatedTemplateCompiler', function () {
         'app-name-here': {
           'router.js': '// stuff here',
           components: {
-            'foo.js': stripIndent`
+            'foo.js': `
               import Component from '@glimmer/component';
 
               export default class FooComponent extends Component {}
@@ -1070,13 +1066,12 @@ describe('ColocatedTemplateCompiler', function () {
       output = createBuilder(tree);
       await output.build();
 
-      assert.deepStrictEqual(
-        output.read(),
+      expect(output.read()).toDeepEqualCode(
         {
           'app-name-here': {
             'router.js': '// stuff here',
             components: {
-              'foo.js': stripIndent`
+              'foo.js': `
                 import { hbs } from 'ember-cli-htmlbars';
                 const __COLOCATED_TEMPLATE__ = hbs("{{yield}}", {"contents":"{{yield}}","moduleName":"app-name-here/components/foo.hbs","parseOptions":{"srcName":"app-name-here/components/foo.hbs"}});
                 import Component from '@glimmer/component';
@@ -1089,17 +1084,20 @@ describe('ColocatedTemplateCompiler', function () {
             },
           },
         },
-        'initial content is correct'
+        'initial content is correct',
       );
 
       await output.build();
 
-      assert.deepStrictEqual(output.changes(), {}, 'NOOP update has no changes');
+      expect(output.changes()).toDeepEqualCode(
+        {},
+        'NOOP update has no changes',
+      );
 
       input.write({
         'app-name-here': {
           components: {
-            'foo.js': stripIndent`
+            'foo.js': `
               import Component from '@glimmer/component';
 
               export default class FooBarComponent extends Component {}
@@ -1110,13 +1108,12 @@ describe('ColocatedTemplateCompiler', function () {
 
       await output.build();
 
-      assert.deepStrictEqual(
-        output.read(),
+      expect(output.read()).toDeepEqualCode(
         {
           'app-name-here': {
             'router.js': '// stuff here',
             components: {
-              'foo.js': stripIndent`
+              'foo.js': `
               import { hbs } from 'ember-cli-htmlbars';
               const __COLOCATED_TEMPLATE__ = hbs("{{yield}}", {"contents":"{{yield}}","moduleName":"app-name-here/components/foo.hbs","parseOptions":{"srcName":"app-name-here/components/foo.hbs"}});
               import Component from '@glimmer/component';
@@ -1129,13 +1126,12 @@ describe('ColocatedTemplateCompiler', function () {
             },
           },
         },
-        'content is correct after updating'
+        'content is correct after updating',
       );
 
-      assert.deepStrictEqual(
-        output.changes(),
+      expect(output.changes()).toDeepEqualCode(
         { 'app-name-here/components/foo.js': 'change' },
-        'has only related changes'
+        'has only related changes',
       );
     });
 
@@ -1144,7 +1140,7 @@ describe('ColocatedTemplateCompiler', function () {
         'app-name-here': {
           'router.js': '// stuff here',
           components: {
-            'foo.js': stripIndent`
+            'foo.js': `
               import Component from '@glimmer/component';
 
               export default class FooComponent extends Component {}
@@ -1162,13 +1158,12 @@ describe('ColocatedTemplateCompiler', function () {
       output = createBuilder(tree);
       await output.build();
 
-      assert.deepStrictEqual(
-        output.read(),
+      expect(output.read()).toDeepEqualCode(
         {
           'app-name-here': {
             'router.js': '// stuff here',
             components: {
-              'foo.js': stripIndent`
+              'foo.js': `
                 import { hbs } from 'ember-cli-htmlbars';
                 const __COLOCATED_TEMPLATE__ = hbs("{{yield}}", {"contents":"{{yield}}","moduleName":"app-name-here/components/foo.hbs","parseOptions":{"srcName":"app-name-here/components/foo.hbs"}});
                 import Component from '@glimmer/component';
@@ -1181,12 +1176,15 @@ describe('ColocatedTemplateCompiler', function () {
             },
           },
         },
-        'initial content is correct'
+        'initial content is correct',
       );
 
       await output.build();
 
-      assert.deepStrictEqual(output.changes(), {}, 'NOOP update has no changes');
+      expect(output.changes()).toDeepEqualCode(
+        {},
+        'NOOP update has no changes',
+      );
 
       input.write({
         'app-name-here': {
@@ -1198,20 +1196,18 @@ describe('ColocatedTemplateCompiler', function () {
 
       await output.build();
 
-      assert.deepStrictEqual(
-        output.changes(),
+      expect(output.changes()).toDeepEqualCode(
         { 'app-name-here/components/foo.js': 'change' },
-        'has only related changes'
+        'has only related changes',
       );
 
-      assert.deepStrictEqual(
-        output.read(),
+      expect(output.read()).toDeepEqualCode(
         {
           'app-name-here': {
             'router.js': '// stuff here',
             components: {
               'foo.js':
-                stripIndent`
+                `
                   import { hbs } from 'ember-cli-htmlbars';
                   const __COLOCATED_TEMPLATE__ = hbs("{{yield}}", {"contents":"{{yield}}","moduleName":"app-name-here/components/foo.hbs","parseOptions":{"srcName":"app-name-here/components/foo.hbs"}});
                   import templateOnly from '@ember/component/template-only';
@@ -1223,7 +1219,7 @@ describe('ColocatedTemplateCompiler', function () {
             },
           },
         },
-        'content is correct after updating'
+        'content is correct after updating',
       );
     });
   });

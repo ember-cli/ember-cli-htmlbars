@@ -8,7 +8,7 @@ module('Acceptance | styleguide', function (hooks) {
   test('visiting /styleguide', async function (assert) {
     await visit('/styleguide');
 
-    assert.equal(currentURL(), '/styleguide');
+    assert.strictEqual(currentURL(), '/styleguide');
 
     assert.dom('[data-test-es-note-heading]').containsText('says...');
   });

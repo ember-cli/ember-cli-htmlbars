@@ -58,14 +58,14 @@ describe('ember-cli-htmlbars addon', function () {
     beforeEach(
       co.wrap(function* () {
         input = yield createTempDir();
-      })
+      }),
     );
 
     afterEach(
       co.wrap(function* () {
         yield input.dispose();
         yield output.dispose();
-      })
+      }),
     );
 
     it(
@@ -78,7 +78,9 @@ describe('ember-cli-htmlbars addon', function () {
         let htmlbarsOptions = {
           isHTMLBars: true,
           templateCompiler: require('ember-source/dist/ember-template-compiler.js'),
-          templateCompilerPath: require.resolve('ember-source/dist/ember-template-compiler.js'),
+          templateCompilerPath: require.resolve(
+            'ember-source/dist/ember-template-compiler.js',
+          ),
         };
 
         subject = this.addon.transpileTree(input.path(), htmlbarsOptions);
@@ -93,7 +95,7 @@ describe('ember-cli-htmlbars addon', function () {
             '',
           ].join('\n'),
         });
-      })
+      }),
     );
   });
 });
