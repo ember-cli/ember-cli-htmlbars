@@ -4,67 +4,9 @@
 
 ## Compatibility
 
-* Ember.js v3.8 or above
-* Ember CLI v3.8 or above
-* Node.js v12 or above
-
-## Tagged Template Usage / Migrating from `htmlbars-inline-precompile`
-
-Starting with version 4.0, this addon now includes the testing helper from [ember-cli-htmlbars-inline-precompile](https://github.com/ember-cli/ember-cli-htmlbars-inline-precompile)
-
-This will require an update to the imports of the `hbs` helper in your tests:
-
-Prior syntax:
-
-```
-import hbs from 'htmlbars-inline-precompile';
-
-...
-
-await render(hbs`
-  <MyComponent />
-`);
-```
-
-New syntax:
-
-```
-import { hbs } from 'ember-cli-htmlbars';
-
-...
-
-await render(hbs`
-  <MyComponent />
-`);
-```
-
-There is a [codemod](https://github.com/ember-codemods/ember-cli-htmlbars-inline-precompile-codemod) available to automate this change.
-
-## Additional Trees
-
-For addons which want additional customizations, they are able to interact with
-this addon directly.
-
-```ts
-interface EmberCLIHTMLBars {
-  /**
-    Supports easier transpilation of non-standard input paths (e.g. to transpile
-    a non-addon NPM dependency) while still leveraging the logic within
-    ember-cli-htmlbars for transpiling (e.g. custom AST transforms, colocation, etc).
-  */
-  transpileTree(inputTree: BroccoliTree): BroccoliTree;
-}
-```
-
-### `transpileTree` usage
-
-```js
-// find the ember-cli-htmlbars addon
-let htmlbarsAddon = this.addons.find(addon => addon.name === 'ember-cli-htmlbars');
-
-// invoke .transpileTree passing in the custom input tree
-let transpiledCustomTree = htmlbarsAddon.transpileTree(someCustomTree);
-```
+* Ember.js v4.12 or above
+* Ember CLI v4.12 or above
+* Node.js v18 or above
 
 ## Adding Custom Plugins
 
@@ -139,28 +81,6 @@ export interface ASTPluginWithDeps extends ASTPlugin {
    */
   dependencies(relativePath: string): string[];
 }
-```
-
-## Precompile HTMLBars template strings within other addons
-
-```javascript
-module.exports = {
-  name: 'my-addon-name',
-
-  setupPreprocessorRegistry: function(type, registry) {
-    var htmlbarsPlugin = registry.load('template').find(function(plugin) {
-      return plugin.name === 'ember-cli-htmlbars';
-    });
-
-    // precompile any htmlbars template string via the precompile method on the
-    // ember-cli-htmlbars plugin wrapper; `precompiled` will be a string of the
-    // form:
-    //
-    //   Ember.HTMLBars.template(function() {...})
-    //
-    var precompiled = htmlbarsPlugin.precompile("{{my-component}}");
-  }
-};
 ```
 
 ### Custom Template Compiler
