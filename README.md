@@ -6,6 +6,7 @@
 
 * Ember.js v4.12 or above
 * Ember CLI v4.12 or above
+* `@embroider/compat` 3.4.3 or above (optional)
 * Node.js v18 or above
 
 ## Adding Custom Plugins
