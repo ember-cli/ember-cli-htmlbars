@@ -5,6 +5,21 @@
 
 
 
+
+## v7.0.0 (2025-11-25)
+
+#### :boom: Breaking Change
+* [#788](https://github.com/ember-cli/ember-cli-htmlbars/pull/788) update minimum node version ([@ef4](https://github.com/ef4))
+* [#786](https://github.com/ember-cli/ember-cli-htmlbars/pull/786) big cleanup ([@ef4](https://github.com/ef4))
+* [#785](https://github.com/ember-cli/ember-cli-htmlbars/pull/785) Drop support for node < 18 and ember < 4.12 ([@ef4](https://github.com/ef4))
+
+#### :house: Internal
+* [#775](https://github.com/ember-cli/ember-cli-htmlbars/pull/775) Fix CI ([@bertdeblock](https://github.com/bertdeblock))
+
+#### Committers: 2
+- Bert De Block ([@bertdeblock](https://github.com/bertdeblock))
+- Edward Faulkner ([@ef4](https://github.com/ef4))
+
 ## v6.3.0 (2023-08-08)
 
 #### :rocket: Enhancement
