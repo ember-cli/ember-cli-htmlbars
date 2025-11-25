@@ -43,13 +43,13 @@
     "heimdalljs-logger": "^0.1.10",
     "js-string-escape": "^1.0.1",
     "silent-error": "^1.1.1",
-    "walk-sync": "^2.2.0"
+    "walk-sync": "^4.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.23.6",
     "@babel/eslint-parser": "^7.23.3",
-    "@babel/plugin-transform-class-properties": "^7.23.3",
     "@babel/plugin-proposal-decorators": "^7.23.6",
+    "@babel/plugin-transform-class-properties": "^7.23.3",
     "@babel/plugin-transform-runtime": "^7.13.15",
     "@babel/plugin-transform-typescript": "^7.10.1",
     "@babel/runtime": "^7.13.8",
@@ -102,7 +102,7 @@
     "ember-source": ">= 4.0.0"
   },
   "engines": {
-    "node": ">= 18"
+    "node": ">= 20"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org"

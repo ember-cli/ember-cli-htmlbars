@@ -11,7 +11,7 @@ module('tests/integration/components/ast-plugins-test', function (hooks) {
 
     assert.strictEqual(
       this.element.textContent.trim(),
-      'dummy/templates/components/x-module-name-inlined-component.hbs',
+      'dummy/components/x-module-name-inlined-component.hbs',
     );
   });
 });
