@@ -4,9 +4,8 @@ const ColocatedTemplateCompiler = require('../lib/colocated-broccoli-plugin');
 const ColocatedBabelPlugin = require.resolve('../lib/colocated-babel-plugin');
 const BroccoliPersistentFilter = require('broccoli-persistent-filter');
 const babel = require('@babel/core');
-const TypescriptTransform = require.resolve(
-  '@babel/plugin-transform-typescript',
-);
+const TypescriptTransform =
+  require.resolve('@babel/plugin-transform-typescript');
 const {
   createTempDir,
   createBuilder: _createBuilder,
