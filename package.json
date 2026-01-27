@@ -33,6 +33,9 @@
     "test:ember": "ember test",
     "test:node": "mocha node-tests/*.js"
   },
+  "resolutions": {
+    "ember-cli-htmlbars": "link:."
+  },
   "dependencies": {
     "@ember/edition-utils": "^1.2.0",
     "babel-plugin-ember-template-compilation": "^2.0.0",
@@ -91,8 +94,7 @@
     "prettier": "^3.1.1",
     "qunit": "^2.20.0",
     "qunit-dom": "^2.0.0",
-    "release-it": "^14.2.1",
-    "release-it-lerna-changelog": "^3.1.0",
+    "release-plan": "^0.17.4",
     "stylelint": "^15.11.0",
     "stylelint-config-standard": "^34.0.0",
     "stylelint-prettier": "^4.1.0",
@@ -102,6 +104,7 @@
     "@babel/core": ">= 7",
     "ember-source": ">= 4.0.0"
   },
+  "packageManager": "pnpm@10.28.2",
   "engines": {
     "node": ">= 20"
   },
@@ -114,27 +117,5 @@
   "ember-addon": {
     "main": "lib/ember-addon-main.js",
     "configPath": "tests/dummy/config"
-  },
-  "resolutions": {
-    "ember-cli-htmlbars": "link:."
-  },
-  "release-it": {
-    "plugins": {
-      "release-it-lerna-changelog": {
-        "infile": "CHANGELOG.md",
-        "launchEditor": true
-      }
-    },
-    "git": {
-      "tagName": "v${version}"
-    },
-    "github": {
-      "release": true,
-      "tokenRef": "GITHUB_AUTH"
-    },
-    "npm": {
-      "publish": false
-    }
-  },
-  "packageManager": "pnpm@10.28.2"
+  }
 }
