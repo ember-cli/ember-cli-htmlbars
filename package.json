@@ -87,6 +87,7 @@
     "loader.js": "^4.7.0",
     "mocha": "^8.4.0",
     "module-name-inliner": "link:./tests/dummy/lib/module-name-inliner",
+    "normalize.css": "^8.0.1",
     "prettier": "^3.1.1",
     "qunit": "^2.20.0",
     "qunit-dom": "^2.0.0",
@@ -134,5 +135,6 @@
     "npm": {
       "publish": false
     }
-  }
+  },
+  "packageManager": "pnpm@10.28.2"
 }
