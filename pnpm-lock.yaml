@@ -165,6 +165,9 @@ importers:
       module-name-inliner:
         specifier: link:./tests/dummy/lib/module-name-inliner
         version: link:tests/dummy/lib/module-name-inliner
+      normalize.css:
+        specifier: ^8.0.1
+        version: 8.0.1
       prettier:
         specifier: ^3.1.1
         version: 3.8.1
