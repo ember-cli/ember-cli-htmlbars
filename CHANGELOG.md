@@ -1,5 +1,22 @@
 # Changelog
 
+## Release (2026-03-29)
+
+* ember-cli-htmlbars 7.0.1 (patch)
+
+#### :bug: Bug Fix
+* `ember-cli-htmlbars`
+  * [#793](https://github.com/ember-cli/ember-cli-htmlbars/pull/793) Handle missing absolutePaths for ember-source v7+ ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+
+#### :house: Internal
+* `ember-cli-htmlbars`
+  * [#790](https://github.com/ember-cli/ember-cli-htmlbars/pull/790) start using release-plan ([@mansona](https://github.com/mansona))
+  * [#789](https://github.com/ember-cli/ember-cli-htmlbars/pull/789) swap to pnpm ([@mansona](https://github.com/mansona))
+
+#### Committers: 2
+- Chris Manson ([@mansona](https://github.com/mansona))
+- NullVoxPopuli's reduced-access machine account for AI usage ([@NullVoxPopuli-ai-agent](https://github.com/NullVoxPopuli-ai-agent))
+
 
 
 
